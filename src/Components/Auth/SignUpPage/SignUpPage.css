@@ -1,0 +1,23 @@
+body,html{
+    background: url(../../assets/loginbg.png) no-repeat 100px;
+    width:100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-position:cover;
+}
+.form-group{
+    width:100%;
+    
+}
+.button-signUp:hover{
+    background-color: black;
+}
+.googleIcon{
+    width:20px;
+    margin-right: 10px;
+}
+.button{
+    user-select: none;
+}
