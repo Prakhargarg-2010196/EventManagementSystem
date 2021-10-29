@@ -1,0 +1,10 @@
+.footer{
+    display: flex;
+
+    align-self: flex-end;
+   
+    height:50vh;
+    background: #765353;
+    width: 100vw;
+    
+}
