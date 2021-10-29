@@ -3,30 +3,29 @@ import './App.css';
 import React, { Component } from "react";
 import { Route, Switch } from 'react-router-dom';
 
-import ChangePass from './Components/Auth/ChangePass/ChangePass';
-import NavBar from "./Components/Layout/Navbar/Navbar";
-
-// import PasswordReset from './Components/PasswordReset/PasswordReset';
-
-// import CardCarousel from './Components/Layout/CardCarousel/CardCarousel';
-// import Footer from './Components/Layout/Footer/Footer';
-
-// import LoginPage from './Components/LoginPage/LoginPage';
-
-
-// import SignUpPage from './Components/SignUpPage/SignUpPage';
+// import ChangePass from './Components/Auth/ChangePass/ChangePass';
+import Home from './Components/Layout/Home/Home';
+import LoginPage from './Components/Auth/LoginPage/LoginPage';
+import NavBar from './Components/Layout/Home/Navbar/Navbar';
+import PasswordReset from './Components/Auth/PasswordReset/PasswordReset';
+import SignUpPage from './Components/Auth/SignUpPage/SignUpPage';
 
 class App extends Component {
   render() {
     return (
       
       
-      
-      <Switch>
-          <Route exact path='/'component={NavBar}></Route>    
-          <Route exact path='' component={ChangePass}></Route>
+      <div>
+        <NavBar/>    
+        <Switch>
+          <Route exact path='/' component={Home}></Route>
+          <Route path='/LogInPage' exact component={LoginPage}></Route>
+          <Route path='/SignUpPage' exact component={SignUpPage}></Route>
+          <Route path='/PasswordResetPage' exact component={PasswordReset}></Route>
           
       </Switch>
+      </div>
+      
     )
   }
 

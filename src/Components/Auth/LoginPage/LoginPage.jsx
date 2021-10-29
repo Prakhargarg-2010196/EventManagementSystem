@@ -1,34 +1,44 @@
 import './LoginPage.css';
 
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
-import React, {useState} from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import React, {Component} from 'react';
 
-import { Link } from 'react-router-dom';
-
-const LoginPage=(props)=>{
+class LoginPage extends Component{
     
-    const [state , setState] = useState({
-        email : "",
-        password : ""
-    })
-    const handleChange = (e) => {
-        const {controlId , value} = e.target   
-        setState(prevState => ({
-            ...prevState,
-            [controlId] : value
-        }))
+    constructor(props) {
+        super(props);
+        this.state = {
+          isLogged: false,
+          loginParams: {
+            user_id: "",
+            user_password: ""
+          }
+        };
     }
-    const handleSubmitClick = (e) => {
-        e.preventDefault();
-        if(state.password === state.confirmPassword) {
-            // sendDetailsToServer();    
-        } else {
-            props.showError('Passwords do not match');
-        }
-    }
-        return (
-                    
-                <Form className='d-flex flex-column justify-content-center'>
+    handleFormChange = event => {
+        let loginParamsNew = { ...this.state.loginParams };
+        let val = event.target.value;
+        loginParamsNew[event.target.name] = val;
+        this.setState({
+          loginParams: loginParamsNew
+        });
+      };
+      login = event => {
+        let user_id = this.state.loginParams.user_id;
+        let user_password = this.state.loginParams.user_password;
+        console.log(user_password);
+        if(user_id==='admin'&& user_password==='123')
+        return <Redirect to="/" />;
+        event.preventDefault();
+      };
+      
+    render()
+        {
+            
+            return (
+                <div>
+                    <Form className='d-flex flex-column justify-content-center'>
                 <h1 className=''>LogIn</h1>
                 <Form.Group className="mb-3 form-group " controlId="formBasicEmail">
                     <FloatingLabel
@@ -41,8 +51,8 @@ const LoginPage=(props)=>{
                         
                         className='mt-3 form-group' 
                         placeholder="name@example.com" 
-                        value={state.email}
-                        onChange={handleChange}/>
+                        value={this.state.user_id}
+                        onChange={this.handleFormChange}/>
                    
                     </FloatingLabel>
 
@@ -56,29 +66,31 @@ const LoginPage=(props)=>{
                         <Form.Control 
                         type="password" 
                         placeholder="Password" 
-                        value={state.email}
-                        onChange={handleChange}
+                        value={this.state.user_password}
+                        onChange={this.handleFormChange}
                         />
                     </FloatingLabel>
                 </Form.Group>
-                <Link className="align-self-end"> 
+                <Link  to="/PasswordResetPage" className="align-self-end"> 
                     <Form.Text >Forgot Password?</Form.Text>
                 </Link>
                 <Button 
                 variant="primary" 
                 className='mb-2 w-50' 
                 type="submit"
-                onClick={handleSubmitClick}>
+                onClick={this.login}>
                     Login
                 </Button>
                 <Form.Text style={{display:""}}>Don't have an account ?</Form.Text>
-                <Link> 
+                <Link to="/SignUpPage"> 
                     <Form.Text>Sign Up</Form.Text>
                 </Link>
             </Form>
             
+                </div> 
+                
             
         )
     }
-
+}
 export default LoginPage;

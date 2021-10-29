@@ -3,7 +3,7 @@ import './SignUpPage.css';
 import { Button, FloatingLabel, Form, Image } from 'react-bootstrap';
 import React, {useState} from 'react';
 
-import GoogleIcon from '../../assets/google.png';
+import GoogleIcon from '../../../assets/google.png';
 import { Link } from 'react-router-dom';
 
 const SignUpPage=(props)=>{
@@ -69,7 +69,7 @@ const SignUpPage=(props)=>{
                         />
                     </FloatingLabel>
                 </Form.Group>
-                <Link className="align-self-end"> 
+                <Link to="PasswordResetPage"className="align-self-end"> 
                     <Form.Text >Forgot Password?</Form.Text>
                 </Link>
                 <Button 
@@ -80,8 +80,8 @@ const SignUpPage=(props)=>{
                     Login
                 </Button>
                 <Form.Text >Already have an account ?</Form.Text>
-                <Link> 
-                    <Form.Text>Sign Up</Form.Text>
+                <Link to="/LogInPage"> 
+                    <Form.Text>Login</Form.Text>
                 </Link>
             </Form>
             
