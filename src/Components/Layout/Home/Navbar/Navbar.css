@@ -1,0 +1,18 @@
+.Navbar{
+    background-color: #7C64EF;
+    width: 100%;
+    position: absolute;
+    top:0;
+    left:0;
+    display: flex;
+    
+}
+.nav-links{
+    user-select: none;
+    text-decoration: none;
+    color:aliceblue;
+    align-self: center; 
+}
+.nav-links:hover{
+    color:aliceblue;
+}

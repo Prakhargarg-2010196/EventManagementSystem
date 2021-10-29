@@ -3,8 +3,9 @@ import './Navbar.css';
 import { Container, Image, Nav, Navbar } from 'react-bootstrap';
 import React, { Component } from "react";
 
-import AccountIcon from '../../../assets/Account.png';
-import Logo from "../../../assets/logo.png";
+import AccountIcon from '../../../../assets/Account.png';
+import {Link} from 'react-router-dom';
+import Logo from "../../../../assets/logo.png";
 
 class NavBar extends Component {
     render() {
@@ -19,13 +20,13 @@ class NavBar extends Component {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav" className='justify-content-end' >
                         <Nav>
-                            <Nav.Link href="#features">Home</Nav.Link>
+                        <Link to="/" className='nav-links'>Home</Link>
                             <Nav.Link href="#pricing">Manage Event</Nav.Link>
                             <Nav.Link href="#pricing">Notifications</Nav.Link>
                             <Nav.Link href="#pricing">Premium</Nav.Link>
-                            <Nav.Link href="#pricing"> 
+                            <Link to="/LogInPage" className='nav-links'> 
                             <Image src={AccountIcon}/>
-                            </Nav.Link>
+                            </Link>
                             
                         </Nav>
                         
