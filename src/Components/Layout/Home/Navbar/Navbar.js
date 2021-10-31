@@ -14,9 +14,9 @@ class NavBar extends Component {
 
             <Navbar collapseOnSelect expand="lg" className='Navbar' variant="dark">
                 <Container >
-                    <Navbar.Brand href="/">
-                        <Image src={Logo} width={40}></Image>
-                        </Navbar.Brand>
+                    <Navbar.Brand>
+                        <Link to="/"><Image src={Logo} width={40}></Image></Link>
+                    </Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav" className='justify-content-end' >
                         <Nav>
@@ -24,7 +24,7 @@ class NavBar extends Component {
                             <Nav.Link href="#pricing">Manage Event</Nav.Link>
                             <Nav.Link href="#pricing">Notifications</Nav.Link>
                             <Nav.Link href="#pricing">Premium</Nav.Link>
-                            <Link to="/LogInPage" className='nav-links'> 
+                            <Link to="/SignUpPage" className='nav-links'> 
                             <Image src={AccountIcon}/>
                             </Link>
                             
