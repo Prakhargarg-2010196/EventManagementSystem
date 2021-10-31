@@ -3,9 +3,9 @@ import '../Home/Home.css';
 import React, { Component } from 'react';
 
 import CardCarousel from './CardCarousel/CardCarousel';
-import Footer from './Footer/Footer';
+import Footer from './Footer/Footer.jsx';
+import NavBar from './Navbar/Navbar.jsx';
 import UserService from "../../../services/user.service"
-import NavBar from './Navbar/Navbar';
 
 // import NavBar from "./Navbar/Navbar";
 
