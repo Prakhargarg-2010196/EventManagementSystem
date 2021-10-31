@@ -1,96 +1,169 @@
 import './LoginPage.css';
 
-import { Button, FloatingLabel, Form } from 'react-bootstrap';
-import { Link, Redirect } from 'react-router-dom';
-import React, {Component} from 'react';
+import * as Yup from "yup";
 
-class LoginPage extends Component{
-    
+import { Button, FloatingLabel, Form } from 'react-bootstrap';
+import { ErrorMessage, Field, Formik } from "formik";
+import React, { Component } from 'react';
+
+import AuthService from '../../../services/auth.service';
+import { Link } from 'react-router-dom';
+
+class LoginPage extends Component {
+
+
+
     constructor(props) {
         super(props);
+        this.handleLogin = this.handleLogin.bind(this);
+        this.onChangeUsername = this.onChangeUsername.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
         this.state = {
-          isLogged: false,
-          loginParams: {
-            user_id: "",
-            user_password: ""
-          }
+            username: "",
+            password: "",
+            loading: false,
+            message: ""
         };
     }
-    handleFormChange = event => {
-        let loginParamsNew = { ...this.state.loginParams };
-        let val = event.target.value;
-        loginParamsNew[event.target.name] = val;
-        this.setState({
-          loginParams: loginParamsNew
+
+    onChangeUsername(e) {
+        this.setState({ username: e.target.value });
+    }
+    onChangePassword(e) {
+        this.setState({ password: e.target.value });
+    }
+    validationSchema() {
+        return Yup.object().shape({
+            email: Yup.string().required('Email is required').email('Email is invalid'),
+      password: Yup.string()
+        .required('Password is required').min(6, 'Password must be at least 6 characters').max(40, 'Password must not exceed 40 characters'),
         });
-      };
-      login = event => {
-        let user_id = this.state.loginParams.user_id;
-        let user_password = this.state.loginParams.user_password;
-        console.log(user_password);
-        if(user_id==='admin'&& user_password==='123')
-        return <Redirect to="/" />;
-        event.preventDefault();
-      };
-      
-    render()
-        {
-            
-            return (
-                <div>
+    }
+
+
+    handleLogin(e) {
+        e.preventDefault();
+        this.setState({
+            message: "",
+            loading: true
+        });
+
+        AuthService.login(this.state.username, this.state.password).then(
+            () => {
+                this.props.history.push("/profile");
+                window.location.reload();
+            },
+            error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+
+                this.setState({
+                    loading: false,
+                    message: resMessage
+                });
+            }
+        );
+    }
+
+
+
+
+
+    render() {
+        return (
+            <div>
+                <Formik
+                    initialValues={this.initialValues}
+                    validationSchema={this.validationSchema}
+                    onSubmit={this.handleLogin}
+
+                >
                     <Form className='d-flex flex-column justify-content-center'>
-                <h1 className=''>LogIn</h1>
-                <Form.Group className="mb-3 form-group " controlId="formBasicEmail">
-                    <FloatingLabel
-                        controlId="floatingInput"
-                        label="Email address"
-                        className="mb-3"
-                    >
-                        <Form.Control 
-                        type="email" 
+                        <h1 className=''>LogIn</h1>
                         
-                        className='mt-3 form-group' 
-                        placeholder="name@example.com" 
-                        value={this.state.user_id}
-                        onChange={this.handleFormChange}/>
-                   
-                    </FloatingLabel>
+                            <Form.Group className="mb-3 form-group " controlId="email">
+                                <FloatingLabel
+                                    controlId="floatingInput"
+                                    label="Email address"
+                                    className="mb-3"
+                                >
+                                    <Field
+                                        type="text"
+                                        name="email"
+                                        className='form-control'
+                                        placeholder=""
+                                        value={this.state.username}
+                                        onChange={this.onChangeUsername} />
+                                
+                                    <ErrorMessage
+                                        name="email"
+                                        component="div"
+                                        className="alert alert-danger" />
 
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text>
-                </Form.Group>
+                                </FloatingLabel>
 
-                <Form.Group className="mb-3 form-group " controlId="formBasicPassword">
-                    <FloatingLabel controlId="floatingPassword" label="Password">
-                        <Form.Control 
-                        type="password" 
-                        placeholder="Password" 
-                        value={this.state.user_password}
-                        onChange={this.handleFormChange}
-                        />
-                    </FloatingLabel>
-                </Form.Group>
-                <Link  to="/PasswordResetPage" className="align-self-end"> 
-                    <Form.Text >Forgot Password?</Form.Text>
-                </Link>
-                <Button 
-                variant="primary" 
-                className='mb-2 w-50' 
-                type="submit"
-                onClick={this.login}>
-                    Login
-                </Button>
-                <Form.Text style={{display:""}}>Don't have an account ?</Form.Text>
-                <Link to="/SignUpPage"> 
-                    <Form.Text>Sign Up</Form.Text>
-                </Link>
-            </Form>
-            
-                </div> 
-                
-            
+                                <Form.Text className="text-muted">
+                                    We'll never share your email with anyone else.
+                                </Form.Text>
+                            </Form.Group>
+                        
+
+
+                        <Form.Group className="mb-3 form-group " controlId="formBasicPassword">
+                            <FloatingLabel controlId="floatingPassword" label="Password">
+                                <Field
+                                    type="password"
+                                    name="password"
+                                    className="form-control"
+                                    placeholder="Password"
+                                    value={this.state.password}
+                                    onChange={this.onChangePassword}
+                                />
+                                <ErrorMessage
+                                    name="password"
+                                    component="div"
+                                    className="alert alert-danger"
+                                />
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Link to="/PasswordResetPage" className="align-self-end">
+                            <Form.Text >Forgot Password?</Form.Text>
+                        </Link>
+                        <Button
+                            variant="primary"
+                            className='mb-2 w-50'
+                            type="submit"
+                            disabled={this.state.loading}>
+                            {this.state.loading && (
+                                <span className="spinner-border spinner-border-sm"></span>
+                            )}
+
+                            Login
+                        </Button>
+                        {this.state.message && (
+                            <div className="form-group">
+                                <div className="alert alert-danger" role="alert">
+                                    {this.state.message}
+                                </div>
+                            </div>
+                        )}
+                        <Form.Text style={{ display: "" }}>Don't have an account ?</Form.Text>
+                        <Link to="/SignUpPage">
+                            <Form.Text>Sign Up</Form.Text>
+                        </Link>
+                    </Form>
+                </Formik>
+
+
+            </div>
+
+
         )
     }
 }
+
 export default LoginPage;
