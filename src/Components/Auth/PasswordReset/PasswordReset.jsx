@@ -1,30 +1,25 @@
 import { Button, FloatingLabel, Form } from "react-bootstrap";
-import { Container, Image, Nav, Navbar } from "react-bootstrap";
 import React, { Component } from "react";
 
 import AuthService from "../../../api/services/auth.service";
 import CalendarMobile from "../../../assets/CalendarMobile.svg";
-import { Link } from "react-router-dom";
+import { DefaultNavbar } from "../DefaultNavbar";
+import { Image } from "react-bootstrap";
 import Logo from "../../../assets/logo.png";
 import styles from "./PasswordReset.module.css";
 
-export const PasswordResetNavbar = () => {
-	return (
-		<Navbar expand="lg" className={styles.Navbar} variant="dark">
-			<Container>
-				<Navbar.Brand>
-					<Link to="/">
-						<Image src={Logo} width={40}></Image>
-					</Link>
-				</Navbar.Brand>
-				<Nav>
-					<Link to="/signUpPage" className={styles.navLinks}>
-						Sign Up
-					</Link>
-				</Nav>
-			</Container>
-		</Navbar>
-	);
+const links = {
+	home: "/",
+	secondLink: "/LogInPage",
+	secondLinkName:"login"
+};
+const style = {
+	Navbar: styles.Navbar,
+	navLinks: styles.navLinks,
+};
+const image = {
+	src: Logo,
+	width: 40,
 };
 class PasswordReset extends Component {
 	defaultState = {
@@ -43,9 +38,9 @@ class PasswordReset extends Component {
 		let emailErr = "";
 
 		if (!this.state.email || regEmail.test(this.state.email) === false)
-        emailErr = "Email Field is Invalid ";
+			emailErr = "Email Field is Invalid ";
 		if (!this.state.email) emailErr = "Email field is required";
-        
+
 		this.setState({
 			...this.state,
 			[e.target.name]: e.target.value,
@@ -56,11 +51,11 @@ class PasswordReset extends Component {
 	handleFocus(e) {
 		e.preventDefault();
 		const regEmail = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
-        let emailErr = "";
+		let emailErr = "";
 		if (!this.state.email || regEmail.test(this.state.email) === false)
 			emailErr = "Email Field is Invalid ";
 		if (!this.state.email) emailErr = "Email field is required";
-		
+
 		this.setState({
 			...this.state,
 			[e.target.name]: e.target.value,
@@ -71,9 +66,9 @@ class PasswordReset extends Component {
 	handleSubmit(e) {
 		e.preventDefault();
 		this.handleKeyPress(e);
-		const details={
-			email:this.state.email,
-		}
+		const details = {
+			email: this.state.email,
+		};
 		AuthService.ResetPass(details).then(
 			(response) => {
 				if (response.status === 200) {
@@ -86,28 +81,24 @@ class PasswordReset extends Component {
 			(error) => {
 				if (error.response.status === 401) {
 					this.setState({
-						message:error.response.data,
+						message: error.response.data,
 						successful: false,
 					});
 					console.log(error.response);
-				} 
+				}
 			}
-							
-			
 		);
-		this.props.history.push({	pathname:"/OtpPasswordReset",
-								 	state:details
-								});
+		this.props.history.push({ pathname: "/OtpPasswordReset", state: details });
 	}
 	handleKeyPress(e) {
 		if (e.key === "Enter") e.preventDefault();
-		
 	}
 
 	render() {
 		return (
 			<div className={styles.container}>
-				<PasswordResetNavbar />
+				<DefaultNavbar style={style} image={image} links={links} />
+
 				<Image src={CalendarMobile} className={styles.calendarImage}></Image>
 				<Form className={styles.form}>
 					<h2 className="text-center">Forgot Password</h2>
@@ -133,23 +124,22 @@ class PasswordReset extends Component {
 							We'll never share your email with anyone else.
 						</Form.Text>
 					</Form.Group>
-					
 
 					<Button
 						variant="primary"
-                        className={styles.buttonSignUp}
+						className={styles.buttonSignUp}
 						onClick={(e) => this.handleSubmit(e)}
 						onKeyPress={(e) => this.handleKeyPress(e)}
 					>
 						Confirm
 					</Button>
 					{this.state.message && (
-							<div className="form-group">
-								<div className="alert alert-danger" role="alert">
-									{this.state.message}
-								</div>
+						<div className="form-group">
+							<div className="alert alert-danger" role="alert">
+								{this.state.message}
 							</div>
-						)}
+						</div>
+					)}
 				</Form>
 			</div>
 		);

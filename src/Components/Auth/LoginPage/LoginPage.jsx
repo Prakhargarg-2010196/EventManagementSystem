@@ -1,31 +1,28 @@
 import { Button, FloatingLabel, Form } from "react-bootstrap";
-import { Container, Image, Nav, Navbar } from "react-bootstrap";
 import React, { Component } from "react";
 
 import AuthService from "../../../api/services/auth.service";
 import CalendarMobile from "../../../assets/CalendarMobile.svg";
+import { DefaultNavbar } from "../DefaultNavbar";
+import { Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Logo from "../../../assets/logo.png";
 import styles from "./LoginPage.module.css";
 
-export const SignUpPageNavbar = () => {
-	return (
-		<Navbar expand="lg" className={styles.Navbar} variant="dark">
-			<Container>
-				<Navbar.Brand>
-					<Link to="/">
-						<Image src={Logo} width={40}></Image>
-					</Link>
-				</Navbar.Brand>
-				<Nav>
-					<Link to="/signUpPage" className={styles.navLinks}>
-						Sign Up
-					</Link>
-				</Nav>
-			</Container>
-		</Navbar>
-	);
-};
+const links = {
+    home: '/',
+    secondLink: "/SignUpPage",
+	secondLinkName:"SignUp"
+}
+const style={
+    Navbar:styles.Navbar,
+    navLinks:styles.navLinks
+
+}    
+const image={
+    src:Logo,
+    width:40
+}
 class LoginPage extends Component {
 	defaultState = {
 		email: "",
@@ -126,7 +123,8 @@ class LoginPage extends Component {
 	render() {
 		return (
 			<div className={styles.container}>
-				<SignUpPageNavbar />
+                < DefaultNavbar style={style}  image={image} links = {links}/>
+
 				<Image src={CalendarMobile} className={styles.calendarImage}></Image>
 				{!this.state.successful && (
 					<Form className={styles.form}>

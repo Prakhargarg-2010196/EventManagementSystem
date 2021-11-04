@@ -1,27 +1,26 @@
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
-import { Container, Image, Nav, Navbar } from 'react-bootstrap';
 import React, { Component } from 'react';
 
 import AuthService from '../../../api/services/auth.service';
 import CalendarMobile from "../../../assets/CalendarMobile.svg"
-import { Link } from 'react-router-dom';
+import { DefaultNavbar } from '../DefaultNavbar';
+import { Image } from 'react-bootstrap';
 import Logo from "../../../assets/logo.png";
 import styles from './ChangePass.module.css';
 
-export const ChangePasswordPageNavbar = () => {
-    return (
-        <Navbar expand="lg" className={styles.Navbar} variant="dark">
-            <Container >
-                <Navbar.Brand>
-                    <Link to="/"><Image src={Logo} width={40}></Image></Link>
-                </Navbar.Brand>
-                <Nav>
-                    <Link to="/LogInPage" className={styles.navLinks}>Login</Link>
-                </Nav>
+const links = {
+    home: '/',
+    secondLink: "/LogInPage",
+    secondLinkName:"login"
+}
+const style={
+    Navbar:styles.Navbar,
+    navLinks:styles.navLinks
 
-            </Container>
-        </Navbar>
-    )
+}    
+const image={
+    src:Logo,
+    width:40
 }
 class ChangePass extends Component {
     defaultState = {
@@ -29,7 +28,8 @@ class ChangePass extends Component {
         confirmPassword: "",
         newPasswordErr: "",
         confirmPasswordErr: "",
-        successful:false,
+        successful: false,
+        message: "",
     }
     constructor(props) {
         super(props);
@@ -80,9 +80,9 @@ class ChangePass extends Component {
     handleSubmit(e) {
         e.preventDefault();
         this.handleKeyPress(e);
-        const details={
-            newpass:this.state.newPassword,
-            email:this.props.history.location.state.email,
+        const details = {
+            newpass: this.state.newPassword,
+            email: this.props.history.location.state.email,
         }
         console.log(details.newpass);
         AuthService.NewPassword(details).then((response) => {
@@ -97,31 +97,30 @@ class ChangePass extends Component {
                 this.props.history.push("/LoginPage");
             }
         },
-        (error) => {
-            if (error.response.status === 403) {
-                this.setState({
-                    message: error.response.data,
-                    successful: false,
-                });
-                console.log(error.response);
-            } else if (error.response.status === 422) {
-                this.setState({
-                    message: error.response.data + "Enter Again",
-                    successful: false,
-                });
-                
-            }
-            else if (error.response.status===403||error.response.status===401)
-            {   
-                this.setState({
-                    message: error.response.data ,
-                    successful: false,
-                });
-                setTimeout({
-                    
-                },5000);   
-            }
-        })
+            (error) => {
+                if (error.response.status === 403) {
+                    this.setState({
+                        message: error.response.data,
+                        successful: false,
+                    });
+                    console.log(error.response);
+                } else if (error.response.status === 422) {
+                    this.setState({
+                        message: error.response.data + "Enter Again",
+                        successful: false,
+                    });
+
+                }
+                else if (error.response.status === 403 || error.response.status === 401) {
+                    this.setState({
+                        message: error.response.data,
+                        successful: false,
+                    });
+                    setTimeout({
+
+                    }, 5000);
+                }
+            })
     }
     handleKeyPress(e) {
 
@@ -133,60 +132,60 @@ class ChangePass extends Component {
     render() {
         return (
             <div className={styles.container}>
-                <ChangePasswordPageNavbar />
-                <Image src={CalendarMobile} className={styles.calendarImage}></Image> 
+                < DefaultNavbar style={style}  image={image} links = {links}/>
+                <Image src={CalendarMobile} className={styles.calendarImage}></Image>
                 {
-                   !this.state.successful&&(<Form className='d-flex flex-column m-4 justify-content-center'>
+                    !this.state.successful && (<Form className='d-flex flex-column m-4 justify-content-center'>
 
-                    <h1 className='text-center'>Change Password</h1>
+                        <h1 className='text-center'>Change Password</h1>
 
-                    <Form.Group className={styles.formGroup} controlId="formBasicPassword">
+                        <Form.Group className={styles.formGroup} controlId="formBasicPassword">
 
-                        <FloatingLabel controlId="floatingPassword" label="newPassword">
-                            <Form.Control
-                                type="password"
-                                placeholder=""
-                                name="newPassword"
-                                className="form-control"
-                                onBlur={(e) => this.handleBlur(e)}
-                                onFocus={(e) => this.handleFocus(e)}
-                            />
-                            <span className="text-danger">{this.state.newPasswordErr}</span>
+                            <FloatingLabel controlId="floatingPassword" label="newPassword">
+                                <Form.Control
+                                    type="password"
+                                    placeholder=""
+                                    name="newPassword"
+                                    className="form-control"
+                                    onBlur={(e) => this.handleBlur(e)}
+                                    onFocus={(e) => this.handleFocus(e)}
+                                />
+                                <span className="text-danger">{this.state.newPasswordErr}</span>
 
-                        </FloatingLabel>
-                    </Form.Group>
-                    <Form.Group className={styles.formGroup} controlId="formBasicPassword">
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Form.Group className={styles.formGroup} controlId="formBasicPassword">
 
-                        <FloatingLabel controlId="floatingPassword" label="confirmPassword">
-                            <Form.Control
-                                type="password"
-                                placeholder="Confirm Password"
-                                name="confirmPassword"
-                                className="form-control"
-                                onBlur={(e) => this.handleBlur(e)}
-                                onFocus={(e) => this.handleFocus(e)}
-                            />
+                            <FloatingLabel controlId="floatingPassword" label="confirmPassword">
+                                <Form.Control
+                                    type="password"
+                                    placeholder="Confirm Password"
+                                    name="confirmPassword"
+                                    className="form-control"
+                                    onBlur={(e) => this.handleBlur(e)}
+                                    onFocus={(e) => this.handleFocus(e)}
+                                />
 
-                            <span className="text-danger">{this.state.confirmPasswordErr}</span>
-                        </FloatingLabel>
-                    </Form.Group>
+                                <span className="text-danger">{this.state.confirmPasswordErr}</span>
+                            </FloatingLabel>
+                        </Form.Group>
 
-                    <Button
-                        variant="primary"
-                        className={styles.button}
-                        onClick={(e) => this.handleSubmit(e)}
-                        onKeyPress={(e) => this.handleKeyPress(e)}
-                    >
-                        Reset Password
-                    </Button>
-                    {this.state.message && (
-							<div className="form-group">
-								<div className="alert alert-danger" role="alert">
-									{this.state.message}
-								</div>
-							</div>
-						)}
-                </Form>)}
+                        <Button
+                            variant="primary"
+                            className={styles.button}
+                            onClick={(e) => this.handleSubmit(e)}
+                            onKeyPress={(e) => this.handleKeyPress(e)}
+                        >
+                            Reset Password
+                        </Button>
+                        {this.state.message && (
+                            <div className="form-group">
+                                <div className="alert alert-danger" role="alert">
+                                    {this.state.message}
+                                </div>
+                            </div>
+                        )}
+                    </Form>)}
             </div>
 
         )

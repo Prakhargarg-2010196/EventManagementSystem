@@ -1,31 +1,27 @@
 import { Button, FloatingLabel, Form } from "react-bootstrap";
-import { Container, Image, Nav, Navbar } from "react-bootstrap";
 import React, { Component } from "react";
 
 import AuthService from "../../../../api/services/auth.service";
 import CalendarMobile from "../../../../assets/CalendarMobile.svg";
-import { Link } from "react-router-dom";
+import { DefaultNavbar } from "../../DefaultNavbar";
+import { Image } from "react-bootstrap";
 import Logo from "../../../../assets/logo.png";
 import styles from "./OtpPasswordReset.module.css";
 
-export const OtpPasswordResetNavbar = () => {
-	return (
-		<Navbar expand="lg" className={styles.Navbar} variant="dark">
-			<Container>
-				<Navbar.Brand>
-					<Link to="/">
-						<Image src={Logo} width={40}></Image>
-					</Link>
-				</Navbar.Brand>
-				<Nav>
-					<Link to="/signUpPage" className={styles.navLinks}>
-						Sign Up
-					</Link>
-				</Nav>
-			</Container>
-		</Navbar>
-	);
-};
+const links = {
+    home: '/',
+    secondLink: "/SignUpPage",
+	secondLinkName:"signup"
+}
+const style={
+    Navbar:styles.Navbar,
+    navLinks:styles.navLinks
+
+}    
+const image={
+    src:Logo,
+    width:40
+}
 class OtpPasswordReset extends Component {
 	defaultState = {
 		otp: "",
@@ -136,7 +132,7 @@ class OtpPasswordReset extends Component {
 	render() {
 		return (
 			<div className={styles.container}>
-				<OtpPasswordResetNavbar />
+                < DefaultNavbar style={style}  image={image} links = {links}/>
 				<Image src={CalendarMobile} className={styles.calendarImage}></Image>
 				{!this.state.successful && (
 					<Form className={styles.form}>
