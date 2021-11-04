@@ -6,6 +6,7 @@ import { Route, Switch } from 'react-router-dom';
 import ChangePass from './Components/Auth/ChangePass/ChangePass';
 import Home from './Components/Layout/Home/Home';
 import LoginPage from './Components/Auth/LoginPage/LoginPage';
+import OtpPasswordReset from './Components/Auth/PasswordReset/OtpPasswordReset/OtpPasswordReset';
 import OtpSignUp from './Components/Auth/SignUpPage/OtpSignUp/OtpSignup.jsx';
 import PasswordResetPage from './Components/Auth/PasswordReset/PasswordReset';
 import SignUpPage from './Components/Auth/SignUpPage/SignUpPage';
@@ -24,6 +25,7 @@ class App extends Component {
           <Route path='/SignUpPage' exact component={SignUpPage}></Route>
           <Route path='/ChangePass' exact component={ChangePass}></Route>
           <Route path='/OtpSignUp' exact component={OtpSignUp}></Route>
+          <Route path='/OtpPasswordReset' exact component={OtpPasswordReset}></Route>
       </Switch>
       </div>
       

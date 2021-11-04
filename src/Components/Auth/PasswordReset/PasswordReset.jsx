@@ -2,6 +2,7 @@ import { Button, FloatingLabel, Form } from "react-bootstrap";
 import { Container, Image, Nav, Navbar } from "react-bootstrap";
 import React, { Component } from "react";
 
+import AuthService from "../../../api/services/auth.service";
 import CalendarMobile from "../../../assets/CalendarMobile.svg";
 import { Link } from "react-router-dom";
 import Logo from "../../../assets/logo.png";
@@ -28,9 +29,7 @@ export const PasswordResetNavbar = () => {
 class PasswordReset extends Component {
 	defaultState = {
 		email: "",
-		otp: "",
 		emailErr: "",
-		otpErr: "",
 	};
 	constructor(props) {
 		super(props);
@@ -41,60 +40,73 @@ class PasswordReset extends Component {
 
 	handleBlur(e) {
 		const regEmail = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
-		const regOtp=/\d*/  ;
 		let emailErr = "";
-		let otpErr = "";
 
 		if (!this.state.email || regEmail.test(this.state.email) === false)
         emailErr = "Email Field is Invalid ";
 		if (!this.state.email) emailErr = "Email field is required";
         
-        if (!this.state.otp || regOtp.test(this.state.otp) === false)
-            otpErr = "otp is invalid";
-        if (this.state.otp.length !== 6&& this.state.otp) 
-        otpErr = "otp is invalid";
-        if (!this.state.otp) otpErr = "otp is required";
 		this.setState({
 			...this.state,
 			[e.target.name]: e.target.value,
 			emailErr,
-			otpErr,
 		});
 	}
 
 	handleFocus(e) {
 		e.preventDefault();
 		const regEmail = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
-		const regOtp=/\d*/  ;
         let emailErr = "";
-		let otpErr = "";
 		if (!this.state.email || regEmail.test(this.state.email) === false)
 			emailErr = "Email Field is Invalid ";
 		if (!this.state.email) emailErr = "Email field is required";
-		if (!this.state.otp || regOtp.test(this.state.otp) === false)
-			otpErr = "otp is invalid";
-		if (!this.state.otp) otpErr = "otp is required";
-        if (this.state.otp.length !== 6 && this.state.otp) 
-        otpErr = "otp is invalid";
+		
 		this.setState({
 			...this.state,
 			[e.target.name]: e.target.value,
 			emailErr,
-			otpErr,
 		});
 	}
 
 	handleSubmit(e) {
 		e.preventDefault();
 		this.handleKeyPress(e);
+		const details={
+			email:this.state.email,
+		}
+		AuthService.ResetPass(details).then(
+			(response) => {
+				if (response.status === 200) {
+					this.setState({
+						message: response.data,
+						successful: true,
+					});
+				}
+			},
+			(error) => {
+				if (error.response.status === 401) {
+					this.setState({
+						message:error.response.data,
+						successful: false,
+					});
+					console.log(error.response);
+				} 
+			}
+							
+			
+		);
+		this.props.history.push({	pathname:"/OtpPasswordReset",
+								 	state:details
+								});
 	}
 	handleKeyPress(e) {
 		if (e.key === "Enter") e.preventDefault();
+		
 	}
 
 	render() {
 		return (
-			<div className={styles.body}>
+			<div className={styles.container}>
 				<PasswordResetNavbar />
 				<Image src={CalendarMobile} className={styles.calendarImage}></Image>
 				<Form className={styles.form}>
@@ -121,19 +133,7 @@ class PasswordReset extends Component {
 							We'll never share your email with anyone else.
 						</Form.Text>
 					</Form.Group>
-					<Form.Group className={styles.formGroup} controlId="formBasicOtp">
-						<FloatingLabel controlId="floatingInput" label="otp">
-							<Form.Control
-								type="password"
-								placeholder="otp"
-								name="otp"
-								className="form-control"
-								onBlur={(e) => this.handleBlur(e)}
-								onFocus={(e) => this.handleFocus(e)}
-							/>
-							<span className="text-danger">{this.state.otpErr}</span>
-						</FloatingLabel>
-					</Form.Group>
+					
 
 					<Button
 						variant="primary"
@@ -143,6 +143,13 @@ class PasswordReset extends Component {
 					>
 						Confirm
 					</Button>
+					{this.state.message && (
+							<div className="form-group">
+								<div className="alert alert-danger" role="alert">
+									{this.state.message}
+								</div>
+							</div>
+						)}
 				</Form>
 			</div>
 		);

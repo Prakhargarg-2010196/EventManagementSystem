@@ -2,6 +2,7 @@ import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { Container, Image, Nav, Navbar } from 'react-bootstrap';
 import React, { Component } from 'react';
 
+import AuthService from '../../../api/services/auth.service';
 import CalendarMobile from "../../../assets/CalendarMobile.svg"
 import { Link } from 'react-router-dom';
 import Logo from "../../../assets/logo.png";
@@ -15,7 +16,7 @@ export const ChangePasswordPageNavbar = () => {
                     <Link to="/"><Image src={Logo} width={40}></Image></Link>
                 </Navbar.Brand>
                 <Nav>
-                    <Link to="/signUpPage" className={styles.navLinks}>Sign Up</Link>
+                    <Link to="/LogInPage" className={styles.navLinks}>Login</Link>
                 </Nav>
 
             </Container>
@@ -28,6 +29,7 @@ class ChangePass extends Component {
         confirmPassword: "",
         newPasswordErr: "",
         confirmPasswordErr: "",
+        successful:false,
     }
     constructor(props) {
         super(props);
@@ -78,6 +80,48 @@ class ChangePass extends Component {
     handleSubmit(e) {
         e.preventDefault();
         this.handleKeyPress(e);
+        const details={
+            newpass:this.state.newPassword,
+            email:this.props.history.location.state.email,
+        }
+        console.log(details.newpass);
+        AuthService.NewPassword(details).then((response) => {
+            if (response.status === 200) {
+                this.setState({
+                    message: response.data,
+                    successful: true,
+                });
+            }
+
+            if (this.state.successful) {
+                this.props.history.push("/LoginPage");
+            }
+        },
+        (error) => {
+            if (error.response.status === 403) {
+                this.setState({
+                    message: error.response.data,
+                    successful: false,
+                });
+                console.log(error.response);
+            } else if (error.response.status === 422) {
+                this.setState({
+                    message: error.response.data + "Enter Again",
+                    successful: false,
+                });
+                
+            }
+            else if (error.response.status===403||error.response.status===401)
+            {   
+                this.setState({
+                    message: error.response.data ,
+                    successful: false,
+                });
+                setTimeout({
+                    
+                },5000);   
+            }
+        })
     }
     handleKeyPress(e) {
 
@@ -88,20 +132,21 @@ class ChangePass extends Component {
 
     render() {
         return (
-            <div className={styles.body}>
+            <div className={styles.container}>
                 <ChangePasswordPageNavbar />
                 <Image src={CalendarMobile} className={styles.calendarImage}></Image> 
-                <Form className='d-flex flex-column m-4 justify-content-center'>
+                {
+                   !this.state.successful&&(<Form className='d-flex flex-column m-4 justify-content-center'>
 
                     <h1 className='text-center'>Change Password</h1>
 
                     <Form.Group className={styles.formGroup} controlId="formBasicPassword">
 
-                        <FloatingLabel controlId="floatingPassword" label="NewPassword">
+                        <FloatingLabel controlId="floatingPassword" label="newPassword">
                             <Form.Control
                                 type="password"
-                                placeholder="NewPassword"
-                                name="NewPassword"
+                                placeholder=""
+                                name="newPassword"
                                 className="form-control"
                                 onBlur={(e) => this.handleBlur(e)}
                                 onFocus={(e) => this.handleFocus(e)}
@@ -112,11 +157,11 @@ class ChangePass extends Component {
                     </Form.Group>
                     <Form.Group className={styles.formGroup} controlId="formBasicPassword">
 
-                        <FloatingLabel controlId="floatingPassword" label="ConfirmPassword">
+                        <FloatingLabel controlId="floatingPassword" label="confirmPassword">
                             <Form.Control
                                 type="password"
                                 placeholder="Confirm Password"
-                                name="ConfirmPassword"
+                                name="confirmPassword"
                                 className="form-control"
                                 onBlur={(e) => this.handleBlur(e)}
                                 onFocus={(e) => this.handleFocus(e)}
@@ -134,8 +179,14 @@ class ChangePass extends Component {
                     >
                         Reset Password
                     </Button>
-
-                </Form>
+                    {this.state.message && (
+							<div className="form-group">
+								<div className="alert alert-danger" role="alert">
+									{this.state.message}
+								</div>
+							</div>
+						)}
+                </Form>)}
             </div>
 
         )
