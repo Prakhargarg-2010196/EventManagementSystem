@@ -1,13 +1,10 @@
-*{
-    margin: 0;
-    
-}
+
 img{
     margin:0;
     padding:0;
     display: inline-block;
 }
-body,html{
+.container{
     background: url(../../../assets/loginbg.png) no-repeat  ;
     width:100vw;
     height: 100vh;
@@ -59,8 +56,10 @@ body,html{
 @media only screen and (max-width:490px)
 {
 
-    body,html{
+    .container{
         background:#fff 0px; 
+        display: flex;
+        flex-direction: column;
     }
 
         .calendarImage{

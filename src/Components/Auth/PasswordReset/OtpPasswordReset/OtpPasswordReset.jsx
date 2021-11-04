@@ -6,10 +6,9 @@ import AuthService from "../../../../api/services/auth.service";
 import CalendarMobile from "../../../../assets/CalendarMobile.svg";
 import { Link } from "react-router-dom";
 import Logo from "../../../../assets/logo.png";
-// import axios from "axios";
-import styles from "./otpSignUp.module.css";
+import styles from "./OtpPasswordReset.module.css";
 
-export const OtpSignUpNavbar = () => {
+export const OtpPasswordResetNavbar = () => {
 	return (
 		<Navbar expand="lg" className={styles.Navbar} variant="dark">
 			<Container>
@@ -27,7 +26,7 @@ export const OtpSignUpNavbar = () => {
 		</Navbar>
 	);
 };
-class OtpSignUp extends Component {
+class OtpPasswordReset extends Component {
 	defaultState = {
 		otp: "",
 		otpErr: "",
@@ -78,53 +77,50 @@ class OtpSignUp extends Component {
 		e.preventDefault();
 		this.handleKeyPress(e);
 		const user = {
-			name:this.props.history.location.state.name,
-			password:this.props.history.location.state.password ,
-			email:this.props.history.location.state.email ,
+			email: this.props.history.location.state.email,
 		};
 		console.log(user);
-		await AuthService.SignUp(user).then((res)=>{
+		await AuthService.ResetPass(user).then((res) => {
 			console.log(res);
 		});
-
-	}
+	};
 
 	handleSubmit = async (e) => {
 		e.preventDefault();
 
 		this.handleKeyPress(e);
-
 		const otp = {
 			otp: this.state.otp,
-			name:this.props.history.location.state.name,
-			password:this.props.history.location.state.password ,
-			email:this.props.history.location.state.email ,
+			email: this.props.history.location.state.email,
+		};
+		const details = {
+			email: this.props.history.location.state.email,
 		};
 
-		AuthService.OtpSignUp(otp).then(
+		AuthService.VerifyResetPassOtp(otp).then(
 			(response) => {
-				if (response.status === 201) {
+				if (response.status === 200) {
 					this.setState({
-						// message: response.data,
+						message: response.data,
 						successful: true,
 					});
 				}
 
-				if (response.data.token) {
-					const { token } = response.data;
-					localStorage.setItem("user", JSON.stringify(token));
+				if (this.state.successful) {
+					this.props.history.push({
+						pathname: "/ChangePass",
+						state: details,
+					});
 				}
-				if (this.state.successful) this.props.history.push("/");
 			},
 			(error) => {
-				if (error.response.status === 402 || error.response.status === 401) {
+				if (error.response.status === 401) {
 					this.setState({
-						message:
-							error.response.data,
+						message: error.response.data,
 						successful: false,
 					});
 					console.log(error.response);
-				} else if (error.response.status === 403) {
+				} else if (error.response.status === 402) {
 					this.setState({
 						message: error.response.data + "Enter Again",
 						successful: false,
@@ -140,7 +136,7 @@ class OtpSignUp extends Component {
 	render() {
 		return (
 			<div className={styles.container}>
-				<OtpSignUpNavbar />
+				<OtpPasswordResetNavbar />
 				<Image src={CalendarMobile} className={styles.calendarImage}></Image>
 				{!this.state.successful && (
 					<Form className={styles.form}>
@@ -196,4 +192,4 @@ class OtpSignUp extends Component {
 	}
 }
 
-export default OtpSignUp;
+export default OtpPasswordReset;
