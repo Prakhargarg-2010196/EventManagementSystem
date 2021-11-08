@@ -1,0 +1,12 @@
+.img {
+    width: 40px;
+}
+
+.footer {
+    display: grid;
+    background: #765353;
+    padding-top: 30px;
+    width: 100%;
+
+}
+

@@ -1,0 +1,21 @@
+.DateAndTime{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.requiredField::after {
+    content: "*";
+    color: red;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    min-height:100vh;
+    padding: 150px;
+}
+.button{
+    width: 50%;
+    align-self: center;
+    margin-top: 50px;
+}

@@ -11,7 +11,7 @@ import styles from "./PasswordReset.module.css";
 const links = {
 	home: "/",
 	secondLink: "/LogInPage",
-	secondLinkName:"login"
+	secondLinkName: "login",
 };
 const style = {
 	Navbar: styles.Navbar,
@@ -25,6 +25,7 @@ class PasswordReset extends Component {
 	defaultState = {
 		email: "",
 		emailErr: "",
+		successful: false,
 	};
 	constructor(props) {
 		super(props);
@@ -75,8 +76,15 @@ class PasswordReset extends Component {
 					this.setState({
 						message: response.data,
 						successful: true,
+				
+					});
+					if (this.state.successful)
+					this.props.history.push({
+						pathname: "/OtpPasswordReset",
+						state: details,
 					});
 				}
+				
 			},
 			(error) => {
 				if (error.response.status === 401) {
@@ -84,11 +92,14 @@ class PasswordReset extends Component {
 						message: error.response.data,
 						successful: false,
 					});
-					console.log(error.response);
+				} else if (error.response.status === 422) {
+					this.setState({
+						message: error.response.data,
+						successful: false,
+					});
 				}
 			}
 		);
-		this.props.history.push({ pathname: "/OtpPasswordReset", state: details });
 	}
 	handleKeyPress(e) {
 		if (e.key === "Enter") e.preventDefault();
@@ -100,47 +111,49 @@ class PasswordReset extends Component {
 				<DefaultNavbar style={style} image={image} links={links} />
 
 				<Image src={CalendarMobile} className={styles.calendarImage}></Image>
-				<Form className={styles.form}>
-					<h2 className="text-center">Forgot Password</h2>
+				{!this.state.successful && (
+					<Form className={styles.form}>
+						<h2 className="text-center">Forgot Password</h2>
 
-					<Form.Group className={styles.formGroup} controlId="formBasicEmail">
-						<FloatingLabel
-							controlId="floatingInput"
-							label="Email"
-							className="mb-3"
+						<Form.Group className={styles.formGroup} controlId="formBasicEmail">
+							<FloatingLabel
+								controlId="floatingInput"
+								label="Email"
+								className="mb-3"
+							>
+								<Form.Control
+									name="email"
+									className="form-control"
+									placeholder="name@example.com"
+									type="text"
+									onFocus={(e) => this.handleBlur(e)}
+									onBlur={(e) => this.handleBlur(e)}
+								/>
+								<span className="text-danger">{this.state.emailErr}</span>
+							</FloatingLabel>
+
+							<Form.Text className="text-danger">
+								We'll never share your email with anyone else.
+							</Form.Text>
+						</Form.Group>
+
+						<Button
+							variant="primary"
+							className={styles.buttonSignUp}
+							onClick={(e) => this.handleSubmit(e)}
+							onKeyPress={(e) => this.handleKeyPress(e)}
 						>
-							<Form.Control
-								name="email"
-								className="form-control"
-								placeholder="name@example.com"
-								type="text"
-								onFocus={(e) => this.handleBlur(e)}
-								onBlur={(e) => this.handleBlur(e)}
-							/>
-							<span className="text-danger">{this.state.emailErr}</span>
-						</FloatingLabel>
-
-						<Form.Text className="text-danger">
-							We'll never share your email with anyone else.
-						</Form.Text>
-					</Form.Group>
-
-					<Button
-						variant="primary"
-						className={styles.buttonSignUp}
-						onClick={(e) => this.handleSubmit(e)}
-						onKeyPress={(e) => this.handleKeyPress(e)}
-					>
-						Confirm
-					</Button>
-					{this.state.message && (
-						<div className="form-group">
-							<div className="alert alert-danger" role="alert">
-								{this.state.message}
+							Confirm
+						</Button>
+						{this.state.message && (
+							<div className="form-group">
+								<div className="alert alert-danger" role="alert">
+									{this.state.message}
+								</div>
 							</div>
-						</div>
-					)}
-				</Form>
+						)}
+					</Form>
+				)}
 			</div>
 		);
 	}

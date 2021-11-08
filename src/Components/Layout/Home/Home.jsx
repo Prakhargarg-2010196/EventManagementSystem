@@ -1,44 +1,28 @@
-import React, { Component } from 'react';
+import CardCarousel from "./CardCarousel/CardCarousel";
+// import Checkout from "./Checkout/Checkout";
+import { Component } from "react";
+import {Container} from "react-bootstrap";
+import { Footer } from "./Footer/Footer.jsx";
+import { NavBar } from "./NavBar/NavBar";
+import React from "react";
+import styles from "./Home.module.css";
 
-// import CardCarousel from './CardCarousel/CardCarousel';
-import Footer from './Footer/Footer.jsx';
-import NavBar from './Navbar/Navbar.jsx';
-import styles from '../Home/Home.module.css';
-
-// import UserService from "../../../services/user.service"
-
-// import NavBar from "./Navbar/Navbar";
-
-class Home extends Component{
-    //  componentDidMount() {
-    //     UserService.getPublicContent().then(
-    //       response => {
-    //         this.setState({
-    //           content: response.data
-    //         });
-    //       },
-    //       error => {
-    //         this.setState({
-    //           content:
-    //             (error.response && error.response.data) ||
-    //             error.message ||
-    //             error.toString()
-    //         });
-    //       }
-    //     );
-    //   }
-    render(){
-
-
-        return(
-            <div className={styles.container}>
-               <NavBar/> 
-
-                {/* <CardCarousel/> */}
-                <Footer/>
-           </div>
-        )
-    }
-    
+class Home extends Component {
+	render() {
+		return (
+			<Container fluid className={styles.containerFluid}>
+				<NavBar/>
+				<Container className={styles.container}>
+					{/* <CardCarousel />
+					<CardCarousel />
+					<CardCarousel />
+					<CardCarousel />
+					<CardCarousel />
+					<CardCarousel />
+					<CardCarousel /> */}
+				</Container>
+				<Footer />
+			</Container>);
+	}
 }
 export default Home;

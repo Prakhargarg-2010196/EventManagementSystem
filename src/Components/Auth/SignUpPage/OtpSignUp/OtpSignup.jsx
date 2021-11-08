@@ -76,9 +76,7 @@ class OtpSignUp extends Component {
 			password:this.props.history.location.state.password ,
 			email:this.props.history.location.state.email ,
 		};
-		console.log(user);
 		await AuthService.SignUp(user).then((res)=>{
-			console.log(res);
 		});
 
 	}
@@ -117,7 +115,6 @@ class OtpSignUp extends Component {
 							error.response.data,
 						successful: false,
 					});
-					console.log(error.response);
 				} else if (error.response.status === 403) {
 					this.setState({
 						message: error.response.data + "Enter Again",
