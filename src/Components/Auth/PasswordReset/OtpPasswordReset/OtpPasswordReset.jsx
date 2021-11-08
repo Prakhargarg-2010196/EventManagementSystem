@@ -75,9 +75,7 @@ class OtpPasswordReset extends Component {
 		const user = {
 			email: this.props.history.location.state.email,
 		};
-		console.log(user);
 		await AuthService.ResetPass(user).then((res) => {
-			console.log(res);
 		});
 	};
 
@@ -115,10 +113,9 @@ class OtpPasswordReset extends Component {
 						message: error.response.data,
 						successful: false,
 					});
-					console.log(error.response);
 				} else if (error.response.status === 402) {
 					this.setState({
-						message: error.response.data + "Enter Again",
+						message: error.response.data + "\nEnter Again",
 						successful: false,
 					});
 				}
@@ -167,9 +164,7 @@ class OtpPasswordReset extends Component {
 						>
 							resend otp
 						</Button>
-					</Form>
-				)}
-				{this.state.message && (
+						{this.state.message && (
 					<div className="form-group">
 						<div
 							className={
@@ -183,6 +178,9 @@ class OtpPasswordReset extends Component {
 						</div>
 					</div>
 				)}
+					</Form>
+				)}
+				
 			</div>
 		);
 	}

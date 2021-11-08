@@ -42,7 +42,6 @@ class SignUpPage extends Component {
 
 	validate() {
 		const regEmail = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
-		const regPassword = /^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$/;
 		let usernameErr = "";
 		let emailErr = "";
 		let passErr = "";
@@ -51,7 +50,7 @@ class SignUpPage extends Component {
 			usernameErr = "username field is invalid";
 		if (!this.state.email || regEmail.test(this.state.email) === false)
 			emailErr = "Email Field is Invalid ";
-		if (!this.state.password || regPassword.test(this.state.password) === false)
+		if (this.state.password.length < 8)
 			passErr = "Pass Field is Invalid ";
 		if (!this.state.email) emailErr = "Email field is required";
 		if (!this.state.password) passErr = "Pass field is required";
@@ -192,14 +191,13 @@ class SignUpPage extends Component {
 						>
 							Sign Up
 						</Button>
+						
 						<Form.Text>Already have an account ?</Form.Text>
 						<Link to="LogInPage">
 							<Form.Text>Login</Form.Text>
 						</Link>
-					</Form>
-				)}
-				{this.state.message && (
-					<div className="form-group">
+						{this.state.message && (
+					<div className="form-group mt-2">
 						<div
 							className={
 								this.state.successful
@@ -212,6 +210,10 @@ class SignUpPage extends Component {
 						</div>
 					</div>
 				)}
+					</Form>
+					
+				)}
+				
 			</div>
 		);
 	}

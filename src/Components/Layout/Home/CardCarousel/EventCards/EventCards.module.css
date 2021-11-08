@@ -1,0 +1,8 @@
+.Card{
+    margin:0 -50px;
+    width:200px;
+    font-size: small;
+}
+.Card:hover{
+    box-shadow: 2px 2px 2px 2px gainsboro;
+}

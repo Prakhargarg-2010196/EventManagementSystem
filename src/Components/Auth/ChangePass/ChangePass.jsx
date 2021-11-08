@@ -56,7 +56,7 @@ class ChangePass extends Component {
 
         this.setState({ ...this.state, [e.target.name]: e.target.value, newPasswordErr, confirmPasswordErr });
 
-        console.log(this.state);
+        
     }
     handleFocus(e) {
         e.preventDefault();
@@ -84,7 +84,6 @@ class ChangePass extends Component {
             newpass: this.state.newPassword,
             email: this.props.history.location.state.email,
         }
-        console.log(details.newpass);
         AuthService.NewPassword(details).then((response) => {
             if (response.status === 200) {
                 this.setState({
@@ -103,7 +102,7 @@ class ChangePass extends Component {
                         message: error.response.data,
                         successful: false,
                     });
-                    console.log(error.response);
+                    
                 } else if (error.response.status === 422) {
                     this.setState({
                         message: error.response.data + "Enter Again",

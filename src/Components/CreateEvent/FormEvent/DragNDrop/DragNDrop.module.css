@@ -1,0 +1,13 @@
+.PlusIcon{
+    width: 100px;
+}
+.dropzone{
+    width:100px;
+    height: 100px;
+    margin: 0;
+}
+.container{
+    width: inherit;
+    height: inherit;
+    margin:0;
+}
