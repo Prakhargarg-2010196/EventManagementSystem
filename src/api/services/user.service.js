@@ -4,7 +4,7 @@ import axios from "axios";
 class UserService{
     
     getUserBoard(){
-        return axios.get(BaseUrl() ,'user' ,{headers:authHeader()})
+        return axios.get(BaseUrl(),{headers:authHeader()})
     }
     getAdminBoard() {
         return axios.get(BaseUrl() + 'adminLogin', { headers: authHeader() });

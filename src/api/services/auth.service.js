@@ -10,7 +10,11 @@ class AuthService{
     OtpSignUp(otp){
         return axios.put((BaseUrl()+"auth/signup/verify"),otp)
     }
-   
+    
+    getCurrentUser(){
+        return JSON.parse(localStorage.getItem('user2'));
+    }
+    
     logOut(){
         localStorage.removeItem("user2");    
     }

@@ -1,9 +1,11 @@
 import { Route, Switch } from "react-router-dom";
 
 import ChangePass from "../Components/Auth/ChangePass/ChangePass";
-import CreateEvent  from "../Components/CreateEvent/CreateEvent";
+import CreateEvent  from "../Components/Boards/profile/Profile/CRUD/CreateEvent/CreateEvent";
+import DashBoard from "../Components/Boards/profile/Profile/DashBoard/DashBoard";
 import Home from "../Components/Layout/Home/Home";
 import LoginPage from "../Components/Auth/LoginPage/LoginPage";
+import ManageEvent from "../Components/Boards/profile/Profile/CRUD/ManageEvent/Manage Events";
 import OtpPasswordReset from "../Components/Auth/PasswordReset/OtpPasswordReset/OtpPasswordReset";
 import OtpSignUp from "../Components/Auth/SignUpPage/OtpSignUp/OtpSignup.jsx";
 import PasswordResetPage from "../Components/Auth/PasswordReset/PasswordReset";
@@ -51,6 +53,16 @@ export const Routes = () => {
                 path="/CreateEvent"
                 exact
                 component={CreateEvent}>
+            </Route>
+            <Route
+                path="/DashBoard"
+                exact
+                component={DashBoard}>
+            </Route>
+            <Route
+                path="/ManageEvent"
+                exact
+                component={ManageEvent}>
             </Route>
         </Switch>
     );

@@ -9,16 +9,16 @@ import { MultiSelect } from "primereact/multiselect";
 export const CategorySelect = (props) => {
 	const [Category, setCategory] = useState([]);
 	const Categories = [
-		{ name: "music" },
-		{ name: "sports" },
-		{ name: "award ceremony" },
-		{ name: "trade and shopping" },
-		{ name: "education" },
-		{ name: "workshops" },
-		{ name: "webinars" },
-		{ name: "festivals and parties" },
-		{ name: "fashion" },
-		{ name: "others" },
+		  "music" ,
+		  "sports" ,
+		  "award ceremony" ,
+		  "trade and shopping" ,
+		  "education" ,
+		  "workshops" ,
+		  "webinars" ,
+		  "festivals and parties" ,
+		  "fashion" ,
+		  "others" 
 	];
 	useEffect(() => {
 		props.onSelect(Category);
@@ -34,7 +34,6 @@ export const CategorySelect = (props) => {
 						setCategory(e.target.value);
 					}}
                     
-					optionLabel="name"
 					placeholder="Category"
 					display="chip"
 					selectionLimit={3}

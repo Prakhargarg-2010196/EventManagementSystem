@@ -1,4 +1,4 @@
-import { Image, Nav, Navbar } from "react-bootstrap";
+import { Container, Image, Nav, Navbar } from "react-bootstrap";
 
 import AccountIcon from "../../../../assets/Account.png";
 import { Link } from "react-router-dom";
@@ -16,7 +16,7 @@ export const NavBar = () => {
 		>
 			<Navbar.Brand>
 				<Link to="/" className={styles.navLinks}>
-					<Image src={Logo} width={40} className={styles.logo}></Image>
+					<Image src={Logo} className={styles.logo}></Image>
 				</Link>
 			</Navbar.Brand>
 
@@ -24,19 +24,21 @@ export const NavBar = () => {
 				className={styles.responsiveNavbar}
 				aria-controls="responsive-navbar-nav"
 			/>
-			<Navbar.Collapse id="responsive-navbar-nav">
-				<Nav >
-					<Link to="/" className={styles.navLinks}>
-						Home
-					</Link>
-					<Link to="/SignUpPage" className={styles.navLinks}>
-						<Image src={AccountIcon} />
-					</Link>
-					<Link to="/CreateEvent" className={styles.navLinks}>
-						Create Event
-					</Link>
-				</Nav>
-			</Navbar.Collapse>
+			
+				<Navbar.Collapse id="responsive-navbar-nav">
+				<Container>
+					<Nav className={styles.nav}>
+						<Link to="/" className={styles.navLinks}>
+							Home
+						</Link>
+						<Link to="/SignUpPage" className={styles.navLinks}>
+							<Image src={AccountIcon} />
+						</Link>
+						
+					</Nav>
+					</Container>
+				</Navbar.Collapse>
+			
 		</Navbar>
 	);
 };

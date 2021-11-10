@@ -99,10 +99,11 @@ class LoginPage extends Component {
 				if (response.data.token) {
 					const { token } = response.data;
 					localStorage.setItem("user2", JSON.stringify(token));
+					localStorage.setItem("isAuthenticatedLogin",true);
 				}
 
 				if (this.state.successful) {
-					this.props.history.push("/");
+					this.props.history.push("/DashBoard");
 					return response.data;
 				}
                 
