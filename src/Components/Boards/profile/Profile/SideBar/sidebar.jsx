@@ -17,21 +17,21 @@ export const SideBar = () => {
 			<nav className={styles.nav}>
 				<List sx={style} component="nav" aria-label="mailbox folders">
 					<ListItem button>
-						<Link className={styles.link} to="DashBoard">
+						<Link className={styles.link} to="/DashBoard">
 							DashBoard 
 						</Link>
 					</ListItem>
 					<Divider />
 					<Divider />
 					<ListItem button divider>
-						<Link className={styles.link} to="ManageEvent">
+						<Link className={styles.link} to="/ManageEvent">
 							Manage Event
 						</Link>
 					</ListItem>
 					<Divider />
 					<Divider />
 					<ListItem button>
-						<Link className={styles.link} to="CreateEvent">
+						<Link className={styles.link} to="/CreateEvent">
 							Create event 
 						</Link>
 					</ListItem>

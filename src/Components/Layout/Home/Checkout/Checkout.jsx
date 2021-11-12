@@ -9,10 +9,9 @@ class Checkout extends Component {
 	render() {
 		return (
 			<div>
-					
-					<Form.Control></Form.Control>
-					
-						{/* <Image src="" width={40}/> */}
+				<Form.Control></Form.Control>
+
+				{/* <Image src="" width={40}/> */}
 				<Col style={{ margin: "0" }}>
 					<div className="cartValue">
 						<div className="cartValueHeader">PRICE DETAILS</div>

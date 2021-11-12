@@ -87,7 +87,15 @@ class PasswordReset extends Component {
 				
 			},
 			(error) => {
-				if (error.response.status === 401) {
+				let resMessage="";
+				if(!error.response){
+					resMessage=JSON.stringify(error.message);
+					this.setState({
+						message:resMessage,
+						successful:false,
+					})
+				}
+				else if (error.response.status === 401) {
 					this.setState({
 						message: error.response.data,
 						successful: false,
@@ -132,9 +140,7 @@ class PasswordReset extends Component {
 								<span className="text-danger">{this.state.emailErr}</span>
 							</FloatingLabel>
 
-							<Form.Text className="text-danger">
-								We'll never share your email with anyone else.
-							</Form.Text>
+							
 						</Form.Group>
 
 						<Button
@@ -146,7 +152,7 @@ class PasswordReset extends Component {
 							Confirm
 						</Button>
 						{this.state.message && (
-							<div className="form-group">
+							<div className="form-group mt-4">
 								<div className="alert alert-danger" role="alert">
 									{this.state.message}
 								</div>

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 
 import Button from "@mui/material/Button";
 import CrudService from "../../../../../../api/services/crud-service";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { NavBar } from "../../../../../Layout/Home/NavBar/NavBar";
 import Paper from "@mui/material/Paper";
 import { SideBar } from "../../SideBar/sidebar";
@@ -12,6 +13,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import crudService from "../../../../../../api/services/crud-service";
 import styles from "./ManageEvents.module.css";
 
 export default class ManageEvent extends Component {
@@ -21,7 +23,6 @@ export default class ManageEvent extends Component {
 
 	constructor(props) {
 		super(props);
-
 		this.state = this.defaultState;
 	}
 	async componentDidMount() {
@@ -29,6 +30,18 @@ export default class ManageEvent extends Component {
 			this.setState({ events: response.data });
 			console.log(response.data);
 		});
+	}
+	onUpdate(e, eventItemId) {
+		console.log("hi");
+		e.preventDefault();
+		this.props.history.push({
+			pathname: `/UpdateEvent/${eventItemId}`,
+		});
+	}
+	onDelete(e, eventItemId) {
+		console.log("hi");
+		e.preventDefault();
+		crudService.Delete(eventItemId);
 	}
 	render() {
 		return (
@@ -59,9 +72,9 @@ export default class ManageEvent extends Component {
 													</TableRow>
 												</TableHead>
 												<TableBody>
-													{this.state.events.map((event) => (
+													{this.state.events.map((eventItem) => (
 														<TableRow
-															key={event._id}
+															key={eventItem._id}
 															sx={{
 																"&:last-child td, &:last-child th": {
 																	border: 0,
@@ -69,18 +82,34 @@ export default class ManageEvent extends Component {
 															}}
 														>
 															<TableCell component="th" scope="row">
-																{event.title}
+																<Link to="">{eventItem.title}</Link>
 															</TableCell>
 															<TableCell align="center">
-																{event.category.join(",")}
+																{eventItem.category.join(",")}
 															</TableCell>
 															<TableCell align="center"></TableCell>
 															<TableCell align="center"></TableCell>
 															<TableCell align="center">
-																<Button variant="contained">Edit</Button>
+																<Button
+																	variant="contained"
+																	onClick={(e) => {
+																		this.onUpdate(e, eventItem._id);
+																		// console.log({eventItem}._id);
+																	}}
+																>
+																	Edit
+																</Button>
 															</TableCell>
+
 															<TableCell align="center">
-																<Button variant="contained">Delete</Button>
+																<Button
+																	variant="contained"
+																	onClick={(e) => {
+																		this.onDelete(e, eventItem._id);
+																	}}
+																>
+																	Delete
+																</Button>
 															</TableCell>
 														</TableRow>
 													))}

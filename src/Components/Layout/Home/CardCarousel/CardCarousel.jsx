@@ -2,7 +2,6 @@ import "swiper/swiper-bundle.css";
 import "swiper/swiper.min.css";
 import "swiper/swiper-bundle";
 
-// import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, {
 	A11y,
@@ -27,9 +26,7 @@ export const CardCarousel = () => {
 				}}
 				spaceBetween={40}
 				slidesPerView={3}
-				pagination={{
-					type: "progressbar",
-				}}
+				pagination					
 
 				
 				navigation={true}

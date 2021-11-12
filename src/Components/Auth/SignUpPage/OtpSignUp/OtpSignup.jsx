@@ -59,7 +59,7 @@ class OtpSignUp extends Component {
 		if (!this.state.otp || regOtp.test(this.state.otp) === false)
 			otpErr = "otp is invalid";
 		if (!this.state.otp) otpErr = "otp is required";
-		if (this.state.otp.length !== 6 && this.state.otp)
+		if (this.state.otp.length !==6 && this.state.otp)
 			otpErr = "otp is invalid";
 		this.setState({
 			...this.state,
@@ -109,7 +109,16 @@ class OtpSignUp extends Component {
 				if (this.state.successful) this.props.history.push("/");
 			},
 			(error) => {
-				if (error.response.status === 402 || error.response.status === 401) {
+				
+				let resMessage = "";
+				if (!error.response) {
+					resMessage = JSON.stringify(error.message);
+					this.setState({
+						message: resMessage,
+						successful: false,
+					});
+				}
+				else if (error.response.status === 402 || error.response.status === 401) {
 					this.setState({
 						message:
 							error.response.data,

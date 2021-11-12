@@ -10,6 +10,10 @@ import OtpPasswordReset from "../Components/Auth/PasswordReset/OtpPasswordReset/
 import OtpSignUp from "../Components/Auth/SignUpPage/OtpSignUp/OtpSignup.jsx";
 import PasswordResetPage from "../Components/Auth/PasswordReset/PasswordReset";
 import SignUpPage from "../Components/Auth/SignUpPage/SignUpPage";
+import UpdateEvent from "../Components/Boards/profile/Profile/CRUD/ManageEvent/UpdateEvent/UpdateEvent";
+import UpdateFormEvent from "../Components/Boards/profile/Profile/CRUD/ManageEvent/UpdateEvent/UpdateFormEvent/UpdateFormEvent";
+import UpdateImages from "../Components/Boards/profile/Profile/CRUD/ManageEvent/UpdateEvent/UpdateImages/UpdateImages"
+import UpdateImagesEvent from "../Components/Boards/profile/Profile/CRUD/ManageEvent/UpdateEvent/UpdateImages/UpdateImagesEvent/UpdateImagesEvent";
 
 export const Routes = () => {
     return (
@@ -63,6 +67,26 @@ export const Routes = () => {
                 path="/ManageEvent"
                 exact
                 component={ManageEvent}>
+            </Route>
+            <Route
+                path="/UpdateEvent/:id"
+                exact
+                component={UpdateEvent}>
+            </Route>
+            <Route
+                path="/UpdateFormEvent"
+                exact
+                component={UpdateFormEvent}>
+            </Route>
+            <Route
+                path="/UpdateImagesEvent"
+                exact
+                component={UpdateImagesEvent}>
+            </Route>
+            <Route
+                path="/UpdateImages"
+                exact
+                component={UpdateImages}>
             </Route>
         </Switch>
     );

@@ -1,9 +1,11 @@
 import { Container, Image, Nav, Navbar } from "react-bootstrap";
 
-import AccountIcon from "../../../../assets/Account.png";
+// import AccountIcon from "../../../../assets/Account.png";
+import Avatar from '@mui/material/Avatar';
 import { Link } from "react-router-dom";
 import Logo from "../../../../assets/logo.png";
 import React from "react";
+import { deepOrange } from '@mui/material/colors';
 import styles from "./NavBar.module.css";
 
 export const NavBar = () => {
@@ -26,17 +28,16 @@ export const NavBar = () => {
 			/>
 			
 				<Navbar.Collapse id="responsive-navbar-nav">
-				<Container>
+				
 					<Nav className={styles.nav}>
 						<Link to="/" className={styles.navLinks}>
 							Home
 						</Link>
 						<Link to="/SignUpPage" className={styles.navLinks}>
-							<Image src={AccountIcon} />
+							<Avatar sx={{ bgcolor: "aliceblue" ,width:28,height:29,color:"black" }} variant="square">N</Avatar>
 						</Link>
 						
 					</Nav>
-					</Container>
 				</Navbar.Collapse>
 			
 		</Navbar>

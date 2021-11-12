@@ -9,19 +9,18 @@ import Logo from "../../../../assets/logo.png";
 import styles from "./OtpPasswordReset.module.css";
 
 const links = {
-    home: '/',
-    secondLink: "/SignUpPage",
-	secondLinkName:"signup"
-}
-const style={
-    Navbar:styles.Navbar,
-    navLinks:styles.navLinks
-
-}    
-const image={
-    src:Logo,
-    width:40
-}
+	home: "/",
+	secondLink: "/SignUpPage",
+	secondLinkName: "signup",
+};
+const style = {
+	Navbar: styles.Navbar,
+	navLinks: styles.navLinks,
+};
+const image = {
+	src: Logo,
+	width: 40,
+};
 class OtpPasswordReset extends Component {
 	defaultState = {
 		otp: "",
@@ -75,8 +74,7 @@ class OtpPasswordReset extends Component {
 		const user = {
 			email: this.props.history.location.state.email,
 		};
-		await AuthService.ResetPass(user).then((res) => {
-		});
+		await AuthService.ResetPass(user).then((res) => {});
 	};
 
 	handleSubmit = async (e) => {
@@ -108,7 +106,15 @@ class OtpPasswordReset extends Component {
 				}
 			},
 			(error) => {
-				if (error.response.status === 401) {
+				let resMessage = "";
+				if (!error.response) {
+					resMessage = JSON.stringify(error.message);
+					this.setState({
+						message: resMessage,
+						successful: false,
+					});
+				}
+				else if (error.response.status === 401) {
 					this.setState({
 						message: error.response.data,
 						successful: false,
@@ -129,7 +135,7 @@ class OtpPasswordReset extends Component {
 	render() {
 		return (
 			<div className={styles.container}>
-                < DefaultNavbar style={style}  image={image} links = {links}/>
+				<DefaultNavbar style={style} image={image} links={links} />
 				<Image src={CalendarMobile} className={styles.calendarImage}></Image>
 				{!this.state.successful && (
 					<Form className={styles.form}>
@@ -165,22 +171,21 @@ class OtpPasswordReset extends Component {
 							resend otp
 						</Button>
 						{this.state.message && (
-					<div className="form-group">
-						<div
-							className={
-								this.state.successful
-									? "alert alert-success"
-									: "alert alert-danger"
-							}
-							role="alert"
-						>
-							{this.state.message}
-						</div>
-					</div>
-				)}
+							<div className="form-group mt-4">
+								<div
+									className={
+										this.state.successful
+											? "alert alert-success"
+											: "alert alert-danger"
+									}
+									role="alert"
+								>
+									{this.state.message}
+								</div>
+							</div>
+						)}
 					</Form>
 				)}
-				
 			</div>
 		);
 	}
