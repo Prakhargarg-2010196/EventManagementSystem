@@ -15,7 +15,7 @@ import styles from "./Footer.module.css";
 
 function Copyright() {
 	return (
-		<Typography variant="body2" color="text.secondary">
+		<Typography variant="body2" color="text.secondary" className="text-center">
 			{"Copyright © "}
 			<Link color="inherit" to="/" className={styles.links}>
 				Eventooz
@@ -48,8 +48,8 @@ export default function Footer() {
 					px: 2,
 					mt: "auto",
 					backgroundColor: " #765353",
-					display:"flex",
-					flexWrap:"wrap"
+					display: "flex",
+					flexWrap: "wrap",
 				}}
 			>
 				<Box
@@ -57,56 +57,149 @@ export default function Footer() {
 					sx={{
 						width: 300,
 						height: 300,
-						borderRight:"solid 1px grey"
 					}}
 				>
-					<div>
+					<div className="text-center">
 						<p style={{ fontSize: "20px" }}>Download our app</p>
 
-							<ShopIcon sx={{ fontSize: 40 }} />
-						
-						<AppleIcon sx={{ fontSize: 40 }} />
+						<ShopIcon sx={{ fontSize: 40, color: "white" }} />
+
+						<AppleIcon sx={{ fontSize: 40, color: "white" }} />
 					</div>
-					<div>
+					<div className="text-center">
 						<p style={{ fontSize: "20px" }}>Follow us</p>
-					
-						<Link href="https://www.instagram.com/" className={styles.links}>	
-						<InstagramIcon sx={{ fontSize: 40 }} />
+
+						<Link href="https://www.instagram.com/" className={styles.links}>
+							<InstagramIcon sx={{ fontSize: 40, color: "white" }} />
 						</Link>
-						<Link href="https://www.instagram.com/" className={styles.links}>	
-						<FacebookIcon sx={{ fontSize: 40 }} />
+						<Link href="https://www.instagram.com/" className={styles.links}>
+							<FacebookIcon sx={{ fontSize: 40, color: "white" }} />
 						</Link>
 					</div>
-				<Copyright />
+
+					<Copyright />
 				</Box>
 				<Box
 					style={{ display: "flex", flexDirection: "column" }}
 					sx={{
-						width: "72vw",
+						width: 300,
 						height: 300,
-					
 					}}
 				>
-					<div>
-						<h1 style={{ fontSize: "20px" }}>Learn </h1>
-						<p>
-							
-						</p>
+					<div className="d-flex flex-column m-auto mt-0">
+						<p style={{ fontSize: "20px" }}>Learn More</p>
+						<a href="google.com" alt="">
+							How it works
+						</a>
+						<a href="google.com" alt="">
+							Policies
+						</a>
+						<a href="google.com" alt="">
+							Privacy
+						</a>
+
+						<a href="google.com" alt="">
+							Support / FAQs
+						</a>
+					</div>
+				</Box>
+				<Box
+					style={{ display: "flex", flexDirection: "column" }}
+					sx={{
+						width: 300,
+						height: 300,
+					}}
+				>
+					<div className="d-flex flex-column m-auto mt-0">
+						<p style={{ fontSize: "20px" }}>About</p>
+						<a href="google.com" alt="">
+							About us
+						</a>
+						<a href="google.com" alt="">
+							Contact us
+						</a>
+						<a href="google.com" alt="">
+							Blog
+						</a>
+						<a href="google.com" alt="">
+							Event Magazine
+						</a>
+						<a href="google.com" alt="">
+							Product Diary
+						</a>
+						<a href="google.com" alt="">
+							Sitemap
+						</a>
+					</div>
+				</Box>
+				<Box
+					style={{ display: "flex", flexDirection: "column" }}
+					sx={{
+						width: 300,
+						height: 300,
+					}}
+				>
+					<div className="d-flex flex-column m-auto mt-0 ">
+						<p style={{ fontSize: "20px" }}>Organize events</p>
+						<a href="google.com" alt="">
+							Music
+						</a>
+						<a href="google.com" alt="">
+							sports
+						</a>
+						<a href="google.com" alt="">
+							Award ceremony
+						</a>
+						<a href="google.com" alt="">
+							trade &shopping
+						</a>
+						<a href="google.com" alt="">
+							education
+						</a>
+						<a href="google.com" alt="">
+							workshop
+						</a>
+						<a href="google.com" alt="">
+							webinar
+						</a>
+						<a href="google.com" alt="">
+							festival & parties
+						</a>
+						<a href="google.com" alt="">
+							art &craft
+						</a>
+						<a href="google.com" alt="">
+							Product launch
+						</a>
 						
 					</div>
-					<div>
-						<p style={{ fontSize: "20px" }}>Follow us</p>
-					
-						<Link href="https://www.instagram.com/" className={styles.links}>	
-						<InstagramIcon sx={{ fontSize: 40 }} />
-						</Link>
-						<Link href="https://www.instagram.com/" className={styles.links}>	
-						<FacebookIcon sx={{ fontSize: 40 }} />
-						</Link>
-					</div>
-				<Copyright />
 				</Box>
-				
+				<Box
+					style={{ display: "flex", flexDirection: "column"}}
+					sx={{
+						width: 200,
+						height: 300,
+					}}
+				>
+					<div className="d-flex flex-column">
+						<p style={{ fontSize: "20px" }}>Popular Searches</p>
+						<a href="google.com" alt="">
+							Countries supported by Eventooze
+						</a>
+						<a href="google.com" alt="">
+							Countries supported by Eventooze
+						</a>
+						<a href="google.com" alt="">
+							Countries supported by Eventooze
+						</a>
+						<a href="google.com" alt="">
+							Countries supported by Eventooze
+						</a>
+						<a href="google.com" alt="">
+							Countries supported by Eventooze
+						</a>
+					</div>
+				</Box>
 			</Box>
 		</Box>
 	);

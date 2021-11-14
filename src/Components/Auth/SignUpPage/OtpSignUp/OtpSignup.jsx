@@ -11,7 +11,7 @@ import styles from "./otpSignUp.module.css";
 const links = {
 	home: "/",
 	secondLink: "/LogInPage",
-	secondLinkName:'login'
+	secondLinkName: "login",
 };
 const style = {
 	Navbar: styles.Navbar,
@@ -59,7 +59,7 @@ class OtpSignUp extends Component {
 		if (!this.state.otp || regOtp.test(this.state.otp) === false)
 			otpErr = "otp is invalid";
 		if (!this.state.otp) otpErr = "otp is required";
-		if (this.state.otp.length !==6 && this.state.otp)
+		if (this.state.otp.length !== 6 && this.state.otp)
 			otpErr = "otp is invalid";
 		this.setState({
 			...this.state,
@@ -72,14 +72,12 @@ class OtpSignUp extends Component {
 		e.preventDefault();
 		this.handleKeyPress(e);
 		const user = {
-			name:this.props.history.location.state.name,
-			password:this.props.history.location.state.password ,
-			email:this.props.history.location.state.email ,
+			name: this.props.history.location.state.name,
+			password: this.props.history.location.state.password,
+			email: this.props.history.location.state.email,
 		};
-		await AuthService.SignUp(user).then((res)=>{
-		});
-
-	}
+		await AuthService.SignUp(user).then((res) => {});
+	};
 
 	handleSubmit = async (e) => {
 		e.preventDefault();
@@ -88,9 +86,9 @@ class OtpSignUp extends Component {
 
 		const otp = {
 			otp: this.state.otp,
-			name:this.props.history.location.state.name,
-			password:this.props.history.location.state.password ,
-			email:this.props.history.location.state.email ,
+			name: this.props.history.location.state.name,
+			password: this.props.history.location.state.password,
+			email: this.props.history.location.state.email,
 		};
 
 		AuthService.OtpSignUp(otp).then(
@@ -106,22 +104,22 @@ class OtpSignUp extends Component {
 					const { token } = response.data;
 					localStorage.setItem("user", JSON.stringify(token));
 				}
-				if (this.state.successful) this.props.history.push("/");
+				if (this.state.successful) this.props.history.push("/DashBoard");
 			},
 			(error) => {
-				
 				let resMessage = "";
 				if (!error.response) {
-					resMessage = JSON.stringify(error.message);
+					resMessage = JSON.stringify(error.message).replace(/^"|$/g, '');
 					this.setState({
 						message: resMessage,
 						successful: false,
 					});
-				}
-				else if (error.response.status === 402 || error.response.status === 401) {
+				} else if (
+					error.response.status === 402 ||
+					error.response.status === 401
+				) {
 					this.setState({
-						message:
-							error.response.data,
+						message: error.response.data,
 						successful: false,
 					});
 				} else if (error.response.status === 403) {
@@ -141,7 +139,7 @@ class OtpSignUp extends Component {
 		return (
 			<div className={styles.container}>
 				<DefaultNavbar style={style} image={image} links={links} />
-				
+
 				<Image src={CalendarMobile} className={styles.calendarImage}></Image>
 				{!this.state.successful && (
 					<Form className={styles.form}>
@@ -176,21 +174,21 @@ class OtpSignUp extends Component {
 						>
 							resend otp
 						</Button>
+						{this.state.message && (
+							<div className="form-group mt-4">
+								<div
+									className={
+										this.state.successful
+											? "alert alert-success"
+											: "alert alert-danger"
+									}
+									role="alert"
+								>
+									{this.state.message}
+								</div>
+							</div>
+						)}
 					</Form>
-				)}
-				{this.state.message && (
-					<div className="form-group">
-						<div
-							className={
-								this.state.successful
-									? "alert alert-success"
-									: "alert alert-danger"
-							}
-							role="alert"
-						>
-							{this.state.message}
-						</div>
-					</div>
 				)}
 			</div>
 		);

@@ -2,21 +2,21 @@ import { Col, Container, Row } from "react-bootstrap";
 import React, { Component } from "react";
 
 import Button from "@mui/material/Button";
-import CrudService from "../../../../../../api/services/crud-service";
+import CrudService from "../../../../../api/services/crud-service";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import { NavBar } from "../../../../../Layout/Home/NavBar/NavBar";
+import { NavBar } from "../../../../Layout/Home/NavBar/NavBar";
 import Paper from "@mui/material/Paper";
-import { SideBar } from "../../SideBar/sidebar";
+import { SideBar } from "../SideBar/sidebar";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import crudService from "../../../../../../api/services/crud-service";
-import styles from "./ManageEvents.module.css";
+import crudService from "../../../../../api/services/crud-service";
+import styles from "./BookMarkedEvents.module.css";
 
-export default class ManageEvent extends Component {
+export default class BookMarkedEvents extends Component {
 	defaultState = {
 		events: [],
 	};
@@ -26,24 +26,10 @@ export default class ManageEvent extends Component {
 		this.state = this.defaultState;
 	}
 	async componentDidMount() {
-		await CrudService.ReadEvents().then(
-			(response) => {
-				this.setState({ events: response.data });
-			},
-			(error) => {
-				let resMessage = "";
-				if (!error.response) {
-					console.log(JSON.stringify(error.message));
-				}
-
-				resMessage = error.response.data;
-
-				this.setState({
-					successful: false,
-					message: resMessage,
-				});
-			}
-		);
+		await CrudService.ReadEvents().then((response) => {
+			this.setState({ events: response.data });
+			console.log(response.data);
+		});
 	}
 	onUpdate(e, eventItemId) {
 		console.log("hi");

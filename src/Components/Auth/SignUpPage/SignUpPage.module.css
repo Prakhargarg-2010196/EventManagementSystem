@@ -11,7 +11,7 @@ img {
     width: 100vw;
     height: 100vh;
 
-    background-position: center center ;
+    background-position: center 100px center ;
     background-size: cover;
     display: flex;
     justify-content: center;
@@ -67,7 +67,7 @@ img {
     color: aliceblue;
 }
 
-@media only screen and (max-width:534px) {
+@media only screen and (max-width:1000px) {
 
     .container {
         background: #fff 0px;

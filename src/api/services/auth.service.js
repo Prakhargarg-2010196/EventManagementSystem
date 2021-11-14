@@ -11,12 +11,13 @@ class AuthService{
         return axios.put((BaseUrl()+"auth/signup/verify"),otp)
     }
     
-    getCurrentUser(){
-        return JSON.parse(localStorage.getItem('user2'));
+    isAuthenticated(){
+        return JSON.parse(localStorage.getItem('isAuthenticatedLogin'));
     }
     
     logOut(){
         localStorage.removeItem("user2");    
+        localStorage.removeItem("isAuthenticatedLogin");    
     }
    
     ResetPass(userCredentials){

@@ -53,34 +53,26 @@ const UpdateFormEvent = (props) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		handleKeyPress(e);
-
-		// const isOnline = optionValue === "Online" ? true : false;
-		// const venueORlink = optionValue === "Offline" ? Address : Url;
-		const FileData = new FormData();
-
-		// FileData.append("title", title);
-		FileData.append("content", content);
-		FileData.append("date", dateValue);
-		FileData.append("time", timeValue);
-		FileData.append("city", City);
-		Categories.forEach((category) => {
-			FileData.append("category", category);
-		});
-		// FileData.append("isOnline", isOnline);
-		// FileData.append("venueORlink", venueORlink);
-		FileData.append("rate", money);
+		const FileData = { 
+			 
+			content:content,
+			time:timeValue,
+			category:Categories,
+			date:dateValue,
+			rate:money
+		
+		};
+		
 		await crudService.Update(id, FileData).then(
 			(response) => {
 				setResMessage({
 					successful: true,
 				});
 				console.log(id);
-				console.log(...FileData);
 				console.log(response.data);
 			},
 			(error) => {
-				if (error.response.status === 401 || error.response.data === 402)
-					history.push("/ManageEvents");
+				
 				const respondMessage = error.response.data;
 				setResMessage({
 					successful: false,

@@ -12,13 +12,11 @@ export const CategorySelect = (props) => {
 		  "music" ,
 		  "sports" ,
 		  "award ceremony" ,
-		  "trade and shopping" ,
 		  "education" ,
 		  "workshops" ,
 		  "webinars" ,
-		  "festivals and parties" ,
-		  "fashion" ,
-		  "others" 
+		  "dance",
+		  "singing"
 	];
 	useEffect(() => {
 		props.onSelect(Category);
