@@ -12,7 +12,7 @@ import styles from "./SignUpPage.module.css";
 const links = {
 	home: "/",
 	secondLink: "/LogInPage",
-	secondLinkName:"Login"
+	secondLinkName: "Login",
 };
 const style = {
 	Navbar: styles.Navbar,
@@ -50,8 +50,7 @@ class SignUpPage extends Component {
 			usernameErr = "username field is invalid";
 		if (!this.state.email || regEmail.test(this.state.email) === false)
 			emailErr = "Email Field is Invalid ";
-		if (this.state.password.length < 8)
-			passErr = "Pass Field is Invalid ";
+		if (this.state.password.length < 8) passErr = "Pass Field is Invalid ";
 		if (!this.state.email) emailErr = "Email field is required";
 		if (!this.state.password) passErr = "Pass field is required";
 
@@ -59,16 +58,6 @@ class SignUpPage extends Component {
 	}
 
 	handleBlur(e) {
-		const errors = this.validate();
-		this.setState({
-			...this.state,
-			[e.target.name]: e.target.value,
-			usernameErr: errors.usernameErr,
-			emailErr: errors.emailErr,
-			passErr: errors.passErr,
-		});
-	}
-	handleFocus(e) {
 		const errors = this.validate();
 		this.setState({
 			...this.state,
@@ -99,19 +88,17 @@ class SignUpPage extends Component {
 						pathname: "/OtpSignUp",
 						state: user,
 					});
+					
 				}
 			},
 			(error) => {
 				let resMessage = "";
-				if(!error.response){
-					resMessage=JSON.stringify(error.message);
+				if (!error.response) {
+					console.log(JSON.stringify(error.message));
 				}
-				else
-				{
-						resMessage=error.response.data;
-				} 
-					
-				
+
+				resMessage = error.response.data;
+
 				this.setState({
 					successful: false,
 					message: resMessage,
@@ -127,7 +114,7 @@ class SignUpPage extends Component {
 		return (
 			<div className={styles.container}>
 				<DefaultNavbar style={style} image={image} links={links} />
-				
+
 				<Image src={CalendarMobile} className={styles.calendarImage}></Image>
 				{!this.state.successful && (
 					<Form className={styles.form}>
@@ -146,7 +133,6 @@ class SignUpPage extends Component {
 									name="username"
 									className=" form-control"
 									placeholder=""
-									onFocus={(e) => this.handleFocus(e)}
 									onBlur={(e) => this.handleBlur(e)}
 								/>
 
@@ -164,12 +150,10 @@ class SignUpPage extends Component {
 									className="form-control"
 									placeholder="name@example.com"
 									type="text"
-									onFocus={(e) => this.handleFocus(e)}
 									onBlur={(e) => this.handleBlur(e)}
 								/>
 								<span className="text-danger">{this.state.emailErr}</span>
 							</FloatingLabel>
-
 						</Form.Group>
 						<Form.Group
 							className={styles.formGroup}
@@ -182,7 +166,6 @@ class SignUpPage extends Component {
 									name="password"
 									className="form-control"
 									onBlur={(e) => this.handleBlur(e)}
-									onFocus={(e) => this.handleFocus(e)}
 								/>
 
 								<span className="text-danger">{this.state.passErr}</span>
@@ -198,28 +181,27 @@ class SignUpPage extends Component {
 							Sign Up
 						</Button>
 						
+
 						<Form.Text>Already have an account ?</Form.Text>
 						<Link to="LogInPage">
 							<Form.Text>Login</Form.Text>
 						</Link>
 						{this.state.message && (
-					<div className="form-group mt-2">
-						<div
-							className={
-								this.state.successful
-									? "alert alert-success"
-									: "alert alert-danger"
-							}
-							role="alert"
-						>
-							{this.state.message}
-						</div>
-					</div>
-				)}
+							<div className="form-group mt-2">
+								<div
+									className={
+										this.state.successful
+											? "alert alert-success"
+											: "alert alert-danger"
+									}
+									role="alert"
+								>
+									{this.state.message}
+								</div>
+							</div>
+						)}
 					</Form>
-					
 				)}
-				
 			</div>
 		);
 	}

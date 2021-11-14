@@ -35,13 +35,13 @@ const FormEvent = (props) => {
 		setDateValue(dateValueInEpoch);
 	};
 
-	
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		handleKeyPress(e);
 
 		const isOnline = optionValue === "Online" ? true : false;
-		const venueORlink = optionValue === "Offline" ? Address  : Url ;
+		const venueORlink = optionValue === "Offline" ? Address : Url;
+		const city = optionValue === "Offline" ? City : "Online";
 		var FileData = new FormData();
 		Files.forEach((file) => {
 			console.log(file);
@@ -52,11 +52,12 @@ const FormEvent = (props) => {
 		FileData.append("title", title);
 		FileData.append("content", content);
 		FileData.append("date", dateValue);
+		FileData.append("city", city);
 		FileData.append("time", timeValue);
-		FileData.append("city", City);
-		Categories.forEach((category)=>{
-			FileData.append("category",category);
-		})
+
+		Categories.forEach((category) => {
+			FileData.append("category", category);
+		});
 		FileData.append("isOnline", isOnline);
 		FileData.append("venueORlink", venueORlink);
 		FileData.append("rate", money);
@@ -156,21 +157,6 @@ const FormEvent = (props) => {
 					</Col>
 				</Row>
 
-				<Row className="mt-4">
-					<Col>
-						<Form.Label className={styles.requiredField}>City</Form.Label>
-					</Col>
-					<Col>
-						<Form.Control
-							type="text"
-							placeholder=""
-							onChange={(e) => {
-								setCity(e.target.value);
-							}}
-						/>
-					</Col>
-				</Row>
-
 				{/* Mode of events */}
 				<Row className="mt-4">
 					<Form.Label
@@ -230,21 +216,39 @@ const FormEvent = (props) => {
 							</label>
 
 							{optionValue === "Offline" && (
-								<Row>
-									<Col>
-										<Form.Label className={styles.requiredField}>
-											Main Address
-										</Form.Label>
-										<Form.Control
-											as="textarea"
-											rows={3}
-											className={styles.formTextArea}
-											onChange={(e) => {
-												setAddress(e.target.value);
-											}}
-										/>
-									</Col>
-								</Row>
+								<>
+									<Row>
+										<Col>
+											<Form.Label className={styles.requiredField}>
+												Main Address
+											</Form.Label>
+											<Form.Control
+												as="textarea"
+												rows={3}
+												className={styles.formTextArea}
+												onChange={(e) => {
+													setAddress(e.target.value);
+												}}
+											/>
+										</Col>
+									</Row>
+									<Row className="mt-4">
+										<Col>
+											<Form.Label className={styles.requiredField}>
+												City
+											</Form.Label>
+										</Col>
+										<Col>
+											<Form.Control
+												type="text"
+												placeholder=""
+												onChange={(e) => {
+													setCity(e.target.value);
+												}}
+											/>
+										</Col>
+									</Row>
+								</>
 							)}
 						</div>
 					</Col>

@@ -5,13 +5,17 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import LogoutIcon from '@mui/icons-material/Logout';
 import React from "react";
+import authService from "../../../../../api/services/auth.service"
 import styles from "./SideBar.module.css";
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+
 const style = {
 	width: "100%",
 	bgcolor: "transparent",
 
 };
 export const SideBar = () => {
+	const history=useHistory();
 	return (
 		<>
 			<nav className={styles.nav}>
@@ -38,13 +42,18 @@ export const SideBar = () => {
 					<Divider />
 					<Divider />
 					<ListItem button>
-						<Link className={styles.link} to="/">
+						<Link className={styles.link} to="/BookMarkedEvents">
 							Bookmarked Events
 						</Link>
 					</ListItem>
 					
 				</List>
-				<Button variant="contained"  sx={{position:"fixed",bottom:"30px",left:"50px"}} startIcon={<LogoutIcon/>}>Logout</Button>
+				<Button variant="contained"  sx={{position:"fixed",bottom:"30px",left:"50px"}} 
+				 onClick={()=>{authService.logOut()
+					history.push("/");
+				}}
+				
+				startIcon={<LogoutIcon/>}>Logout</Button>
 			</nav>
 		</>
 	);

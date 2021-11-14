@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import {BaseUrl} from "../../../../../api/services/BaseUrl"
 import Card from "@mui/material/Card";
 import { CardActionArea } from "@mui/material";
 import CardActions from "@mui/material/CardActions";
@@ -26,7 +27,9 @@ const ExpandMore = styled((props) => {
 
 export default function EventCards(props) {
 	const [expanded, setExpanded] = React.useState(false);
-
+	const imgPath=props.img;
+	const imageUrl= `${BaseUrl()}${imgPath}`;
+	console.log(imageUrl);
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
 	};
@@ -34,19 +37,18 @@ export default function EventCards(props) {
 		<Card sx={{ maxWidth: 650,border:"solid 0.5px grey" ,margin:"30px 0px"}}>
 			<CardHeader
 			
-				title=""
+				title={props.title}
 				
 			/>
 			<CardActionArea>
 				<CardMedia
 					component="img"
-					height="100"
-					image="/static/images/cards/paella.jpg"
+					height="200"
+					image={imageUrl}
 					alt="Paella dish"
 				/>
 				<CardContent>
 					<Typography variant="body2" color="text.secondary">
-						dfafdajfhdajfljkd
 					</Typography>
 				</CardContent>
 			</CardActionArea>

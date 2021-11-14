@@ -30,7 +30,7 @@ class LoginPage extends Component {
 		message: "",
 		emailErr: "",
 		passErr: "",
-		successful: "",
+		successful:false,
 	};
 	constructor(props) {
 		super(props);
@@ -41,13 +41,12 @@ class LoginPage extends Component {
 
 	handleBlur(e) {
 		const regEmail = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
-		const regPassword = /^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$/;
 		let emailErr = "";
 		let passErr = "";
 
 		if (!this.state.email || regEmail.test(this.state.email) === false)
 			emailErr = "Email Field is Invalid ";
-		if (!this.state.password || regPassword.test(this.state.password) === false)
+		if (this.state.password<8)
 			passErr = "Pass Field is Invalid ";
 		if (!this.state.email) emailErr = "Email field is required";
 		if (!this.state.password) passErr = "Pass field is required";
@@ -68,7 +67,7 @@ class LoginPage extends Component {
 
 		if (!this.state.email || regEmail.test(this.state.email) === false)
 			emailErr = "Email Field is Invalid ";
-		if (!this.state.password< 8)
+		if (this.state.password< 8)
 			passErr = "Pass Field is Invalid ";
 		if (!this.state.email) emailErr = "Email field is required";
 		if (!this.state.password) passErr = "Pass field is required";
@@ -100,17 +99,17 @@ class LoginPage extends Component {
 					localStorage.setItem("user2", JSON.stringify(token));
 					localStorage.setItem("isAuthenticatedLogin",true);
 				}
-
+				
 				if (this.state.successful) {
+					
 					this.props.history.push("/DashBoard");
-					return response.data;
 				}
                 
 			},
 			(error) => {
 				let resMessage = "";
 				if(!error.response){
-					resMessage=JSON.stringify(error.message);
+					resMessage=JSON.stringify(error.message).replace(/^"|"$/g, '');
 				}
 				else
 				{
@@ -182,6 +181,7 @@ class LoginPage extends Component {
 						>
 							Login
 						</Button>
+						
 						{this.state.message && (
 							<div className="form-group mt-2">
 								<div className="alert alert-danger " role="alert">

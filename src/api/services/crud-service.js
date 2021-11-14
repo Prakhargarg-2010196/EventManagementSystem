@@ -12,16 +12,14 @@ class CrudService {
 			},
 		});
 	}
-
 	Update(id,FormData) {
 		return axios.put(BaseUrl() + `post/update/${id}`, FormData,{
 			headers:{
 				Authorization: "Bearer " + token,
 				enctype: "multipart/form-data",
 				
-			},
-		}
-		)
+			},	
+		})
 	}
 	Delete(id) {
 		return axios.delete(BaseUrl() + `post/delete/${id}`,{
@@ -36,7 +34,7 @@ class CrudService {
 		return axios.get(BaseUrl() + `post/events/${id}`,{
 			headers:{
 				Authorization: "Bearer " + token,
-				// enctype: "multipart/form-data",
+				enctype: "multipart/form-data",
 				
 			},
 		});

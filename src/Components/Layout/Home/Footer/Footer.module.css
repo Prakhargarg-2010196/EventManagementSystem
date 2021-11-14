@@ -10,14 +10,14 @@
     width: 100%;
 
 }
-.links {
+
+a{
+    color:black;
     user-select: none;
     text-decoration: none;
-    color: white;
-    cursor: pointer;
 }
-
-.links:hover,.links:active {
-    color:white;
+a:hover{
+    color:black;
+    user-select: none;
+    text-decoration: none;
 }
-
