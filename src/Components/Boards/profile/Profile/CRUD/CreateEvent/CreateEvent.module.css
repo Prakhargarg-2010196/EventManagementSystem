@@ -1,5 +1,5 @@
 
-.img{
+/* .img{
     width:40px;
 }
 
@@ -15,4 +15,17 @@
     padding-bottom:350px;
     box-sizing: border-box;
 
+} */
+.container{
+    margin:0;
+    padding:0;
+}
+
+
+
+.SideBar{
+    background:rgb(205, 242, 255);
+    box-sizing: border-box;    
+    min-height:90.2vh ;
+    
 }

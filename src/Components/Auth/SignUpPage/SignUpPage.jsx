@@ -102,7 +102,16 @@ class SignUpPage extends Component {
 				}
 			},
 			(error) => {
-				const resMessage = error.response.data;
+				let resMessage = "";
+				if(!error.response){
+					resMessage=JSON.stringify(error.message);
+				}
+				else
+				{
+						resMessage=error.response.data;
+				} 
+					
+				
 				this.setState({
 					successful: false,
 					message: resMessage,
@@ -161,9 +170,6 @@ class SignUpPage extends Component {
 								<span className="text-danger">{this.state.emailErr}</span>
 							</FloatingLabel>
 
-							<Form.Text className="text-danger">
-								We'll never share your email with anyone else.
-							</Form.Text>
 						</Form.Group>
 						<Form.Group
 							className={styles.formGroup}

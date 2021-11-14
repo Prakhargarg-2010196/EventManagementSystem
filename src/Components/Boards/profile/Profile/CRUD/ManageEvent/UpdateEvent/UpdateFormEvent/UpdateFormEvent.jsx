@@ -2,17 +2,14 @@
 // eslint:disable-next-line:no-unused-vars
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import React, { useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 
-import { BaseUrl } from "../../../api/services/BaseUrl";
 import { CategorySelect } from "./CategorySelect/CategorySelect";
-import { DragNDrop } from "./DragNDrop/DragNDrop";
 import TimeField from "react-simple-timefield";
-import axios from "axios";
-import crudService from "../../../api/services/crud-service";
-import styles from "./FormEvent.module.css";
-import { useHistory } from "react-router-dom";
+import crudService from "../../../../../../../../api/services/crud-service";
+import styles from "./UpdateFormEvent.module.css";
 
-export const FormEvent = (props) => {
+const UpdateFormEvent = (props) => {
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
 	const [Categories, setArray] = useState([]);
@@ -23,54 +20,67 @@ export const FormEvent = (props) => {
 	const [City, setCity] = useState("");
 	const [Address, setAddress] = useState("");
 	const [money, setMoney] = useState();
-	const [Files, setFilesArray] = useState([]);
 	const history = useHistory();
 	const [resMessage, setResMessage] = useState({
 		message: "",
 		successful: false,
 	});
-	console.log(Files)
+
+	const { id } = useParams();
+	console.log(id);
 	const handleDateUpdate = (e) => {
 		const dateValue = e.target.value;
 		const dateValueInEpoch = new Date(dateValue).getTime();
 		setDateValue(dateValueInEpoch);
 	};
+	const handleImagesSubmit = (e) => {
+		e.preventDefault();
+		handleKeyPress(e);
+		history.push({
+			pathname: `/UpdateImages/${id}`,
+		});
+	};
+
+	// crudService.ReadEvent(currentId).then((response) => {
+	// 	setTitle(response.data.title);
+	// 	setContent(response.data.con);
+	// 	setContent(response.data.con);
+	// 	setContent(response.data.con);
+	// 	setContent(response.data.con);
+	// 	setContent(response.data.con);
+	// });
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		handleKeyPress(e);
-		
-		const FileData = new FormData();
-		Files.forEach((file) => {
-			console.log(file)
-			console.log(file.name)
-			FileData.append(file.name, file);
-		});
-		
-		console.log(FileData);
-		const formData = {
-			title: title,
-			content: content,
-			date: dateValue,
-			time: timeValue,
-			city: City,
-			rate: money,
-			category: Categories,
-			isOnline: optionValue === "Online" ? true : false,
-			venueORlink: optionValue === "Offline" ? { Address } : { Url },
-			imageUrl: FileData,
-		};
 
-		await crudService.Create(formData).then(
+		// const isOnline = optionValue === "Online" ? true : false;
+		// const venueORlink = optionValue === "Offline" ? Address : Url;
+		const FileData = new FormData();
+
+		// FileData.append("title", title);
+		FileData.append("content", content);
+		FileData.append("date", dateValue);
+		FileData.append("time", timeValue);
+		FileData.append("city", City);
+		Categories.forEach((category) => {
+			FileData.append("category", category);
+		});
+		// FileData.append("isOnline", isOnline);
+		// FileData.append("venueORlink", venueORlink);
+		FileData.append("rate", money);
+		await crudService.Update(id, FileData).then(
 			(response) => {
 				setResMessage({
-					message: response.data,
 					successful: true,
 				});
+				console.log(id);
+				console.log(...FileData);
+				console.log(response.data);
 			},
 			(error) => {
 				if (error.response.status === 401 || error.response.data === 402)
-					history.push("/LogInPage");
+					history.push("/ManageEvents");
 				const respondMessage = error.response.data;
 				setResMessage({
 					successful: false,
@@ -78,7 +88,6 @@ export const FormEvent = (props) => {
 				});
 			}
 		);
-		await axios.get(BaseUrl(), {});
 	};
 	const handleKeyPress = (e) => {
 		if (e.key === "Enter") e.preventDefault();
@@ -92,6 +101,7 @@ export const FormEvent = (props) => {
 					<Col>
 						<Form.Label className={styles.requiredField}>Title</Form.Label>
 						<Form.Control
+							disabled
 							type="text"
 							placeholder=""
 							onChange={(e) => {
@@ -103,10 +113,10 @@ export const FormEvent = (props) => {
 
 				{/* Content */}
 				<Row className="mb-3">
-					<Col md={6}>
+					<Col md={6} sm={12}>
 						<Form.Label className={styles.requiredField}>Content</Form.Label>
 					</Col>
-					<Col md={12}>
+					<Col md={12} sm={8}>
 						<Form.Control
 							as="textarea"
 							rows={5}
@@ -120,18 +130,21 @@ export const FormEvent = (props) => {
 
 				{/* Content end  */}
 
+				{/* Category start */}
 				<Row>
 					<Col xs={12} md={6}>
 						<Form.Label className={styles.requiredField}>Category</Form.Label>
 					</Col>
-					<Col xs={6} md={6}>
+					<Col xs={6} md={3}>
 						<CategorySelect onSelect={setArray} />
 					</Col>
 				</Row>
+				{/* Category end */}
 
+				{/* Date start */}
 				<Row className="mt-4">
 					<Col md={6} sm={6}>
-						<Form.Label className={styles.requiredField}>Date </Form.Label>
+						<Form.Label className={styles.requiredField}>Date</Form.Label>
 					</Col>
 					<Col md={6} sm={12}>
 						<input
@@ -141,6 +154,7 @@ export const FormEvent = (props) => {
 						/>
 					</Col>
 				</Row>
+				{/* Date end */}
 
 				{/* Time */}
 				<Row className="mt-4">
@@ -157,6 +171,7 @@ export const FormEvent = (props) => {
 					</Col>
 				</Row>
 
+				{/* City start */}
 				<Row className="mt-4">
 					<Col>
 						<Form.Label className={styles.requiredField}>City</Form.Label>
@@ -165,16 +180,21 @@ export const FormEvent = (props) => {
 						<Form.Control
 							type="text"
 							placeholder=""
+							disabled
 							onChange={(e) => {
 								setCity(e.target.value);
 							}}
 						/>
 					</Col>
 				</Row>
+				{/* City end */}
 
 				{/* Mode of events */}
 				<Row className="mt-4">
-					<Form.Label className={styles.requiredField} style={{marginBottom:"30px"}}>
+					<Form.Label
+						className={styles.requiredField}
+						style={{ marginBottom: "30px" }}
+					>
 						Mode of Event
 					</Form.Label>
 
@@ -191,6 +211,7 @@ export const FormEvent = (props) => {
 									onChange={(e) => {
 										setOptionValue(e.target.value);
 									}}
+									disabled
 								/>
 								Online
 							</label>
@@ -223,6 +244,7 @@ export const FormEvent = (props) => {
 									onChange={(e) => {
 										setOptionValue(e.target.value);
 									}}
+									disabled
 								/>
 								Offline
 							</label>
@@ -252,7 +274,7 @@ export const FormEvent = (props) => {
 				{/* Money */}
 				<Row className="mt-5">
 					<Col md={6}>
-						<Form.Label className={styles.requiredField} >
+						<Form.Label className={styles.requiredField}>
 							Price(in INR)
 						</Form.Label>
 					</Col>
@@ -271,18 +293,18 @@ export const FormEvent = (props) => {
 				</Row>
 				{/* money end */}
 
-				{/* DragDrop */}
-				<Row className="mt-5">
-					<Col>
-						<Form.Label className={styles.requiredField}>
-							Browse select one at a time or select multiple or drop multiple{" "}
-						</Form.Label>
-					
-						<DragNDrop onGet={setFilesArray} />
-					</Col>
-				</Row>
-				{/* DragDrop END */}
-
+				<Button
+					variant="primary"
+					className={styles.button}
+					onClick={(e) => {
+						handleImagesSubmit(e);
+					}}
+					onKeyPress={(e) => {
+						handleKeyPress(e);
+					}}
+				>
+					Update images
+				</Button>
 				<Button
 					variant="primary"
 					className={styles.button}
@@ -299,3 +321,4 @@ export const FormEvent = (props) => {
 		)
 	);
 };
+export default UpdateFormEvent;

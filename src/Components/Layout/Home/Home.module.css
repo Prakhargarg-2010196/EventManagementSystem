@@ -1,14 +1,8 @@
-.containerFluid{
-    padding:0;
-    margin:0;
-}
+
 .container{
     margin:0;
     padding: 0;
-    margin:auto;
-    min-height: calc(100vh-50px);
-    padding-bottom:250px;
-    box-sizing: border-box;
+   
     
 }
 @media (max-width:480px) {

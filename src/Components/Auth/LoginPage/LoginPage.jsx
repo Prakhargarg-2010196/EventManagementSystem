@@ -63,13 +63,12 @@ class LoginPage extends Component {
 	handleFocus(e) {
 		e.preventDefault();
 		const regEmail = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
-		const regPassword = /^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$/;
 		let emailErr = "";
 		let passErr = "";
 
 		if (!this.state.email || regEmail.test(this.state.email) === false)
 			emailErr = "Email Field is Invalid ";
-		if (!this.state.password || regPassword.test(this.state.password) === false)
+		if (!this.state.password< 8)
 			passErr = "Pass Field is Invalid ";
 		if (!this.state.email) emailErr = "Email field is required";
 		if (!this.state.password) passErr = "Pass field is required";
@@ -99,16 +98,24 @@ class LoginPage extends Component {
 				if (response.data.token) {
 					const { token } = response.data;
 					localStorage.setItem("user2", JSON.stringify(token));
+					localStorage.setItem("isAuthenticatedLogin",true);
 				}
 
 				if (this.state.successful) {
-					this.props.history.push("/");
+					this.props.history.push("/DashBoard");
 					return response.data;
 				}
                 
 			},
 			(error) => {
-				const resMessage = error.response.data;
+				let resMessage = "";
+				if(!error.response){
+					resMessage=JSON.stringify(error.message);
+				}
+				else
+				{
+						resMessage=error.response.data;
+				} 
 				this.setState({
 					successful: false,
 					message: resMessage,
@@ -146,9 +153,7 @@ class LoginPage extends Component {
 								<span className="text-danger">{this.state.emailErr}</span>
 							</FloatingLabel>
 
-							<Form.Text className="text-danger">
-								We'll never share your email with anyone else.
-							</Form.Text>
+							
 						</Form.Group>
 						<Form.Group
 							className={styles.formGroup}
@@ -178,8 +183,8 @@ class LoginPage extends Component {
 							Login
 						</Button>
 						{this.state.message && (
-							<div className="form-group">
-								<div className="alert alert-danger" role="alert">
+							<div className="form-group mt-2">
+								<div className="alert alert-danger " role="alert">
 									{this.state.message}
 								</div>
 							</div>

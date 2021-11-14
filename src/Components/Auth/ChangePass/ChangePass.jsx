@@ -97,7 +97,15 @@ class ChangePass extends Component {
             }
         },
             (error) => {
-                if (error.response.status === 403) {
+                let resMessage = "";
+				if (!error.response) {
+					resMessage = JSON.stringify(error.message);
+					this.setState({
+						message: resMessage,
+						successful: false,
+					});
+				}
+               else if (error.response.status === 403) {
                     this.setState({
                         message: error.response.data,
                         successful: false,

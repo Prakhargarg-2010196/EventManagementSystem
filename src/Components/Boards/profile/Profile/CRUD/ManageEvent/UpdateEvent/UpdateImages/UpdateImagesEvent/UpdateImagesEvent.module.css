@@ -1,0 +1,14 @@
+
+
+
+.requiredField::after {
+    content: "*";
+    color: red;
+    
+}
+
+.button{
+    width: 50%;
+    align-self: center;
+    margin-top: 50px;
+}

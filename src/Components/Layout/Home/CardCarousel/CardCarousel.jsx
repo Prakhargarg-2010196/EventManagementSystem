@@ -1,92 +1,79 @@
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import "swiper/swiper-bundle.css";
+import "swiper/swiper.min.css";
+import "swiper/swiper-bundle";
 
-import { EventCards } from "./EventCards/EventCards";
-import React from "react";
-import Slider from "react-slick";
-import styles from "./CardCarousel.module.css"
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, {
+	A11y,
+	Keyboard,
+	Navigation,
+	Pagination,
+	Scrollbar,
+} from "swiper";
 
-const config = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            infinite: true,
-            dots: true
-          }
-        },
-        {
-          breakpoint: 600,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2,
-            initialSlide: 2
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1
-          }
-        }
-      ],
+import EventCards from "./EventCards/EventCards";
+import styles from "./CardCarousel.module.css";
+
+SwiperCore.use([Pagination, Keyboard, Navigation, A11y, Scrollbar]);
+
+export const CardCarousel = () => {
+	return (
+		<div className={styles.CardCarousel}>
+			<Swiper
+				loop={true}
+				keyboard={{
+					enabled: true,
+				}}
+				spaceBetween={40}
+				slidesPerView={3}
+				pagination					
+
+				
+				navigation={true}
+				onSlideChange={() => console.log("slide change")}
+				onSwiper={(swiper) => console.log(swiper)}
+				breakpoints={{
+					"375":{
+						"slidesPerView": 2,
+						"spaceBetween": 20
+					},
+					
+					"640": {
+					  "slidesPerView": 2,
+					  "spaceBetween": 20
+					},
+					"768": {
+					  "slidesPerView": 3,
+					  "spaceBetween": 40
+					},
+					"1024": {
+					  "slidesPerView": 4,
+					  "spaceBetween": 50
+					}
+				  }}
+			>
+				<SwiperSlide>
+					<EventCards />
+				</SwiperSlide>
+				<SwiperSlide>
+					<EventCards />
+				</SwiperSlide>
+				<SwiperSlide>
+					<EventCards />
+				</SwiperSlide>
+				<SwiperSlide>
+					<EventCards />
+				</SwiperSlide>
+				<SwiperSlide>
+					<EventCards />
+				</SwiperSlide>
+				<SwiperSlide>
+					<EventCards />
+				</SwiperSlide>
+				<SwiperSlide>
+					<EventCards />
+				</SwiperSlide>
+			</Swiper>
+		</div>
+	);
 };
-
-const products = [
-    {
-        img: "/images/product1.jpg",
-        title: "Dolore magna",
-        text: "Lorem ipsum dolor sit amet elit.",
-    },
-    {
-        img: "/images/product2.jpg",
-        title: "Eget est lorem",
-        text: "Lorem Ipsum adipiscing elit ipsum.",
-    },
-    {
-        img: "/images/product3.jpg",
-        title: "Tempus imperdiet",
-        text: "Orci porta non pulvinar neque laoreet.",
-    },
-    {
-        img: "/images/product4.jpg",
-        title: "Mattis rhoncus",
-        text: "Bibendum neque egestas congue quisque.",
-    },
-    {
-        img: "/images/product5.jpg",
-        title: "Odio ut enim",
-        text: "Mattis rhoncus urna neque viverra justo.",
-    },
-];
-
-
-const CardCarousel = () => {
-    return (
-        <div className={styles.CardCarousel}>
-            <Slider {...config}>
-                {products.map((x, i) => {
-                    const img={
-                        src:x.img,
-                    }
-                    const cardDetails={
-                        title:x.title,
-                        text:x.text,
-                    }
-                    return (
-                        <EventCards  key={i}  img={img} cardDetails={cardDetails} />
-                    );
-                })}
-            </Slider>
-        </div>
-    );
-};
-export default CardCarousel;

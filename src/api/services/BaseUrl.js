@@ -1,5 +1,5 @@
 
 export const BaseUrl = () => {
-    const baseUrl = "http://1f09-103-211-14-30.ngrok.io/";
+    const baseUrl = "http://2299-103-211-14-74.ngrok.io/";
     return baseUrl;
 }

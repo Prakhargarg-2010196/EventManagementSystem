@@ -1,5 +1,6 @@
 .img {
     width: 40px;
+    margin:7px;
 }
 
 .footer {
@@ -8,5 +9,15 @@
     padding-top: 30px;
     width: 100%;
 
+}
+.links {
+    user-select: none;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
+.links:hover,.links:active {
+    color:white;
 }
 

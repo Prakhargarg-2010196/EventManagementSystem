@@ -10,7 +10,11 @@ class AuthService{
     OtpSignUp(otp){
         return axios.put((BaseUrl()+"auth/signup/verify"),otp)
     }
-   
+    
+    getCurrentUser(){
+        return JSON.parse(localStorage.getItem('user2'));
+    }
+    
     logOut(){
         localStorage.removeItem("user2");    
     }
@@ -19,7 +23,7 @@ class AuthService{
         return axios.put((BaseUrl()+"auth/resetpass"),userCredentials);
     }
     SignUp(userCredentials){
-        return axios.put((BaseUrl()+"auth/signup"),userCredentials)
+        return axios.post((BaseUrl()+"auth/signup"),userCredentials)
     }
     VerifyResetPassOtp(otp){
         return axios.put((BaseUrl()+"auth/resetpass/verify"),otp)
