@@ -75,7 +75,7 @@ export const DragNDrop=(props)=> {
     isDragReject
   } = useDropzone({
     accept: 'image/jpeg, image/png ,image/jpg',
-    maxFiles:10,
+    maxFiles:(10-props.imagesLength),
     onDrop: acceptedFiles => {
       setFiles(acceptedFiles.map(file => Object.assign(file, {
         preview: URL.createObjectURL(file),
@@ -108,7 +108,7 @@ export const DragNDrop=(props)=> {
     <div className={styles.container}>
       <Container {...getRootProps({isDragActive, isDragAccept, isDragReject})}>
         <input {...getInputProps()} />
-        <p>Drag & drop maximum of 10 files here, or click to select  multiple files at a time </p>
+        <p>Drag & drop maximum of {10-props.imagesLength} files here, or click to select  multiple files at a time </p>
       </Container>
       <aside style={thumbsContainer}>
         {thumbs}

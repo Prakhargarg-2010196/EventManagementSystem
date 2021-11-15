@@ -10,8 +10,8 @@ import styles from "./UpdateImage.module.css";
 export default class UpdateEvent extends Component {
 	constructor(props) {
 		super(props);
-		this.state={id : this.props.match.params};
-		console.log(this.state.id.id)
+
+		this.state=""
 	}
 	 
 	
@@ -32,7 +32,7 @@ export default class UpdateEvent extends Component {
 										<h1 className="text-center mt-4">Update Images</h1>
 									</Row>
 									<Row>
-										<UpdateImagesEvent id={this.state.id.id} />
+										<UpdateImagesEvent  />
 									</Row>
 								</Container>
 							</Col>
