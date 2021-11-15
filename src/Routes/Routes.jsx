@@ -1,5 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 
+import AdminDashBoard from "../Components/Boards/profile/Admin/AdminDashBoard";
 import BookMarkedEvents from "../Components/Boards/profile/Profile/BookMarkedEvents/BookMarkedEvents";
 import CardCarousel from "../Components/Layout/Home/CardCarousel/CardCarousel";
 import ChangePass from "../Components/Auth/ChangePass/ChangePass";
@@ -111,6 +112,12 @@ export const Routes = () => {
                 path="/BookMarkedEvents/:id"
                 exact
                 component={BookMarkedEvents}>
+                    
+            </Route>
+            <Route
+                path="/AdminDashBoard"
+                exact
+                component={AdminDashBoard}>
                     
             </Route>
             

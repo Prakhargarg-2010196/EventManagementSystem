@@ -1,7 +1,7 @@
 // eslint:disable:no-unused-vars
 // eslint:disable-next-line:no-unused-vars
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
 import { CategorySelect } from "./CategorySelect/CategorySelect";
@@ -10,24 +10,30 @@ import crudService from "../../../../../../../../api/services/crud-service";
 import styles from "./UpdateFormEvent.module.css";
 
 const UpdateFormEvent = (props) => {
-	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
 	const [Categories, setArray] = useState([]);
 	const [dateValue, setDateValue] = useState(null);
 	const [timeValue, setTimeValue] = useState("24:00");
-	const [optionValue, setOptionValue] = useState("");
-	const [Url, setUrl] = useState("");
-	const [City, setCity] = useState("");
-	const [Address, setAddress] = useState("");
 	const [money, setMoney] = useState();
 	const history = useHistory();
 	const [resMessage, setResMessage] = useState({
 		message: "",
 		successful: false,
 	});
-
 	const { id } = useParams();
+	useEffect(() => {
+		async function getAllData() {
+			const response = await crudService.Read(id);
+			setContent(response.data.post.content);
+			setDateValue(response.data.post.date.split("T")[0])
+			setTimeValue(response.data.post.time)
+			setMoney(response.data.post.rate)
+		}
+		getAllData();
+	},[id]);
+	console.log(dateValue);
 	console.log(id);
+	
 	const handleDateUpdate = (e) => {
 		const dateValue = e.target.value;
 		const dateValueInEpoch = new Date(dateValue).getTime();
@@ -41,28 +47,18 @@ const UpdateFormEvent = (props) => {
 		});
 	};
 
-	// crudService.ReadEvent(currentId).then((response) => {
-	// 	setTitle(response.data.title);
-	// 	setContent(response.data.con);
-	// 	setContent(response.data.con);
-	// 	setContent(response.data.con);
-	// 	setContent(response.data.con);
-	// 	setContent(response.data.con);
-	// });
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		handleKeyPress(e);
-		const FileData = { 
-			 
-			content:content,
-			time:timeValue,
-			category:Categories,
-			date:dateValue,
-			rate:money
-		
+
+		const FileData = {
+			content: content,
+			time: timeValue,
+			category: Categories,
+			date: dateValue,
+			rate: money,
 		};
-		
+
 		await crudService.Update(id, FileData).then(
 			(response) => {
 				setResMessage({
@@ -72,7 +68,6 @@ const UpdateFormEvent = (props) => {
 				console.log(response.data);
 			},
 			(error) => {
-				
 				const respondMessage = error.response.data;
 				setResMessage({
 					successful: false,
@@ -88,21 +83,6 @@ const UpdateFormEvent = (props) => {
 	return (
 		!resMessage.successful && (
 			<Form className={styles.form}>
-				{/* Title */}
-				<Row>
-					<Col>
-						<Form.Label className={styles.requiredField}>Title</Form.Label>
-						<Form.Control
-							disabled
-							type="text"
-							placeholder=""
-							onChange={(e) => {
-								setTitle(e.target.value);
-							}}
-						/>
-					</Col>
-				</Row>
-
 				{/* Content */}
 				<Row className="mb-3">
 					<Col md={6} sm={12}>
@@ -112,6 +92,7 @@ const UpdateFormEvent = (props) => {
 						<Form.Control
 							as="textarea"
 							rows={5}
+							defaultValue={content}
 							className="w-100"
 							onChange={(e) => {
 								setContent(e.target.value);
@@ -128,7 +109,7 @@ const UpdateFormEvent = (props) => {
 						<Form.Label className={styles.requiredField}>Category</Form.Label>
 					</Col>
 					<Col xs={6} md={3}>
-						<CategorySelect onSelect={setArray} />
+						<CategorySelect  onSelect={setArray} />
 					</Col>
 				</Row>
 				{/* Category end */}
@@ -142,6 +123,7 @@ const UpdateFormEvent = (props) => {
 						<input
 							className="form-control"
 							type="date"
+							defaultValue={dateValue}
 							onChange={(e) => handleDateUpdate(e)}
 						/>
 					</Col>
@@ -159,109 +141,10 @@ const UpdateFormEvent = (props) => {
 							value={timeValue}
 							onChange={(e) => setTimeValue(e.target.value)}
 							className="w-25"
+							defaultValue={timeValue}
 						/>
 					</Col>
 				</Row>
-
-				{/* City start */}
-				<Row className="mt-4">
-					<Col>
-						<Form.Label className={styles.requiredField}>City</Form.Label>
-					</Col>
-					<Col>
-						<Form.Control
-							type="text"
-							placeholder=""
-							disabled
-							onChange={(e) => {
-								setCity(e.target.value);
-							}}
-						/>
-					</Col>
-				</Row>
-				{/* City end */}
-
-				{/* Mode of events */}
-				<Row className="mt-4">
-					<Form.Label
-						className={styles.requiredField}
-						style={{ marginBottom: "30px" }}
-					>
-						Mode of Event
-					</Form.Label>
-
-					{/*Online Option  */}
-					<Col sm={12} md={6}>
-						<div className="form-check">
-							<label className="form-check-label" htmlFor="flexRadioDefault1">
-								<input
-									className="form-check-input"
-									type="radio"
-									name="flexRadioDefault"
-									id="flexRadioDefault1"
-									value="Online"
-									onChange={(e) => {
-										setOptionValue(e.target.value);
-									}}
-									disabled
-								/>
-								Online
-							</label>
-
-							{optionValue === "Online" && (
-								<Col>
-									<Form.Label className={styles.requiredField}>Url</Form.Label>
-									<Form.Control
-										type="url"
-										placeholder=""
-										onChange={(e) => {
-											setUrl(e.target.value);
-										}}
-									/>
-								</Col>
-							)}
-						</div>
-					</Col>
-
-					{/* Offline option */}
-					<Col>
-						<div className="form-check">
-							<label className="form-check-label" htmlFor="flexRadioDefault2">
-								<input
-									className="form-check-input mb-4"
-									type="radio"
-									name="flexRadioDefault"
-									id="flexRadioDefault2"
-									value="Offline"
-									onChange={(e) => {
-										setOptionValue(e.target.value);
-									}}
-									disabled
-								/>
-								Offline
-							</label>
-
-							{optionValue === "Offline" && (
-								<Row>
-									<Col>
-										<Form.Label className={styles.requiredField}>
-											Main Address
-										</Form.Label>
-										<Form.Control
-											as="textarea"
-											rows={3}
-											className={styles.formTextArea}
-											onChange={(e) => {
-												setAddress(e.target.value);
-											}}
-										/>
-									</Col>
-								</Row>
-							)}
-						</div>
-					</Col>
-				</Row>
-				{/* Mode of events end */}
 
 				{/* Money */}
 				<Row className="mt-5">
@@ -279,6 +162,7 @@ const UpdateFormEvent = (props) => {
 								onChange={(e) => {
 									setMoney(e.target.value);
 								}}
+								defaultValue={money}
 							/>
 						</InputGroup>
 					</Col>

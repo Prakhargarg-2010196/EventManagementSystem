@@ -11,15 +11,11 @@ import bgimageOne from "../../../../assets/carouselbg.png";
 
 export const CheckoutCard = () => {
 	return (
-		<Card style={{ width: "100%",marginTop: "50px" }}>
-			<CardHeader title="event Name" /> 
+		<Card style={{ width: "200%",marginTop: "50px" }}>
+			<CardHeader title="Event Name" subheader="Rs.2300.7"/> 
 				
-			<CardMedia component="img" image={bgimageOne} alt="" />
-			<CardContent>
-				<Typography gutterBottom variant="h5" component="div">
-					Lizard
-				</Typography>
-			</CardContent>
+			<CardMedia component="img"  sx={{width:"100%"}} image={bgimageOne} alt="" />
+			
 		</Card>
 	);
 };

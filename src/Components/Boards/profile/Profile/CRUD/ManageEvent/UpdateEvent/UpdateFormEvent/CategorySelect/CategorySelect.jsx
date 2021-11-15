@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { MultiSelect } from "primereact/multiselect";
 
 export const CategorySelect = (props) => {
-	const [Category, setCategory] = useState([]);
+	const [Category, setCategory] = useState(props.defaultValue);
 	const Categories = [
 		  "music" ,
 		  "sports" ,

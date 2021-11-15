@@ -20,13 +20,12 @@ class CheckoutPage extends Component {
 						<SearchBar />
 					</div>
 
-					<Container>
+					
 						<div className="d-flex justify-content-around">
 							<CheckoutCard />
 
 							<Checkout />
 						</div>
-					</Container>
 				</div>
 				<Footer />
 			</>
