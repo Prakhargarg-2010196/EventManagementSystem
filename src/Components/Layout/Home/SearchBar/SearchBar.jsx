@@ -7,7 +7,10 @@ import TextField from "@mui/material/TextField";
 export default function SearchBar() {
 	return (
 		<>
-		<h1 className="margin:">Eventooz</h1>
+		<Stack>
+		<h1>Eventooz</h1>
+			
+		</Stack>
 			<Stack spacing={2} sx={{ width: 600 }}>
 				<Autocomplete
 					freeSolo

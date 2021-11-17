@@ -30,8 +30,6 @@ export default class UpdateEvent extends Component {
 								<Container>
 									<Row>
 										<h1 className="text-center mt-4">Update Images</h1>
-									</Row>
-									<Row>
 										<UpdateImagesEvent  />
 									</Row>
 								</Container>

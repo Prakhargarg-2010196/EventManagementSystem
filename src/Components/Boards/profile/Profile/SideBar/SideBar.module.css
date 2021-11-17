@@ -6,8 +6,9 @@
     margin-bottom:12px;
 }
 .link:hover{
-    color:rgb(1, 1, 2);
+    color:rgb(111, 0, 255);
 }
-.ListItem{
-    margin-bottom: 12px;
+
+.listItem:hover{
+    background:rgb(90, 215, 253);
 }

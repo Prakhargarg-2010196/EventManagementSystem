@@ -1,21 +1,22 @@
-.DateAndTime{
+.DateAndTime {
     display: flex;
     flex-direction: column;
 }
-
 
 .requiredField::after {
     content: "*";
     color: red;
 }
-.form{
+
+.form {
+
     display: flex;
     flex-direction: column;
-    min-height:100vh;
-    padding: 150px;
+    width: 100%;
 }
-.button{
-    width: 50%;
+
+.button {
+    width: 40%;
     align-self: center;
-    margin-top: 50px;
+    margin-top: 40px;
 }

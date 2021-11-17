@@ -1,59 +1,57 @@
-import Button from '@mui/material/Button';
+import { NavLink, useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
+import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import { Link } from "react-router-dom";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import React from "react";
-import authService from "../../../../../api/services/auth.service"
+import authService from "../../../../../api/services/auth.service";
 import styles from "./SideBar.module.css";
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const style = {
 	width: "100%",
 	bgcolor: "transparent",
-
 };
 export const SideBar = () => {
-	const history=useHistory();
+	const history = useHistory();
 	return (
 		<>
 			<nav className={styles.nav}>
 				<List sx={style} component="nav" aria-label="mailbox folders">
-					<ListItem button>
-						<Link className={styles.link} to="/DashBoard">
-							DashBoard 
-						</Link>
-					</ListItem>
+					<NavLink className={styles.link} to="/DashBoard">
+						<ListItem className={styles.listItem} button divider> DashBoard</ListItem>
+					</NavLink>
 					<Divider />
 					<Divider />
-					<ListItem button divider>
-						<Link className={styles.link} to="/ManageEvent">
+					<NavLink className={styles.link} to="/ManageEvent">
+						<ListItem button  className={styles.listItem} divider>
 							Manage Event
-						</Link>
-					</ListItem>
+						</ListItem>
+					</NavLink>
 					<Divider />
 					<Divider />
-					<ListItem button>
-						<Link className={styles.link} to="/CreateEvent">
-							Create event 
-						</Link>
-					</ListItem>
+					<NavLink className={styles.link} to="/CreateEvent">
+						<ListItem button className={styles.listItem} divider>Create event</ListItem>
+					</NavLink>
 					<Divider />
 					<Divider />
-					<ListItem button>
-						<Link className={styles.link} to="/BookMarkedEvents">
-							Bookmarked Events
-						</Link>
-					</ListItem>
-					
+					<NavLink className={styles.link} to="/BookMarkedEvents">
+						<ListItem button className={styles.listItem} divider>Bookmarked Events</ListItem>
+					</NavLink>
 				</List>
-				<Button variant="contained"  sx={{position:"fixed",bottom:"30px",left:"50px"}} 
-				 onClick={()=>{authService.logOut()
-					history.push("/");
-				}}
-				
-				startIcon={<LogoutIcon/>}>Logout</Button>
+				<Button
+					variant="contained"
+					sx={{marginTop:"20%"}}
+					onClick={() => {
+						authService.logOut();
+						history.push("/");
+					}}
+					startIcon={<LogoutIcon />}
+				>
+					Logout
+				</Button>
 			</nav>
 		</>
 	);

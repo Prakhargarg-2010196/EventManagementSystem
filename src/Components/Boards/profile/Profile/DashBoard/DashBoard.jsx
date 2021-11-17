@@ -18,10 +18,11 @@ export default class DashBoard extends Component {
 	}
 	componentDidMount(){
 		userService.getUserBoard().then((res)=>{
-			const result=res.data;
-			this.setState({result});
+			const result=res.data.user;
+			this.setState({result:result});
 		})
 	}
+
 	
 	render() {
 		return (
@@ -30,10 +31,11 @@ export default class DashBoard extends Component {
 					<NavBar />
 					<Container fluid>
 						<Row>
-							<Col md={2} className={styles.SideBar}>
+							<Col md={2}  className={styles.SideBar}>
 								<SideBar />
 							</Col>
 							<Col md={10}>
+								{console.log(this.state.result)}
 								<Container>
 									<Row>
 										<Cards name={this.state.result.name}/>

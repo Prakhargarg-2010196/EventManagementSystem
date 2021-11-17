@@ -96,9 +96,7 @@ class SignUpPage extends Component {
 				if (!error.response) {
 					console.log(JSON.stringify(error.message));
 				}
-
 				resMessage = error.response.data;
-
 				this.setState({
 					successful: false,
 					message: resMessage,

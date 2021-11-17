@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
 import { CategorySelect } from "./CategorySelect/CategorySelect";
+import { Loader } from "../../../../../../../Layout/Loader/Loader";
 import TimeField from "react-simple-timefield";
 import crudService from "../../../../../../../../api/services/crud-service";
 import styles from "./UpdateFormEvent.module.css";
@@ -20,20 +21,21 @@ const UpdateFormEvent = (props) => {
 		message: "",
 		successful: false,
 	});
+	const [isLoading, setLoading] = useState(true);
+
 	const { id } = useParams();
 	useEffect(() => {
 		async function getAllData() {
 			const response = await crudService.Read(id);
 			setContent(response.data.post.content);
-			setDateValue(response.data.post.date.split("T")[0])
-			setTimeValue(response.data.post.time)
-			setMoney(response.data.post.rate)
+			setDateValue(response.data.post.date.split("T")[0]);
+			setTimeValue(response.data.post.time);
+			setMoney(response.data.post.rate);
 		}
 		getAllData();
-	},[id]);
-	console.log(dateValue);
-	console.log(id);
-	
+		setLoading(false);
+	}, [id]);
+
 	const handleDateUpdate = (e) => {
 		const dateValue = e.target.value;
 		const dateValueInEpoch = new Date(dateValue).getTime();
@@ -58,12 +60,15 @@ const UpdateFormEvent = (props) => {
 			date: dateValue,
 			rate: money,
 		};
+		setLoading(true);
 
 		await crudService.Update(id, FileData).then(
 			(response) => {
 				setResMessage({
 					successful: true,
 				});
+				setLoading(false);
+				history.push("/ManageEvent");
 				console.log(id);
 				console.log(response.data);
 			},
@@ -81,120 +86,123 @@ const UpdateFormEvent = (props) => {
 	};
 
 	return (
-		!resMessage.successful && (
-			<Form className={styles.form}>
-				{/* Content */}
-				<Row className="mb-3">
-					<Col md={6} sm={12}>
-						<Form.Label className={styles.requiredField}>Content</Form.Label>
-					</Col>
-					<Col md={12} sm={8}>
-						<Form.Control
-							as="textarea"
-							rows={5}
-							defaultValue={content}
-							className="w-100"
-							onChange={(e) => {
-								setContent(e.target.value);
-							}}
-						/>
-					</Col>
-				</Row>
-
-				{/* Content end  */}
-
-				{/* Category start */}
-				<Row>
-					<Col xs={12} md={6}>
-						<Form.Label className={styles.requiredField}>Category</Form.Label>
-					</Col>
-					<Col xs={6} md={3}>
-						<CategorySelect  onSelect={setArray} />
-					</Col>
-				</Row>
-				{/* Category end */}
-
-				{/* Date start */}
-				<Row className="mt-4">
-					<Col md={6} sm={6}>
-						<Form.Label className={styles.requiredField}>Date</Form.Label>
-					</Col>
-					<Col md={6} sm={12}>
-						<input
-							className="form-control"
-							type="date"
-							defaultValue={dateValue}
-							onChange={(e) => handleDateUpdate(e)}
-						/>
-					</Col>
-				</Row>
-				{/* Date end */}
-
-				{/* Time */}
-				<Row className="mt-4">
-					<Col>
-						<Form.Label>Time(HH:MM) </Form.Label>
-					</Col>
-
-					<Col>
-						<TimeField
-							value={timeValue}
-							onChange={(e) => setTimeValue(e.target.value)}
-							className="w-25"
-							defaultValue={timeValue}
-						/>
-					</Col>
-				</Row>
-
-				{/* Money */}
-				<Row className="mt-5">
-					<Col md={6}>
-						<Form.Label className={styles.requiredField}>
-							Price(in INR)
-						</Form.Label>
-					</Col>
-					<Col md={6}>
-						<InputGroup className="">
-							<InputGroup.Text>₹</InputGroup.Text>
+		<>
+			{isLoading ? (
+				<Loader message={"Your Data is getting an updated"} />
+			) : (
+				<Form className={styles.form}>
+					{/* Content */}
+					<Row className="mb-3">
+						<Col md={6} sm={12}>
+							<Form.Label className={styles.requiredField}>Content</Form.Label>
+						</Col>
+						<Col md={12} sm={8}>
 							<Form.Control
-								aria-label="Amount (to the nearest rupee)"
-								className="w-50"
+								as="textarea"
+								rows={5}
+								defaultValue={content}
+								className="w-100"
 								onChange={(e) => {
-									setMoney(e.target.value);
+									setContent(e.target.value);
 								}}
-								defaultValue={money}
 							/>
-						</InputGroup>
-					</Col>
-				</Row>
-				{/* money end */}
+						</Col>
+					</Row>
 
-				<Button
-					variant="primary"
-					className={styles.button}
-					onClick={(e) => {
-						handleImagesSubmit(e);
-					}}
-					onKeyPress={(e) => {
-						handleKeyPress(e);
-					}}
-				>
-					Update images
-				</Button>
-				<Button
-					variant="primary"
-					className={styles.button}
-					onClick={(e) => {
-						handleSubmit(e);
-					}}
-					onKeyPress={(e) => {
-						handleKeyPress(e);
-					}}
-				>
-					Submit
-				</Button>
-			</Form>
-		)
+					{/* Content end  */}
+
+					{/* Category start */}
+					<Row>
+						<Col xs={12} md={6}>
+							<Form.Label className={styles.requiredField}>Category</Form.Label>
+						</Col>
+						<Col xs={6} md={3}>
+							<CategorySelect onSelect={setArray} />
+						</Col>
+					</Row>
+					{/* Category end */}
+
+					{/* Date start */}
+					<Row className="mt-4">
+						<Col md={6} sm={6}>
+							<Form.Label className={styles.requiredField}>Date</Form.Label>
+						</Col>
+						<Col md={6} sm={12}>
+							<input
+								className="form-control"
+								type="date"
+								defaultValue={dateValue}
+								onChange={(e) => handleDateUpdate(e)}
+							/>
+						</Col>
+					</Row>
+					{/* Date end */}
+
+					{/* Time */}
+					<Row className="mt-4">
+						<Col>
+							<Form.Label>Time(HH:MM) </Form.Label>
+						</Col>
+
+						<Col>
+							<TimeField
+								onChange={(e) => setTimeValue(e.target.value)}
+								className="w-25"
+								defaultValue={timeValue}
+							/>
+						</Col>
+					</Row>
+
+					{/* Money */}
+					<Row className="mt-5">
+						<Col md={6}>
+							<Form.Label className={styles.requiredField}>
+								Price(in INR)
+							</Form.Label>
+						</Col>
+						<Col md={6}>
+							<InputGroup className="">
+								<InputGroup.Text>₹</InputGroup.Text>
+								<Form.Control
+									aria-label="Amount (to the nearest rupee)"
+									className="w-50"
+									onChange={(e) => {
+										setMoney(e.target.value);
+									}}
+									defaultValue={money}
+								/>
+							</InputGroup>
+						</Col>
+					</Row>
+					{/* money end */}
+
+					<Button
+						variant="primary"
+						className={styles.button}
+						onClick={(e) => {
+							handleImagesSubmit(e);
+						}}
+						onKeyPress={(e) => {
+							handleKeyPress(e);
+						}}
+					>
+						Update images
+					</Button>
+					<Button
+						variant="primary"
+						className={styles.button}
+						onClick={(e) => {
+							handleSubmit(e);
+						}}
+						onKeyPress={(e) => {
+							handleKeyPress(e);
+						}}
+					>
+						Submit
+					</Button>
+				</Form>
+			)}
+		</>
 	);
 };
 export default UpdateFormEvent;

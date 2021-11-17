@@ -78,13 +78,15 @@ export const DragNDrop=(props)=> {
     maxFiles:(10-props.imagesLength),
     onDrop: acceptedFiles => {
       setFiles(acceptedFiles.map(file => Object.assign(file, {
-        preview: URL.createObjectURL(file),
+        preview:URL.createObjectURL(file),
        
       })));
       
     }
+    ,
+
+
   });
-  
   const thumbs = files.map(file => (
     <div style={thumb} key={file.name}>
       <div style={thumbInner}>
@@ -97,7 +99,7 @@ export const DragNDrop=(props)=> {
       </div>
     </div>
   ));
-
+  
   useEffect(() => () => {
     // Make sure to revoke the data uris to avoid memory leaks
     files.forEach(file => URL.revokeObjectURL(file.preview));
@@ -110,8 +112,8 @@ export const DragNDrop=(props)=> {
         <input {...getInputProps()} />
         <p>Drag & drop maximum of {10-props.imagesLength} files here, or click to select  multiple files at a time </p>
       </Container>
-      <aside style={thumbsContainer}>
-        {thumbs}
+      <aside style={thumbsContainer} >
+      {thumbs}
       </aside>  
     </div>
   );

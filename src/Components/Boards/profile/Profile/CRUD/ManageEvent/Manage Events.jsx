@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import Button from "@mui/material/Button";
 import CrudService from "../../../../../../api/services/crud-service";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Loader } from "../../../../../Layout/Loader/Loader";
 import { NavBar } from "../../../../../Layout/Home/NavBar/NavBar";
 import Paper from "@mui/material/Paper";
 import { SideBar } from "../../SideBar/sidebar";
@@ -13,12 +14,12 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import crudService from "../../../../../../api/services/crud-service";
 import styles from "./ManageEvents.module.css";
 
 export default class ManageEvent extends Component {
 	defaultState = {
 		events: [],
+		isLoading: true,
 	};
 
 	constructor(props) {
@@ -26,6 +27,7 @@ export default class ManageEvent extends Component {
 		this.state = this.defaultState;
 	}
 	async componentDidMount() {
+		this.setState({ isLoading: true });
 		await CrudService.ReadEvents().then(
 			(response) => {
 				this.setState({ events: response.data });
@@ -44,6 +46,7 @@ export default class ManageEvent extends Component {
 				});
 			}
 		);
+		this.setState({ isLoading: false });
 	}
 	onUpdate(e, eventItemId) {
 		console.log("hi");
@@ -52,16 +55,37 @@ export default class ManageEvent extends Component {
 			pathname: `/UpdateEvent/${eventItemId}`,
 		});
 	}
-	onDelete(e, eventItemId) {
-		console.log("hi");
+	async onDelete(e, eventItemId) {
 		e.preventDefault();
-		crudService.Delete(eventItemId);
+		this.setState({ isLoading: true });
+		await CrudService.Delete(eventItemId);
+
+		await CrudService.ReadEvents().then(
+			(response) => {
+				this.setState({ events: response.data });
+			},
+			(error) => {
+				let resMessage = "";
+				if (!error.response) {
+					console.log(JSON.stringify(error.message));
+				}
+
+				resMessage = error.response.data;
+
+				this.setState({
+					successful: false,
+					message: resMessage,
+				});
+			}
+		);
+		this.setState({ isLoading: false });
 	}
 	render() {
 		return (
 			<>
 				<div className={styles.container}>
 					<NavBar />
+
 					<Container fluid>
 						<Row>
 							<Col md={2} className={styles.SideBar}>
@@ -74,61 +98,64 @@ export default class ManageEvent extends Component {
 									</Row>
 									<Row>
 										<TableContainer component={Paper}>
-											<Table sx={{ minWidth: 650 }} aria-label="simple table">
-												<TableHead>
-													<TableRow>
-														<TableCell align="left">Event Name</TableCell>
-														<TableCell align="center">Category</TableCell>
-														<TableCell align="right">Cost</TableCell>
-														<TableCell align="right">Date & Time</TableCell>
-														<TableCell align="center">Edit</TableCell>
-														<TableCell align="center">Delete</TableCell>
-													</TableRow>
-												</TableHead>
-												<TableBody>
-													{this.state.events.map((eventItem) => (
-														<TableRow
-															key={eventItem._id}
-															sx={{
-																"&:last-child td, &:last-child th": {
-																	border: 0,
-																},
-															}}
-														>
-															<TableCell component="th" scope="row">
-																<Link to="">{eventItem.title}</Link>
-															</TableCell>
-															<TableCell align="center">
-																{eventItem.category.join(",")}
-															</TableCell>
-															<TableCell align="center"></TableCell>
-															<TableCell align="center"></TableCell>
-															<TableCell align="center">
-																<Button
-																	variant="contained"
-																	onClick={(e) => {
-																		this.onUpdate(e, eventItem._id);
-																		// console.log({eventItem}._id);
-																	}}
-																>
-																	Edit
-																</Button>
-															</TableCell>
-
-															<TableCell align="center">
-																<Button
-																	variant="contained"
-																	onClick={(e) => {
-																		this.onDelete(e, eventItem._id);
-																	}}
-																>
-																	Delete
-																</Button>
-															</TableCell>
+											{this.state.isLoading ? (
+												<Loader message={"Your Content is Loading"} />
+											) : (
+												<Table sx={{ minWidth: 650 }} aria-label="simple table">
+													<TableHead>
+														<TableRow>
+															<TableCell align="center">Event Name</TableCell>
+															<TableCell align="center">Category</TableCell>
+															<TableCell align="center">Cost</TableCell>
+															<TableCell align="center">Date & Time</TableCell>
+															<TableCell align="center">Edit</TableCell>
+															<TableCell align="center">Delete</TableCell>
 														</TableRow>
-													))}
-												</TableBody>
-											</Table>
+													</TableHead>
+													<TableBody>
+														{this.state.events.map((eventItem) => (
+															<TableRow
+																key={eventItem._id}
+																sx={{
+																	"&:last-child td, &:last-child th": {
+																		border: 0,
+																	},
+																}}
+															>
+																<TableCell component="th" scope="row">
+																	<Link to="">{eventItem.title}</Link>
+																</TableCell>
+																<TableCell align="center">
+																	{eventItem.category.join(",")}
+																</TableCell>
+																<TableCell align="center">{eventItem.rate}</TableCell>
+																<TableCell align="center">{eventItem.date.split("T")[0]}  &  {eventItem.time}</TableCell>
+																<TableCell align="center">
+																	<Button
+																		variant="contained"
+																		onClick={(e) => {
+																			this.onUpdate(e, eventItem._id);
+																		}}
+																	>
+																		Edit
+																	</Button>
+																</TableCell>
+
+																<TableCell align="center">
+																	<Button
+																		variant="contained"
+																		onClick={(e) => {
+																			this.onDelete(e, eventItem._id);
+																		}}
+																	>
+																		Delete
+																	</Button>
+																</TableCell>
+															</TableRow>
+														))}
+													</TableBody>
+												</Table>
+											)}
 										</TableContainer>
 									</Row>
 								</Container>
