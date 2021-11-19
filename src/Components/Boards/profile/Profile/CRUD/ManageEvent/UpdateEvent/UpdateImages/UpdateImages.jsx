@@ -4,7 +4,6 @@ import React, { Component } from "react";
 import { NavBar } from "../../../../../../../Layout/Home/NavBar/NavBar";
 import { SideBar } from "../../../../SideBar/sidebar";
 import UpdateImagesEvent from "./UpdateImagesEvent/UpdateImagesEvent"
-import crudService from "../../../../../../../../api/services/crud-service";
 import styles from "./UpdateImage.module.css";
 
 export default class UpdateEvent extends Component {

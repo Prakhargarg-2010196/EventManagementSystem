@@ -41,35 +41,32 @@ class ChangePass extends Component {
 
     handleBlur(e) {
         e.preventDefault();
-        const regPassword = /^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$/;
         let newPasswordErr = "";
         let confirmPasswordErr = "";
 
-        if (!this.state.newPassword || regPassword.test(this.state.newPassword) === false)
-            newPasswordErr = " new Pass Field is Invalid ";
-        if (!this.state.newPassword)
-            newPasswordErr = " new Pass field is required";
-        if (!this.state.confirmPassword || regPassword.test(this.state.confirmPassword) === false)
-            confirmPasswordErr = "confirm Pass Field is Invalid ";
-        if (!this.state.confirmPassword)
+        if (this.state.newPassword< 8) 
+            newPasswordErr = "New Pass Field is Invalid";
+        if (this.state.newPassword==="")
+            newPasswordErr = "new Pass field is required";
+        if (this.state.confirmPassword<8)
+            confirmPasswordErr = "Confirm Pass Field is Invalid ";
+        if (this.state.confirmPassword==="")
             confirmPasswordErr = "confirm Pass field is required";
 
         this.setState({ ...this.state, [e.target.name]: e.target.value, newPasswordErr, confirmPasswordErr });
-
         
     }
     handleFocus(e) {
         e.preventDefault();
-        const regPassword = /^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$/;
         let newPasswordErr = "";
         let confirmPasswordErr = "";
 
-        if (!this.state.newPassword || regPassword.test(this.state.newPassword) === false)
-            newPasswordErr = "new Pass Field is Invalid ";
+        if (this.state.newPassword< 8) 
+            newPasswordErr = "New Pass Field is Invalid";
         if (!this.state.newPassword)
             newPasswordErr = "new Pass field is required";
-        if (!this.state.confirmPassword || regPassword.test(this.state.confirmPassword) === false)
-            confirmPasswordErr = "confirm Pass Field is Invalid ";
+        if (this.state.confirmPassword<8)
+            confirmPasswordErr = "Confirm Pass Field is Invalid ";
         if (!this.state.confirmPassword)
             confirmPasswordErr = "confirm Pass field is required";
 
@@ -99,7 +96,7 @@ class ChangePass extends Component {
             (error) => {
                 let resMessage = "";
 				if (!error.response) {
-					resMessage = JSON.stringify(error.message);
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
 					this.setState({
 						message: resMessage,
 						successful: false,
@@ -145,7 +142,7 @@ class ChangePass extends Component {
                     !this.state.successful && (<Form className='d-flex flex-column m-4 justify-content-center'>
 
                         <h1 className='text-center'>Change Password</h1>
-
+                        <span className='small'>Both passwords must be at least 8 characters long</span>
                         <Form.Group className={styles.formGroup} controlId="formBasicPassword">
 
                             <FloatingLabel controlId="floatingPassword" label="newPassword">

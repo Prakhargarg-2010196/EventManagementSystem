@@ -19,9 +19,14 @@ export const SideBar = () => {
 	return (
 		<>
 			<nav className={styles.nav}>
-				<List sx={style} component="nav" aria-label="mailbox folders">
+				<List sx={style} component="nav" >
 					<NavLink className={styles.link} to="/DashBoard">
 						<ListItem className={styles.listItem} button divider> DashBoard</ListItem>
+					</NavLink>
+					<Divider />
+					<Divider />
+					<NavLink className={styles.link} to="/CreateEvent">
+						<ListItem button className={styles.listItem} divider>Create event</ListItem>
 					</NavLink>
 					<Divider />
 					<Divider />
@@ -32,14 +37,14 @@ export const SideBar = () => {
 					</NavLink>
 					<Divider />
 					<Divider />
-					<NavLink className={styles.link} to="/CreateEvent">
-						<ListItem button className={styles.listItem} divider>Create event</ListItem>
+					<NavLink className={styles.link} to="/RegisteredEvents">
+						<ListItem button className={styles.listItem} divider>Registered Events</ListItem>
 					</NavLink>
-					<Divider />
-					<Divider />
 					<NavLink className={styles.link} to="/BookMarkedEvents">
 						<ListItem button className={styles.listItem} divider>Bookmarked Events</ListItem>
 					</NavLink>
+					<Divider />
+					<Divider />
 				</List>
 				<Button
 					variant="contained"

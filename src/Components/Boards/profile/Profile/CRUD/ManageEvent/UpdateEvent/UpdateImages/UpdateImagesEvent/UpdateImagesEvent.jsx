@@ -14,13 +14,27 @@ const UpdateImagesEvent = () => {
 	const [result, setResult] = useState({});
 	const [isLoading, setLoading] = useState(true);
 	const [isAdded, setAdded] = useState(false);
+	const [message, setMessage] = useState("");
+	const [successful, setSuccess] = useState(false);
 	let imgPath = [];
 	let imageUrlUpdate = [];
 	useEffect(() => {
 		async function getAllimages() {
-			const response = await crudService.Read(id);
-			setResult(response.data.post);
-			setLoading(false);
+			await crudService.Read(id).then(
+				(response) => {
+					setResult(response.data.post);
+					setSuccess(true);
+					setLoading(false);
+				},
+				(error) => {
+					let resMessage = "";
+					if (!error.response) {
+						console.log(JSON.stringify(error.message));
+					} else resMessage = error.response.data;
+					setSuccess(false);
+					setMessage(resMessage);
+				}
+			);
 		}
 		getAllimages();
 	}, []);
@@ -37,7 +51,7 @@ const UpdateImagesEvent = () => {
 		console.log(imageUrl);
 		setLoading(true);
 		await postsService.DeleteImage(id, imageUrl);
- 
+
 		const response = await crudService.Read(id);
 		setResult(response.data.post);
 		setLoading(false);
@@ -50,7 +64,17 @@ const UpdateImagesEvent = () => {
 			FileData.append("files", file);
 		});
 		setLoading(true);
-		await postsService.AddImage(id, FileData);
+		await postsService.AddImage(id, FileData).then(
+			(response) => {},
+			(error) => {
+				let resMessage = "";
+				if (!error.response) {
+					console.log(JSON.stringify(error.message));
+				} else resMessage = error.response.data;
+				setSuccess(false);
+				setMessage(resMessage);
+			}
+		);
 		console.log(isAdded);
 		const response = await crudService.Read(id);
 		setResult(response.data.post);
@@ -68,25 +92,27 @@ const UpdateImagesEvent = () => {
 							<Form.Label className={styles.requiredField}>
 								Your Images
 							</Form.Label>
-							{imageUrlUpdate.map((image, index) => (
-								<div className="d-flex justify-content-between" key={index}>
-									<img
-										src={image}
-										width={200}
-										style={{ marginBottom: "10px" }}
-										alt=""
-									/>
-									<Button
-										style={{height:"20%" }}
-										onClick={(e) => {
-											handleDelete(e, id, image);
-										}}
-									>
-										{" "}
-										Delete
-									</Button>
-								</div>
-							))}
+							<div className="d-flex flex-wrap justify-content-between m-2">
+								{imageUrlUpdate.map((image, index) => (
+									<div key={index} className="m-3">
+										<img
+											src={image}
+											width={100}
+											style={{ margin: "auto" }}
+											alt=""
+										/>
+										<Button
+											style={{ width: "100%", marginTop: "10px" }}
+											onClick={(e) => {
+												handleDelete(e, id, image);
+											}}
+										>
+											{" "}
+											Delete
+										</Button>
+									</div>
+								))}
+							</div>
 						</Col>
 						<Col>
 							<Form.Label className={styles.requiredField}>
@@ -108,8 +134,15 @@ const UpdateImagesEvent = () => {
 							</Button>
 						</Col>
 					</Row>
+					{message && (
+						<div className="form-group mt-4">
+							<div className="alert alert-danger" role="alert">
+								{message}
+							</div>
+						</div>
+					)}
 				</Form>
-			)}	
+			)}
 		</>
 	);
 	/* DragDrop END */

@@ -14,9 +14,11 @@ class AuthService{
     isAuthenticated(){
         return JSON.parse(localStorage.getItem('isAuthenticatedLogin'));
     }
-    
+    isAdmin(){
+        return JSON.parse(localStorage.getItem('isAuthenticatedAdminLogin'));
+    }
     logOut(){
-        localStorage.removeItem("user2");    
+        localStorage.removeItem("user2");
         localStorage.removeItem("isAuthenticatedLogin");    
     }
    

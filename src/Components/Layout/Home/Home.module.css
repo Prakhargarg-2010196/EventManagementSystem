@@ -7,10 +7,10 @@
 }
 .Search{
     background: #D1D4E8;
-    padding:20px;
     display: flex;
-    justify-content: center;
-    
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
 }
 @media (max-width:480px) {
     .container{

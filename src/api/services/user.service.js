@@ -7,7 +7,7 @@ class UserService{
         return axios.get(BaseUrl()+"post/dashboard",{headers:authHeader()})
     }
     getAdminBoard() {
-        return axios.get(BaseUrl() + 'adminLogin', { headers: authHeader() });
+        return axios.get(BaseUrl() + 'admin/view', { headers: authHeader() });
       }
 }
 export default new UserService();

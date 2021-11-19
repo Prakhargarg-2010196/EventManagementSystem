@@ -74,7 +74,19 @@ class OtpPasswordReset extends Component {
 		const user = {
 			email: this.props.history.location.state.email,
 		};
-		await AuthService.ResetPass(user).then((res) => {});
+		await AuthService.ResetPass(user).then(
+			(res) => {},
+			(error) => {
+				let resMessage = "";
+				if (!error.response) {
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+				} else resMessage = error.response.data;
+				this.setState({
+					message: resMessage,
+					successful: false,
+				});
+			}
+		);
 	};
 
 	handleSubmit = async (e) => {
@@ -108,13 +120,12 @@ class OtpPasswordReset extends Component {
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
-					resMessage = JSON.stringify(error.message);
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
 					this.setState({
 						message: resMessage,
 						successful: false,
 					});
-				}
-				else if (error.response.status === 401) {
+				} else if (error.response.status === 401) {
 					this.setState({
 						message: error.response.data,
 						successful: false,
@@ -122,6 +133,12 @@ class OtpPasswordReset extends Component {
 				} else if (error.response.status === 402) {
 					this.setState({
 						message: error.response.data + "\nEnter Again",
+						successful: false,
+					});
+				} else {
+					resMessage = error.response.data;
+					this.setState({
+						message: resMessage,
 						successful: false,
 					});
 				}

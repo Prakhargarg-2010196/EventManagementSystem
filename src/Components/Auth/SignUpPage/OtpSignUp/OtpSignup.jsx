@@ -69,6 +69,7 @@ class OtpSignUp extends Component {
 	}
 
 	handleResendOtp = async (e) => {
+		
 		e.preventDefault();
 		this.handleKeyPress(e);
 		const user = {
@@ -76,7 +77,22 @@ class OtpSignUp extends Component {
 			password: this.props.history.location.state.password,
 			email: this.props.history.location.state.email,
 		};
-		await AuthService.SignUp(user).then((res) => {});
+		await AuthService.SignUp(user).then(
+			(response) => {
+				
+			},
+			(error) => {
+				let resMessage = "";
+				if (!error.response) {
+					console.log(JSON.stringify(error.message).replace(/^"|"$/g, ""));
+				}
+				resMessage = error.response.data;
+				this.setState({
+					successful: false,
+					message: resMessage,
+				});
+			}
+		);
 	};
 
 	handleSubmit = async (e) => {
@@ -102,14 +118,17 @@ class OtpSignUp extends Component {
 
 				if (response.data.token) {
 					const { token } = response.data;
-					localStorage.setItem("user", JSON.stringify(token));
+					localStorage.setItem("user2", JSON.stringify(token));
 				}
-				if (this.state.successful) this.props.history.push("/DashBoard");
+				if (this.state.successful) {
+					localStorage.setItem("isAuthenticatedLogin", true);
+					this.props.history.push("/DashBoard");
+				}
 			},
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
-					resMessage = JSON.stringify(error.message).replace(/^"|$/g, '');
+					resMessage = JSON.stringify(error.message).replace(/^"|$/g, "");
 					this.setState({
 						message: resMessage,
 						successful: false,
@@ -169,7 +188,8 @@ class OtpSignUp extends Component {
 						<Button
 							variant="primary"
 							className={styles.buttonSignUp}
-							onClick={(e) => this.handleResendOtp(e)}
+							onClick={(e) => {
+								this.handleResendOtp(e)}}
 							onKeyPress={(e) => this.handleKeyPress(e)}
 						>
 							resend otp

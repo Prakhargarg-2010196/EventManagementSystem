@@ -1,76 +1,85 @@
-
-img{
-    margin:0;
-    padding:0;
+img {
+    margin: 0;
+    padding: 0;
     display: inline-block;
 }
-.container{
-    background: url(../../../assets/loginbg.png) no-repeat  ;
-    width:100vw;
+
+.container {
+    background: url(../../../assets/loginbg.png) no-repeat;
+    width: 100vw;
     height: 100vh;
     background-position: center 100px center;
     background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-position:cover;
+    background-position: cover;
 }
-.calendarImage{
+
+.calendarImage {
     display: none;
     align-self: center;
 }
-.formGroup{
-    width:100%;
-    margin:20px 0;
+
+.formGroup {
+    width: 100%;
+    margin: 20px 0;
 }
-.button:hover{
-    box-shadow: 0px 7px 5px -2px rgb(40, 39, 43) ;
+
+.button:hover {
+    box-shadow: 0px 7px 5px -2px rgb(40, 39, 43);
 }
-.form{
-    display:flex;
+
+.form {
+    display: flex;
     flex-direction: column;
 }
-.button{
+
+.button {
     user-select: none;
-    
+
     margin-top: 10px;
 }
-.Navbar{
-    background-color: #7C64EF;
+
+.Navbar {
+    background: #28BFF5;
+
     width: 100%;
     align-self: flex-start;
     position: fixed;
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
 }
-.navLinks{
+
+.navLinks {
     user-select: none;
     text-decoration: none;
-    color:aliceblue;
-    align-self: center; 
-}
-.navLinks:hover{
-    color:aliceblue;
+    color: aliceblue;
+    align-self: center;
 }
 
-@media only screen and (max-width:490px)
-{
+.navLinks:hover {
+    color: aliceblue;
+}
 
-    .container{
-        background:#fff 0px; 
+@media only screen and (max-width:490px) {
+
+    .container {
+        background: #fff 0px;
         display: flex;
         flex-direction: column;
     }
 
-        .calendarImage{
-        display:block;
+    .calendarImage {
+        display: block;
         width: 100vw;
     }
-    .form{
-        display:flex;
+
+    .form {
+        display: flex;
         flex-direction: column;
-        padding:0 40px;
-    }   
-    
-    
+        padding: 0 40px;
+    }
+
+
 }
