@@ -89,25 +89,15 @@ class PasswordReset extends Component {
 			(error) => {
 				let resMessage="";
 				if(!error.response){
-					resMessage=JSON.stringify(error.message);
-					this.setState({
-						message:resMessage,
-						successful:false,
-					})
+					resMessage=JSON.stringify(error.message).replace(/^"|"$/g, "");
 				}
-				else if (error.response.status === 401) {
-					this.setState({
-						message: error.response.data,
-						successful: false,
-					});
-				} else if (error.response.status === 422) {
-					this.setState({
-						message: error.response.data,
-						successful: false,
-					});
-				}
+				else resMessage=error.response.data;
+				this.setState({
+					message:resMessage,
+					successful:false,
+				})
 			}
-		);
+			);
 	}
 	handleKeyPress(e) {
 		if (e.key === "Enter") e.preventDefault();

@@ -9,7 +9,8 @@
 }
 
 .form {
-
+    border: 0.5px solid rgb(206, 198, 198);
+    padding:60px;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -18,5 +19,6 @@
 .button {
     width: 40%;
     align-self: center;
-    margin-top: 40px;
+    margin-top: 30px;
+    margin-bottom: 20px;
 }

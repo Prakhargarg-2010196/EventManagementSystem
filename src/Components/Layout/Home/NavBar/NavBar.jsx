@@ -1,20 +1,25 @@
 import { Container, Image, Nav, Navbar } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
 import Avatar from "@mui/material/Avatar";
 import Logo from "../../../../assets/logo.png";
+import { NavLink } from "react-router-dom";
 import authService from "../../../../api/services/auth.service";
 import styles from "./NavBar.module.css";
 import userService from "../../../../api/services/user.service";
 
 export const NavBar = () => {
-	const [result, setResult] = useState();
+	const [result, setResult] = useState("");
 	useEffect(() => {
-		userService.getUserBoard().then((res) => {
-			const result = res.data.letter;
-			setResult(result.toUpperCase());
-		});
+		if (authService.isAuthenticated()) {
+			userService.getUserBoard().then((res) => {
+				let result = res.data.letter;
+				if (res.data.letter) {
+					result = result.toUpperCase();
+					setResult(result);
+				}
+			});
+		}
 	}, []);
 
 	return (
@@ -38,8 +43,8 @@ export const NavBar = () => {
 						<NavLink to="/" className={styles.navLinks}>
 							Home
 						</NavLink>
-						<NavLink to="/DashBoard" className={styles.navLinks}>
 							{authService.isAuthenticated() ? (
+						<NavLink to="/DashBoard" className={styles.navLinks}>
 								<Avatar
 									sx={{
 										bgcolor: "aliceblue",
@@ -51,12 +56,12 @@ export const NavBar = () => {
 								>
 									{result}
 								</Avatar>
+						</NavLink>
 							) : (
 								<NavLink to="/LogInPage" className={styles.navLinks}>
 									Login
 								</NavLink>
 							)}
-						</NavLink>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

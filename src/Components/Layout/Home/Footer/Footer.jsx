@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import { maxWidth, textAlign } from "@mui/system";
-
 import AppleIcon from "@mui/icons-material/Apple";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";

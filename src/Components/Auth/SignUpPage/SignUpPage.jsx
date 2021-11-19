@@ -79,10 +79,9 @@ class SignUpPage extends Component {
 		await AuthService.SignUp(user).then(
 			(response) => {
 				this.setState({
-					message: response.data,
+					// message: response.data,
 					successful: true,
 				});
-
 				if (this.state.successful) {
 					this.props.history.push({
 						pathname: "/OtpSignUp",
@@ -94,7 +93,7 @@ class SignUpPage extends Component {
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
-					console.log(JSON.stringify(error.message));
+					console.log(JSON.stringify(error.message).replace(/^"|"$/g, "") );
 				}
 				resMessage = error.response.data;
 				this.setState({

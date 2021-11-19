@@ -1,6 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 
-import AdminDashBoard from "../Components/Boards/profile/Admin/AdminDashBoard";
+import AdminDashBoard from "../Components/Boards/profile/Admin/AdminDashBoard/AdminDashBoard";
 import BookMarkedEvents from "../Components/Boards/profile/Profile/BookMarkedEvents/BookMarkedEvents";
 import CardCarousel from "../Components/Layout/Home/CardCarousel/CardCarousel";
 import ChangePass from "../Components/Auth/ChangePass/ChangePass";
@@ -16,6 +16,8 @@ import OtpPasswordReset from "../Components/Auth/PasswordReset/OtpPasswordReset/
 import OtpSignUp from "../Components/Auth/SignUpPage/OtpSignUp/OtpSignup.jsx";
 import PasswordResetPage from "../Components/Auth/PasswordReset/PasswordReset";
 import ProtectedRoute from "../Routes/protectedRoutes";
+import RegisteredEvents from "../Components/Boards/profile/Profile/RegisteredEvents/RegisteredEvents";
+import SearchPage from "../Components/Layout/SearchPage/SearchPage";
 import SignUpPage from "../Components/Auth/SignUpPage/SignUpPage";
 import UpdateEvent from "../Components/Boards/profile/Profile/CRUD/ManageEvent/UpdateEvent/UpdateEvent";
 import UpdateFormEvent from "../Components/Boards/profile/Profile/CRUD/ManageEvent/UpdateEvent/UpdateFormEvent/UpdateFormEvent";
@@ -26,16 +28,20 @@ export const Routes = () => {
 	return (
 		<Switch>
 			<Route path="/" exact component={Home}></Route>
-			<ProtectedRoute
+			<Route path="/SearchPage" exact component={SearchPage}></Route>
+			<Route path="/RegisteredEvents" exact component={RegisteredEvents}></Route>
+			<Route path="/BookMarkedEvents" exact component={BookMarkedEvents}></Route>
+			
+			<Route
 				path="/PasswordResetPage"
 				exact
 				component={PasswordResetPage}
 			/>
 			<Route path="/LogInPage" exact component={LoginPage}></Route>
-			<ProtectedRoute path="/SignUpPage" exact component={SignUpPage} />
-			<ProtectedRoute path="/ChangePass" exact component={ChangePass} />
-			<ProtectedRoute path="/OtpSignUp" exact component={OtpSignUp} />
-			<ProtectedRoute
+			<Route path="/SignUpPage" exact component={SignUpPage} />
+			<Route path="/ChangePass" exact component={ChangePass} />
+			<Route path="/OtpSignUp" exact component={OtpSignUp} />
+			<Route
 				path="/OtpPasswordReset"
 				exact
 				component={OtpPasswordReset}
@@ -71,11 +77,11 @@ export const Routes = () => {
 				exact
 				component={UpdateImages}
 			></ProtectedRoute>
-			<ProtectedRoute
-				path="/EventPage"
+			<Route
+				path="/EventPage/:id"
 				exact
 				component={EventPage}
-			></ProtectedRoute>
+			></Route>
 			<Route path="/CheckoutPage" exact component={CheckoutPage}></Route>
 			<Route path="/CardCarousel" exact component={CardCarousel}></Route>
 			<Route

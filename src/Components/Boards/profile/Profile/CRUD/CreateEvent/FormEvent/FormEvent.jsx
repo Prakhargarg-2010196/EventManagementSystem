@@ -22,32 +22,32 @@ const FormEvent = (props) => {
 	const [City, setCity] = useState("");
 	const [Address, setAddress] = useState("");
 	const [money, setMoney] = useState();
-	const [Files, setFilesArray] = useState({});
+	const [Files, setFilesArray] = useState([]);
 	const history = useHistory();
-	const [resMessage, setResMessage] = useState({
-		message: "",
-		successful: false,
-	});
+	const [message, setMessage] = useState("");
+	const [successful, setSuccess] = useState(false);
 	const [isLoading, setLoading] = useState(false);
-	console.log(Categories);
-	console.log(Files);
 	const handleDateUpdate = (e) => {
 		const dateValue = e.target.value;
+		const dateValueToBe = new Date(dateValue);
 		const dateValueInEpoch = new Date(dateValue).getTime();
-		setDateValue(dateValueInEpoch);
+		const currentDate = new Date();
+		if (
+			dateValueToBe.getDate() - currentDate.getDate() >= 0 &&
+			dateValueToBe.getMonth() + 1 - currentDate.getMonth() + 1 >= 0 &&
+			dateValueToBe.getFullYear() - currentDate.getFullYear() >= 0
+		)
+			setDateValue(dateValueInEpoch);
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		handleKeyPress(e);
-
 		const isOnline = optionValue === "Online" ? true : false;
 		const venueORlink = optionValue === "Offline" ? Address : Url;
 		const city = optionValue === "Offline" ? City : "Online";
 		var FileData = new FormData();
 		Files.forEach((file) => {
-			console.log(file);
-			console.log(file.name);
 			FileData.append("files", file);
 		});
 
@@ -67,20 +67,19 @@ const FormEvent = (props) => {
 		setLoading(true);
 		await crudService.Create(FileData).then(
 			(response) => {
-				history.push("/ManageEvent");
-				setResMessage({
-					successful: true,
-				});
+				setSuccess(true);
 				setLoading(false);
+				history.push("/ManageEvent");
 			},
 			(error) => {
+				let message = "";
 				if (error.response.status === 401 || error.response.data === 402)
 					history.push("/LogInPage");
-				const respondMessage = error.response.data;
-				setResMessage({
-					successful: false,
-					message: respondMessage,
-				});
+				else if (!error.response) {
+					message = JSON.stringify(error.message).replace(/^"|"$/g, "");
+				} else message = error.response.data;
+				setMessage(message);
+				setLoading(false);
 			}
 		);
 	};
@@ -94,16 +93,17 @@ const FormEvent = (props) => {
 				<Loader message={"Your Data is being uploaded please wait "} />
 			) : (
 				<Container>
-					<Row className="mt-4">
+					<h1 style={{ textAlign: "center" }}>Create Events</h1>
+					<Row className="mt-5">
 						{/* DragDrop */}
-						<Col md={5}>
+						<Col md={6}>
 							<Row>
 								<Form.Label className={styles.requiredField}>
 									Browse select one at a time or select multiple or drop
 									multiple{" "}
 								</Form.Label>
 
-								<DragNDrop onGet={setFilesArray} />	
+								<DragNDrop onGet={setFilesArray} />
 							</Row>
 							{/* Content */}
 							<Row className="mt-5">
@@ -122,7 +122,7 @@ const FormEvent = (props) => {
 							{/* Content end  */}
 						</Col>
 						{/* DragDrop END */}
-						<Col md={7}>
+						<Col md={6}>
 							<Form className={styles.form}>
 								{/* Title */}
 								<Row className="mb-3">
@@ -176,7 +176,7 @@ const FormEvent = (props) => {
 
 									<Col>
 										<TimeField
-											value={timeValue}
+											defaultValue={timeValue}
 											onChange={(e) => setTimeValue(e.target.value)}
 											className="w-25"
 										/>
@@ -317,6 +317,16 @@ const FormEvent = (props) => {
 									onClick={(e) => {
 										handleSubmit(e);
 									}}
+									disabled={
+										!title ||
+										!content ||
+										!Categories ||
+										!dateValue ||
+										!timeValue ||
+										!optionValue ||
+										!money ||
+										Files.length === 0
+									}
 									onKeyPress={(e) => {
 										handleKeyPress(e);
 									}}
@@ -326,6 +336,18 @@ const FormEvent = (props) => {
 							</Form>
 						</Col>
 					</Row>
+					{message && (
+						<div className="form-group mt-2">
+							<div
+								className={
+									successful ? "alert alert-success" : "alert alert-danger"
+								}
+								role="alert"
+							>
+								{message}
+							</div>
+						</div>
+					)}
 				</Container>
 			)}
 		</>

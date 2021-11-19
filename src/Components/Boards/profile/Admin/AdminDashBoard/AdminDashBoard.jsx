@@ -1,43 +1,28 @@
-import "react-calendar/dist/Calendar.css";
-
 import { Col, Container, Row } from "react-bootstrap";
 import React, { Component } from "react";
 
-import Calendar from "react-calendar";
-import Cards from "./card.jsx";
+import {AdminSideBar} from "../AdminSidebar/AdminSideBar";
+import Calendar from "react-calendar/dist/umd/Calendar";
+import Cards from "../card.jsx";
 import { NavBar } from "../../../../Layout/Home/NavBar/NavBar";
-import { SideBar } from "../SideBar/sidebar";
-import styles from "./DashBoard.module.css";
-import userService from "../../../../../api/services/user.service.js";
+import styles from "./AdminDashBoard.module.css";
 
-export default class DashBoard extends Component {
+// import userService from "../../../../../api/services/user.service";
+
+export default class AdminDashBoard extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			date: new Date(),
 			result: {},
-			isLoading: true,
 		};
 	}
-	async componentDidMount() {
-		await userService.getUserBoard().then(
-			(res) => {
-				const result = res.data.user;
-				this.setState({ result: result });
-			},
-			(error) => {
-				let resMessage = "";
-				if (!error.response) {
-					resMessage = JSON.stringify(error.message);
-				} else resMessage = error.response.data;
-
-				this.setState({
-					successful: false,
-					message: resMessage,
-				});
-			}
-		);
+	componentDidMount() {
+		// userService.getAdminBoard().then((res)=>{
+		// 	const result=res.data;
+		// 	this.setState({result});
+		// })
 	}
 
 	render() {
@@ -48,12 +33,12 @@ export default class DashBoard extends Component {
 					<Container fluid>
 						<Row>
 							<Col md={2} className={styles.SideBar}>
-								<SideBar />
+								<AdminSideBar />
 							</Col>
 							<Col md={10}>
 								<Row>
 									<Col md={6}>
-										<Cards name={this.state.result.name} />
+										<Cards />
 									</Col>
 									<Col md={6}>
 										<Calendar
@@ -89,13 +74,6 @@ export default class DashBoard extends Component {
 								</Row>
 							</Col>
 						</Row>
-						{this.state.message && (
-							<div className="form-group mt-4">
-								<div className="alert alert-danger" role="alert">
-									{this.state.message}
-								</div>
-							</div>
-						)}
 					</Container>
 				</div>
 			</>

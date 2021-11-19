@@ -1,10 +1,7 @@
 import {
-	Button,
 	Card,
-	CardContent,
 	CardHeader,
 	CardMedia,
-	Typography,
 } from "@mui/material";
 
 import bgimageOne from "../../../../assets/carouselbg.png";

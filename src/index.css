@@ -1,8 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Rufina:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@1,700&family=Rufina:wght@700&display=swap');
-h1,h2,h3,h4,h5,h6,a,p,aside,div,label{
+h1,h2,h3,h4,h5,h6{
     font-family:  'Rufina', serif;
+    /* font-size: small; */
 }
-body,html{
+body,html,p,aside,label,input{
     font-family:'PT Serif', serif;
 }
+/* input:required:invalid, input:focus:invalid {
+    background-image: url(./assets/invalid.png);
+    background-position: right top;
+    background-repeat: no-repeat;
+  }
+  input:required:valid {
+    background-image: url(./assets/valid.png);
+    background-position: right top;
+    background-repeat: no-repeat;
+  } */

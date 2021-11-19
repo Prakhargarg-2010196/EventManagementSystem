@@ -1,7 +1,5 @@
 import { Carousel } from "react-bootstrap";
 import bgimageOne from "../../../../assets/carouselbg.png";
-import bgimageThree from "../../../../assets/2.png";
-import bgimageTwo from "../../../../assets/1.png";
 import styles from "./Caraousel.module.css";
 const CarouselMain = () => {
 	return (

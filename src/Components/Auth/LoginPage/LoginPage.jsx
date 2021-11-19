@@ -2,6 +2,7 @@ import { Button, FloatingLabel, Form } from "react-bootstrap";
 import React, { Component } from "react";
 
 import AuthService from "../../../api/services/auth.service";
+import { BaseUrl } from "../../../api/services/BaseUrl";
 import CalendarMobile from "../../../assets/CalendarMobile.svg";
 import { DefaultNavbar } from "../DefaultNavbar";
 import { Image } from "react-bootstrap";
@@ -10,19 +11,18 @@ import Logo from "../../../assets/logo.png";
 import styles from "./LoginPage.module.css";
 
 const links = {
-    home: '/',
-    secondLink: "/SignUpPage",
-	secondLinkName:"SignUp"
-}
-const style={
-    Navbar:styles.Navbar,
-    navLinks:styles.navLinks
-
-}    
-const image={
-    src:Logo,
-    width:40
-}
+	home: "/",
+	secondLink: "/SignUpPage",
+	secondLinkName: "SignUp",
+};
+const style = {
+	Navbar: styles.Navbar,
+	navLinks: styles.navLinks,
+};
+const image = {
+	src: Logo,
+	width: 40,
+};
 class LoginPage extends Component {
 	defaultState = {
 		email: "",
@@ -30,7 +30,7 @@ class LoginPage extends Component {
 		message: "",
 		emailErr: "",
 		passErr: "",
-		successful:false,
+		successful: false,
 	};
 	constructor(props) {
 		super(props);
@@ -46,8 +46,7 @@ class LoginPage extends Component {
 
 		if (!this.state.email || regEmail.test(this.state.email) === false)
 			emailErr = "Email Field is Invalid ";
-		if (this.state.password<8)
-			passErr = "Pass Field is Invalid ";
+		if (this.state.password < 8) passErr = "Pass Field is Invalid ";
 		if (!this.state.email) emailErr = "Email field is required";
 		if (!this.state.password) passErr = "Pass field is required";
 
@@ -67,9 +66,8 @@ class LoginPage extends Component {
 
 		if (!this.state.email || regEmail.test(this.state.email) === false)
 			emailErr = "Email Field is Invalid ";
-		if (this.state.password< 8)
-			passErr = "Pass Field is Invalid ";
 		if (!this.state.email) emailErr = "Email field is required";
+		if (this.state.password < 8) passErr = "Pass Field is Invalid ";
 		if (!this.state.password) passErr = "Pass field is required";
 
 		this.setState({
@@ -97,24 +95,26 @@ class LoginPage extends Component {
 				if (response.data.token) {
 					const { token } = response.data;
 					localStorage.setItem("user2", JSON.stringify(token));
-					localStorage.setItem("isAuthenticatedLogin",true);
+					localStorage.setItem("isAuthenticatedLogin", true);
 				}
-				
-				if (this.state.successful) {
-					
+
+				const { userId } = response.data;
+				console.log(userId);
+				if (this.state.successful && userId === 100) {
+					this.props.history.push("/AdminDashBoard");
+				} else if (this.state.successful && userId !== 100) {
 					this.props.history.push("/DashBoard");
 				}
-                
 			},
 			(error) => {
 				let resMessage = "";
-				if(!error.response){
-					resMessage=JSON.stringify(error.message).replace(/^"|"$/g, '');
+				if (!error.response || !BaseUrl()) {
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+				} else if (error.response.status === 401) {
+					resMessage = error.response.data;
+				} else if (error.response.status === 402) {
+					resMessage = error.response.data + " Enter Again";
 				}
-				else
-				{
-						resMessage=error.response.data;
-				} 
 				this.setState({
 					successful: false,
 					message: resMessage,
@@ -129,7 +129,7 @@ class LoginPage extends Component {
 	render() {
 		return (
 			<div className={styles.container}>
-                < DefaultNavbar style={style}  image={image} links = {links}/>
+				<DefaultNavbar style={style} image={image} links={links} />
 
 				<Image src={CalendarMobile} className={styles.calendarImage}></Image>
 				{!this.state.successful && (
@@ -151,13 +151,14 @@ class LoginPage extends Component {
 								/>
 								<span className="text-danger">{this.state.emailErr}</span>
 							</FloatingLabel>
-
-							
 						</Form.Group>
 						<Form.Group
 							className={styles.formGroup}
 							controlId="formBasicPassword"
 						>
+							<span className="small">
+							 Password must be at least 8 characters long
+							</span>
 							<FloatingLabel controlId="floatingPassword" label="Password">
 								<Form.Control
 									type="password"
@@ -181,11 +182,13 @@ class LoginPage extends Component {
 						>
 							Login
 						</Button>
-						
+
 						{this.state.message && (
 							<div className="form-group mt-2">
 								<div className="alert alert-danger " role="alert">
-									{this.state.message}
+								{
+									this.state.message
+								}
 								</div>
 							</div>
 						)}

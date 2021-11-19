@@ -1,0 +1,23 @@
+.card{
+    background-color: rgb(222, 242, 245);
+    margin-top: 30px ;
+    border:solid rgb(201, 193, 193) 1px;
+    width:18em;
+    height:12em;
+    box-shadow: 0 8px 8px -4px lightblue;;
+}
+.card>.cardTitle{
+    text-align: center;
+    font-size: large;
+    margin-top: 12px;
+    font-weight: 800;
+}
+.card>.cardBody{
+    text-align: left;
+    margin: 12px;
+}
+.card>.cardBody{
+    font-size: 50px;
+    margin-bottom:30px;
+    text-align: center;
+}

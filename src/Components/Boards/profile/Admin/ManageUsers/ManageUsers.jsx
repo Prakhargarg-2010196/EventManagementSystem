@@ -2,18 +2,18 @@ import { Col, Container, Row } from "react-bootstrap";
 import React, { Component } from "react";
 
 import Button from "@mui/material/Button";
-import CrudService from "../../../../../../api/services/crud-service";
+import CrudService from "../../../../../api/services/crud-service";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import { Loader } from "../../../../../Layout/Loader/Loader";
-import { NavBar } from "../../../../../Layout/Home/NavBar/NavBar";
+import { Loader } from "../../../../Layout/Loader/Loader";
+import { NavBar } from "../../../../Layout/Home/NavBar/NavBar";
 import Paper from "@mui/material/Paper";
-import { SideBar } from "../../SideBar/sidebar";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { adminSideBar } from "../AdminSidebar/AdminSideBar";
 import styles from "./ManageEvents.module.css";
 
 export default class ManageEvent extends Component {
@@ -27,11 +27,15 @@ export default class ManageEvent extends Component {
 		this.state = this.defaultState;
 	}
 	async componentDidMount() {
-		await CrudService.ReadEvents().then(
+		// this.setState({ isLoading: true });
+		console.log("first");
+		await CrudService.ReadEvents( ).then(
 			(response) => {
+				console.log("res achieve")
 				this.setState({ events: response.data });
 			},
 			(error) => {
+				console.log("error")
 				let resMessage = "";
 				if (!error.response) {
 					console.log(JSON.stringify(error.message));
@@ -65,10 +69,10 @@ export default class ManageEvent extends Component {
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
-					resMessage = JSON.stringify(error.message);
+					console.log(JSON.stringify(error.message));
 				}
 
-				else resMessage = error.response.data;
+				resMessage = error.response.data;
 
 				this.setState({
 					successful: false,
@@ -87,7 +91,7 @@ export default class ManageEvent extends Component {
 					<Container fluid>
 						<Row>
 							<Col md={2} className={styles.SideBar}>
-								<SideBar />
+								<adminSideBar />
 							</Col>
 							<Col md={10}>
 								<Container>
@@ -111,11 +115,6 @@ export default class ManageEvent extends Component {
 														</TableRow>
 													</TableHead>
 													<TableBody>
-														{this.state.events.length === 0 && (
-															<div className=" d-flex justify-content-center  bg-white">
-																<h1>No such events</h1>
-															</div>
-														)}
 														{this.state.events.map((eventItem) => (
 															<TableRow
 																key={eventItem._id}
@@ -125,25 +124,14 @@ export default class ManageEvent extends Component {
 																	},
 																}}
 															>
-																<TableCell align="center">
-																	<Link
-																		to={{
-																			pathname: `/EventPage/${eventItem._id}`,
-																		}}
-																	>
-																		{eventItem.title}
-																	</Link>
+																<TableCell component="th" scope="row">
+																	<Link to={{ pathname: `/EventPage/${eventItem._id}`}}>{eventItem.title}</Link>
 																</TableCell>
 																<TableCell align="center">
 																	{eventItem.category.join(",")}
 																</TableCell>
-																<TableCell align="center">
-																	{eventItem.rate}
-																</TableCell>
-																<TableCell align="center">
-																	{eventItem.date.split("T")[0]} &{" "}
-																	{eventItem.time}
-																</TableCell>
+																<TableCell align="center">{eventItem.rate}</TableCell>
+																<TableCell align="center">{eventItem.date.split("T")[0]}  &  {eventItem.time}</TableCell>
 																<TableCell align="center">
 																	<Button
 																		variant="contained"
@@ -171,13 +159,6 @@ export default class ManageEvent extends Component {
 												</Table>
 											)}
 										</TableContainer>
-										{this.state.message && (
-											<div className="form-group mt-4">
-												<div className="alert alert-danger" role="alert">
-													{this.state.message}
-												</div>
-											</div>
-										)}
 									</Row>
 								</Container>
 							</Col>
