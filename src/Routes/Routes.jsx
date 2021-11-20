@@ -89,11 +89,11 @@ export const Routes = () => {
 				exact
 				component={BookMarkedEvents}
 			></Route>
-			<ProtectedRoute
+			<Route
 				path="/AdminDashBoard"
 				exact
 				component={AdminDashBoard}
-			></ProtectedRoute>
+			></Route>
 			<Route path="/Loader" exact component={Loader}></Route>
 
 			<ProtectedRoute path="/DashBoard" component={DashBoard} />

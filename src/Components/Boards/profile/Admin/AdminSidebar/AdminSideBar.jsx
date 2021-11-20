@@ -13,7 +13,7 @@ const style = {
 	bgcolor: "transparent",
 };
 export const AdminSideBar = () => {
-	const history = React.useHistory();
+	// const history = React.useHistory();
 	return (
 		<>
 			<nav className={styles.nav}>
@@ -37,7 +37,7 @@ export const AdminSideBar = () => {
 					sx={{ marginTop: "20%" }}
 					onClick={() => {
 						authService.logOut();
-						history.push("/");
+						// history.push("/");
 					}}
 					startIcon={<LogoutIcon />}
 				>
