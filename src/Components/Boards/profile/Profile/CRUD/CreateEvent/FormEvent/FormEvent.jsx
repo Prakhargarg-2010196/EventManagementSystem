@@ -32,11 +32,7 @@ const FormEvent = (props) => {
 		const dateValueToBe = new Date(dateValue);
 		const dateValueInEpoch = new Date(dateValue).getTime();
 		const currentDate = new Date();
-		if (
-			dateValueToBe.getDate() - currentDate.getDate() >= 0 &&
-			dateValueToBe.getMonth() + 1 - currentDate.getMonth() + 1 >= 0 &&
-			dateValueToBe.getFullYear() - currentDate.getFullYear() >= 0
-		)
+		if (dateValueToBe.getDate() - currentDate.getDate() >= 0)
 			setDateValue(dateValueInEpoch);
 	};
 
