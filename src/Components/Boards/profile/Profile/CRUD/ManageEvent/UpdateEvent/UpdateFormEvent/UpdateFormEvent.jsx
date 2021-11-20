@@ -40,10 +40,10 @@ const UpdateFormEvent = (props) => {
 					let message = "";
 					if (!error.response || !BaseUrl()) {
 						message = JSON.stringify(error.message).replace(/^"|"$/g, "");
-					}
-					else message=error.response.data
+					} else message = error.response.data;
 					setSuccess(false);
 					setMessage(message);
+					setLoading(false);
 				}
 			);
 		};
@@ -86,8 +86,7 @@ const UpdateFormEvent = (props) => {
 				let message = "";
 				if (!error.response || !BaseUrl()) {
 					message = JSON.stringify(error.message).replace(/^"|"$/g, "");
-				}
-				else message=error.response.data
+				} else message = error.response.data;
 				setSuccess(false);
 				setMessage(message);
 			}
@@ -102,135 +101,129 @@ const UpdateFormEvent = (props) => {
 			{isLoading ? (
 				<Loader message={"Your Data is getting an updated"} />
 			) : (
-				successful && (
-					<Form className={styles.form}>
-						{/* Content */}
-						<Row className="mb-3">
-							<Col md={6} sm={12}>
-								<Form.Label className={styles.requiredField}>
-									Content
-								</Form.Label>
-							</Col>
-							<Col md={12} sm={8}>
-								<Form.Control
-									as="textarea"
-									rows={5}
-									defaultValue={content}
-									className="w-100"
-									onChange={(e) => {
-										setContent(e.target.value);
-									}}
-								/>
-							</Col>
-						</Row>
-
-						{/* Content end  */}
-
-						{/* Category start */}
-						<Row>
-							<Col xs={12} md={6}>
-								<Form.Label className={styles.requiredField}>
-									Category
-								</Form.Label>
-							</Col>
-							<Col xs={6} md={3}>
-								<CategorySelect onSelect={setArray} />
-							</Col>
-						</Row>
-						{/* Category end */}
-
-						{/* Date start */}
-						<Row className="mt-4">
-							<Col md={6} sm={6}>
-								<Form.Label className={styles.requiredField}>Date</Form.Label>
-							</Col>
-							<Col md={6} sm={12}>
-								<input
-									className="form-control"
-									type="date"
-									defaultValue={dateValue}
-									onChange={(e) => handleDateUpdate(e)}
-								/>
-							</Col>
-						</Row>
-						{/* Date end */}
-
-						{/* Time */}
-						<Row className="mt-4">
-							<Col>
-								<Form.Label>Time(HH:MM) </Form.Label>
-							</Col>
-
-							<Col>
-								<TimeField
-									onChange={(e) => setTimeValue(e.target.value)}
-									className="w-25"
-									defaultValue={timeValue}
-								/>
-							</Col>
-						</Row>
-
-						{/* Money */}
-						<Row className="mt-5">
-							<Col md={6}>
-								<Form.Label className={styles.requiredField}>
-									Price(in INR)
-								</Form.Label>
-							</Col>
-							<Col md={6}>
-								<InputGroup className="">
-									<InputGroup.Text>₹</InputGroup.Text>
-									<Form.Control
-										aria-label="Amount (to the nearest rupee)"
-										className="w-50"
-										onChange={(e) => {
-											setMoney(e.target.value);
-										}}
-										defaultValue={money}
-									/>
-								</InputGroup>
-							</Col>
-						</Row>
-						{/* money end */}
-
-						<Button
-							variant="primary"
-							className={styles.button}
-							onClick={(e) => {
-								handleImagesSubmit(e);
-							}}
-							onKeyPress={(e) => {
-								handleKeyPress(e);
-							}}
-						>
-							Update images
-						</Button>
-						<Button
-							variant="primary"
-							className={styles.button}
-							onClick={(e) => {
-								handleSubmit(e);
-							}}
-							onKeyPress={(e) => {
-								handleKeyPress(e);
-							}}
-						>
-							Submit
-						</Button>
-						{message && (
-							<div className="form-group mt-2">
-								<div
-									className={
-										successful ? "alert alert-success" : "alert alert-danger"
-									}
-									role="alert"
-								>
-									{message}
-								</div>
+				<Form className={styles.form}>
+					{/* Content */}
+					{message && (
+						<div className="form-group mt-2">
+							<div
+								className={
+									successful ? "alert alert-success" : "alert alert-danger"
+								}
+								role="alert"
+							>
+								{message}
 							</div>
-						)}
-					</Form>
-				)
+						</div>
+					)}
+					<Row className="mb-3">
+						<Col md={6} sm={12}>
+							<Form.Label className={styles.requiredField}>Content</Form.Label>
+						</Col>
+						<Col md={12} sm={8}>
+							<Form.Control
+								as="textarea"
+								rows={5}
+								defaultValue={content}
+								className="w-100"
+								onChange={(e) => {
+									setContent(e.target.value);
+								}}
+							/>
+						</Col>
+					</Row>
+
+					{/* Content end  */}
+
+					{/* Category start */}
+					<Row>
+						<Col xs={12} md={6}>
+							<Form.Label className={styles.requiredField}>Category</Form.Label>
+						</Col>
+						<Col xs={6} md={3}>
+							<CategorySelect onSelect={setArray} />
+						</Col>
+					</Row>
+					{/* Category end */}
+
+					{/* Date start */}
+					<Row className="mt-4">
+						<Col md={6} sm={6}>
+							<Form.Label className={styles.requiredField}>Date</Form.Label>
+						</Col>
+						<Col md={6} sm={12}>
+							<input
+								className="form-control"
+								type="date"
+								defaultValue={dateValue}
+								onChange={(e) => handleDateUpdate(e)}
+							/>
+						</Col>
+					</Row>
+					{/* Date end */}
+
+					{/* Time */}
+					<Row className="mt-4">
+						<Col>
+							<Form.Label>Time(HH:MM) </Form.Label>
+						</Col>
+
+						<Col>
+							<TimeField
+								onChange={(e) => setTimeValue(e.target.value)}
+								className="w-25"
+								defaultValue={timeValue}
+							/>
+						</Col>
+					</Row>
+
+					{/* Money */}
+					<Row className="mt-5">
+						<Col md={6}>
+							<Form.Label className={styles.requiredField}>
+								Price(in INR)
+							</Form.Label>
+						</Col>
+						<Col md={6}>
+							<InputGroup className="">
+								<InputGroup.Text>₹</InputGroup.Text>
+								<Form.Control
+									aria-label="Amount (to the nearest rupee)"
+									className="w-50"
+									onChange={(e) => {
+										setMoney(e.target.value);
+									}}
+									defaultValue={money}
+								/>
+							</InputGroup>
+						</Col>
+					</Row>
+					{/* money end */}
+
+					<Button
+						variant="primary"
+						className={styles.button}
+						onClick={(e) => {
+							handleImagesSubmit(e);
+						}}
+						onKeyPress={(e) => {
+							handleKeyPress(e);
+						}}
+					>
+						Update images
+					</Button>
+					<Button
+						variant="primary"
+						className={styles.button}
+						onClick={(e) => {
+							handleSubmit(e);
+						}}
+						onKeyPress={(e) => {
+							handleKeyPress(e);
+						}}
+					>
+						Submit
+					</Button>
+				</Form>
 			)}
 		</>
 	);
