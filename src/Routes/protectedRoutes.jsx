@@ -8,10 +8,10 @@ const ProtectedRoute = ({ auth, component: Component, ...rest }) => {
 		<Route
 			{...rest}
 			render={(props) => {
-				if (authService.isAuthenticated()) {
+				if (authService.isAuthenticated()||authService.isAdmin()) {
 					return <Component {...props} />;
 				}
-				if (!authService.isAuthenticated()) {
+				if (!authService.isAuthenticated()||!authService.isAdmin()) {
 					return (
 						<Redirect
 							to={{

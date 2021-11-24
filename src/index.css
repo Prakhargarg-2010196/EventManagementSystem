@@ -7,6 +7,9 @@ h1,h2,h3,h4,h5,h6{
 body,html,p,aside,label,input{
     font-family:'PT Serif', serif;
 }
+*{
+  box-sizing: border-box;
+}
 /* input:required:invalid, input:focus:invalid {
     background-image: url(./assets/invalid.png);
     background-position: right top;

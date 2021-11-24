@@ -20,6 +20,7 @@ class AuthService{
     logOut(){
         localStorage.removeItem("user2");
         localStorage.removeItem("isAuthenticatedLogin");    
+        localStorage.removeItem("isAuthenticatedAdminLogin");    
     }
    
     ResetPass(userCredentials){

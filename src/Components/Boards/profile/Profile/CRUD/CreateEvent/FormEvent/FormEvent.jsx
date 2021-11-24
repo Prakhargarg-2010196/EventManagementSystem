@@ -27,6 +27,7 @@ const FormEvent = (props) => {
 	const [message, setMessage] = useState("");
 	const [successful, setSuccess] = useState(false);
 	const [isLoading, setLoading] = useState(false);
+
 	const handleDateUpdate = (e) => {
 		const dateValue = e.target.value;
 		const dateValueToBe = new Date(dateValue);
@@ -39,9 +40,11 @@ const FormEvent = (props) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		handleKeyPress(e);
+
 		const isOnline = optionValue === "Online" ? true : false;
 		const venueORlink = optionValue === "Offline" ? Address : Url;
 		const city = optionValue === "Offline" ? City : "Online";
+
 		var FileData = new FormData();
 		Files.forEach((file) => {
 			FileData.append("files", file);
@@ -79,6 +82,7 @@ const FormEvent = (props) => {
 			}
 		);
 	};
+
 	const handleKeyPress = (e) => {
 		if (e.key === "Enter") e.preventDefault();
 	};
@@ -91,6 +95,7 @@ const FormEvent = (props) => {
 				<Container>
 					<h1 style={{ textAlign: "center" }}>Create Events</h1>
 					<Row className="mt-5">
+						
 						{/* DragDrop */}
 						<Col md={6}>
 							<Row>
@@ -101,6 +106,9 @@ const FormEvent = (props) => {
 
 								<DragNDrop onGet={setFilesArray} />
 							</Row>
+							{/* DragDrop END */}
+							
+							
 							{/* Content */}
 							<Row className="mt-5">
 								<Form.Label className={styles.requiredField}>
@@ -114,12 +122,14 @@ const FormEvent = (props) => {
 									}}
 								/>
 							</Row>
-
 							{/* Content end  */}
 						</Col>
-						{/* DragDrop END */}
+						
+						
 						<Col md={6}>
+							
 							<Form className={styles.form}>
+								
 								{/* Title */}
 								<Row className="mb-3">
 									<Col>
@@ -137,7 +147,10 @@ const FormEvent = (props) => {
 										/>
 									</Col>
 								</Row>
-
+								{/*Title end*/}
+								
+								
+								{/* Category start */}
 								<Row>
 									<Col>
 										<Form.Label className={styles.requiredField}>
@@ -148,7 +161,11 @@ const FormEvent = (props) => {
 										<CategorySelect onSelect={setArray} />
 									</Col>
 								</Row>
+								
+								{/* Category end */}
 
+								
+								{/* Date Start */}
 								<Row className="mt-4">
 									<Col>
 										<Form.Label className={styles.requiredField}>
@@ -163,8 +180,10 @@ const FormEvent = (props) => {
 										/>
 									</Col>
 								</Row>
+								
+								{/* Date end */}
 
-								{/* Time */}
+								{/* Time start*/}
 								<Row className="mt-4">
 									<Col>
 										<Form.Label>Time(HH:MM) </Form.Label>
@@ -178,7 +197,9 @@ const FormEvent = (props) => {
 										/>
 									</Col>
 								</Row>
-
+								{/* Time end */}
+								
+								
 								{/* Mode of events */}
 								<Row className="mt-4">
 									<Form.Label

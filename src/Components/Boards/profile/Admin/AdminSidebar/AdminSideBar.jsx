@@ -1,9 +1,10 @@
+import { NavLink, useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import React from "react";
 import authService from "../../../../../api/services/auth.service";
 import styles from "./AdminSideBar.module.css";
@@ -13,7 +14,7 @@ const style = {
 	bgcolor: "transparent",
 };
 export const AdminSideBar = () => {
-	// const history = React.useHistory();
+	const history = useHistory();
 	return (
 		<>
 			<nav className={styles.nav}>
@@ -37,7 +38,7 @@ export const AdminSideBar = () => {
 					sx={{ marginTop: "20%" }}
 					onClick={() => {
 						authService.logOut();
-						// history.push("/");
+						history.push("/");
 					}}
 					startIcon={<LogoutIcon />}
 				>

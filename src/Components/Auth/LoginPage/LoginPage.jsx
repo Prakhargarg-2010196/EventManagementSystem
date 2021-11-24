@@ -92,17 +92,18 @@ class LoginPage extends Component {
 					message: response.data,
 					successful: true,
 				});
-				if (response.data.token) {
-					const { token } = response.data;
-					localStorage.setItem("user2", JSON.stringify(token));
-					localStorage.setItem("isAuthenticatedLogin", true);
-				}
 
 				const { userId } = response.data;
 				console.log(userId);
-				if (this.state.successful && userId === 100) {
+				if (response.data.token && userId === 100) {
+					const { token } = response.data;
+					localStorage.setItem("isAuthenticatedAdminLogin", true);
+					localStorage.setItem("user2", JSON.stringify(token));
 					this.props.history.push("/AdminDashBoard");
-				} else if (this.state.successful && userId !== 100) {
+				} else if (response.data.token && userId !== 100) {
+					const { token } = response.data;
+					localStorage.setItem("user2", JSON.stringify(token));
+					localStorage.setItem("isAuthenticatedLogin", true);
 					this.props.history.push("/DashBoard");
 				}
 			},
@@ -114,6 +115,10 @@ class LoginPage extends Component {
 					resMessage = error.response.data;
 				} else if (error.response.status === 402) {
 					resMessage = error.response.data + " Enter Again";
+				} else if (error.response.status === 403) {
+					resMessage = error.response.data;
+					localStorage.removeItem("user2");
+					localStorage.removeItem("isAuthenticatedLogin");
 				}
 				this.setState({
 					successful: false,
@@ -157,7 +162,7 @@ class LoginPage extends Component {
 							controlId="formBasicPassword"
 						>
 							<span className="small">
-							 Password must be at least 8 characters long
+								Password must be at least 8 characters long
 							</span>
 							<FloatingLabel controlId="floatingPassword" label="Password">
 								<Form.Control
@@ -186,9 +191,7 @@ class LoginPage extends Component {
 						{this.state.message && (
 							<div className="form-group mt-2">
 								<div className="alert alert-danger " role="alert">
-								{
-									this.state.message
-								}
+									{this.state.message}
 								</div>
 							</div>
 						)}

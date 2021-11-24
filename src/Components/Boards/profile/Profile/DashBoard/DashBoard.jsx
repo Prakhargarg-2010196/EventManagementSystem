@@ -51,41 +51,35 @@ export default class DashBoard extends Component {
 								<SideBar />
 							</Col>
 							<Col md={10}>
-								<Row>
-									<Col md={6}>
-										<Cards name={this.state.result.name} />
-									</Col>
-									<Col md={6}>
+								<div className={styles.CalendarContainer}>
+										<Cards name={this.state.result.name} email={this.state.result.email} />
+									
 										<Calendar
 											onChange={this.state.date}
 											className={styles.Calendar}
 										/>
-									</Col>
-								</Row>
+								</div>
 								<Row>
-									<Col md={4}>
+									<div className={styles.cardContainer}>
 										<div className={styles.card}>
 											<div className={styles.cardTitle}>Booked Events</div>
 											<div className={styles.cardBody}>
 												<span>120 </span>
 											</div>
 										</div>
-									</Col>
-									<Col md={4}>
+
 										<div className={styles.card}>
 											<div className={styles.cardTitle}>Rated Events</div>
 											<div className={styles.cardBody}>
 												<span>120 </span>
 											</div>
 										</div>
-									</Col>
 
-									<Col md={4}>
 										<div className={styles.card}>
 											<div className={styles.cardTitle}>Suggested Events</div>
 											<div className={styles.cardBody}>120</div>
 										</div>
-									</Col>
+									</div>
 								</Row>
 							</Col>
 						</Row>
