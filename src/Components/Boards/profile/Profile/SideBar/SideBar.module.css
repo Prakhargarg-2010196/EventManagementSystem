@@ -4,13 +4,7 @@
     font-weight: 800;
     margin-bottom:12px;
 }
-/* .link:hover{
-    color:rgb(255, 5, 151);
-} */
-.link:active{
-    color:rgb(111, 19, 218);
+.listItem:hover{
+    background:rgb(131, 148, 153);
 }
 
-.listItem:hover{
-    background:rgb(0, 143, 187);
-}

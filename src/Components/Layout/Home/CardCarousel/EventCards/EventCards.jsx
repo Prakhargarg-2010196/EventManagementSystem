@@ -17,6 +17,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 export default function EventCards(props) {
 	const [favorite, setFavorite] = React.useState();
 	const [favoriteList, setFavoriteList] = React.useState([]);
+	const [message, setMessage] = React.useState("");
 	var isPresent = favoriteList.some((el) => el._id === props.id);
 	const history = useHistory();
 	const imgPath = props.img;
@@ -29,7 +30,11 @@ export default function EventCards(props) {
 					if (response.data) setFavoriteList(response.data);
 				},
 				(error) => {
-					console.log(error.response.data);
+					let resMessage = "";
+					if (!error.response || !BaseUrl()) {
+						resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+					} else resMessage = error.response.data;
+					setMessage(resMessage);
 				}
 			);
 		};
@@ -38,36 +43,57 @@ export default function EventCards(props) {
 	const handleClickEvent = () => {
 		history.push({ pathname: `/EventPage/${props.id}` });
 	};
-	
+
 	const handleFavoritism = async () => {
 		if (authService.isAuthenticated()) {
 			if (!isPresent || !favorite) {
 				setFavorite(true);
-				alert("Bookmarked")
-				await postsService.FavoritePost(props.id);
+				alert("Bookmarked");
+				await postsService.FavoritePost(props.id).then(
+					(res) => {},
+					(error) => {
+						let resMessage = "";
+						if (!error.response || !BaseUrl()) {
+							resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+						} else resMessage = error.response.data;
+						setMessage(resMessage);
+					}
+				);
 			} else {
 				setFavorite(false);
-				alert("UnBookmarked")
-				await postsService.UnFavoritePost(props.id);
+				alert("UnBookmarked");
+				await postsService.UnFavoritePost(props.id).then(
+					(res) => {},
+					(error) => {
+						let resMessage = "";
+						if (!error.response || !BaseUrl()) {
+							resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+						} else resMessage = error.response.data;
+						setMessage(resMessage);
+					}
+				);
 			}
 			await crudService.BookMarkedEvents().then(
 				(response) => {
 					if (response.data) setFavoriteList(response.data);
 				},
 				(error) => {
-					console.log(error.response.data);
+					let resMessage = "";
+					if (!error.response || !BaseUrl()) {
+						resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+					} else resMessage = error.response.data;
+					setMessage(resMessage);
 				}
 			);
-			
-		};
-		
+		}
 	};
 
 	return (
+		
 		<Card
 			sx={{ maxWidth: 650, border: "solid 0.5px grey", margin: "30px 0px" }}
 		>
-			{console.log(favoriteList)}
+			
 			<CardHeader title={props.title} />
 			<CardActionArea>
 				<CardMedia

@@ -1,13 +1,9 @@
-import {BaseUrl} from './BaseUrl'
-import authHeader from './auth-header';
+import { BaseUrl } from "./BaseUrl";
+import authHeader from "./auth-header";
 import axios from "axios";
-class UserService{
-    
-    getUserBoard(){
-        return axios.get(BaseUrl()+"post/dashboard",{headers:authHeader()})
-    }
-    getAdminBoard() {
-        return axios.get(BaseUrl() + 'admin/view', { headers: authHeader() });
-      }
+class UserService {
+	getUserBoard() {
+		return axios.get(BaseUrl() + "post/dashboard", { headers: authHeader() });
+	}
 }
 export default new UserService();

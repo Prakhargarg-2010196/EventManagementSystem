@@ -55,28 +55,28 @@ export default class ManageEvent extends Component {
 	}
 	async onDelete(e, eventItemId) {
 		e.preventDefault();
-		this.setState({ isLoading: true });
+		// this.setState({ isLoading: true });
 		await CrudService.Delete(eventItemId);
+		this.setState({events:this.state.events.filter((event) => event._id !== eventItemId)})
+		// await CrudService.ReadEvents().then(
+		// 	(response) => {
+		// 		this.setState({ events: response.data });
+		// 	},
+		// 	(error) => {
+		// 		let resMessage = "";
+		// 		if (!error.response) {
+		// 			resMessage = JSON.stringify(error.message);
+		// 		}
 
-		await CrudService.ReadEvents().then(
-			(response) => {
-				this.setState({ events: response.data });
-			},
-			(error) => {
-				let resMessage = "";
-				if (!error.response) {
-					resMessage = JSON.stringify(error.message);
-				}
+		// 		else resMessage = error.response.data;
 
-				else resMessage = error.response.data;
-
-				this.setState({
-					successful: false,
-					message: resMessage,
-				});
-			}
-		);
-		this.setState({ isLoading: false });
+		// 		this.setState({
+		// 			successful: false,
+		// 			message: resMessage,
+		// 		});
+		// 	}
+		// );
+		// this.setState({ isLoading: false });
 	}
 	render() {
 		return (

@@ -12,6 +12,7 @@ import Home from "../Components/Layout/Home/Home";
 import { Loader } from "../Components/Layout/Loader/Loader";
 import LoginPage from "../Components/Auth/LoginPage/LoginPage";
 import ManageEvent from "../Components/Boards/profile/Profile/CRUD/ManageEvent/Manage Events";
+import ManageUsers from "../Components/Boards/profile/Admin/ManageUsers/ManageUsers"
 import OtpPasswordReset from "../Components/Auth/PasswordReset/OtpPasswordReset/OtpPasswordReset";
 import OtpSignUp from "../Components/Auth/SignUpPage/OtpSignUp/OtpSignup.jsx";
 import PasswordResetPage from "../Components/Auth/PasswordReset/PasswordReset";
@@ -31,6 +32,7 @@ export const Routes = () => {
 			<Route path="/SearchPage" exact component={SearchPage}></Route>
 			<Route path="/RegisteredEvents" exact component={RegisteredEvents}></Route>
 			<Route path="/BookMarkedEvents" exact component={BookMarkedEvents}></Route>
+			<Route path="/ManageUsers" exact component={ManageUsers}></Route>
 			
 			<Route
 				path="/PasswordResetPage"
@@ -89,11 +91,11 @@ export const Routes = () => {
 				exact
 				component={BookMarkedEvents}
 			></Route>
-			<Route
+			<ProtectedRoute
 				path="/AdminDashBoard"
 				exact
 				component={AdminDashBoard}
-			></Route>
+			></ProtectedRoute>
 			<Route path="/Loader" exact component={Loader}></Route>
 
 			<ProtectedRoute path="/DashBoard" component={DashBoard} />

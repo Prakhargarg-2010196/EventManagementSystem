@@ -48,13 +48,11 @@ const UpdateImagesEvent = () => {
 
 	const handleDelete = async (e, id, imageUrl) => {
 		e.preventDefault();
-		console.log(imageUrl);
-		setLoading(true);
 		await postsService.DeleteImage(id, imageUrl);
-
+		// imageUrlUpdate.filter((image) =>image !==imageUrl )
 		const response = await crudService.Read(id);
 		setResult(response.data.post);
-		setLoading(false);
+		
 	};
 
 	const handleAdd = async (e, id) => {

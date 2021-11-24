@@ -2,38 +2,48 @@
     margin:0;
     padding:0;
     background: #fce7e7;
+    
 }
 
 
 
 .SideBar{
-    margin-top: 10px;
+    
     
     border-top-left-radius:12px;
     border-top-right-radius:12px;
     background:rgb(205, 242, 255);
     box-sizing: border-box;    
-    min-height:90.2vh ;
-    
+    height:90.2vh ;
+}
+
+.CalendarContainer{
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
 }
 .Calendar{
-    width: 50%;
+    width: inherit;
     height: 100%;
     background: rgb(225, 228, 228);
     margin-top: 10px;
     border-radius: 12px;
     border-image: round;
-    margin-left: 210px;
-    
 }
 
-
+.cardContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin:40px auto;
+    
+}
 .card{
     background-color: rgb(222, 242, 245);
     margin-top: 30px ;
     border:solid rgb(201, 193, 193) 1px;
-    width:18em;
     height:8em;
+    width: 17em;
     box-shadow: 0 8px 8px -4px lightblue;;
 }
 .card>.cardTitle{
@@ -50,4 +60,21 @@
     font-size: 50px;
     margin-bottom:30px;
     text-align: center;
+}
+@media screen and (max-width:560px) {
+    .Calendar{
+        width:100%;
+        margin-right:0;
+        
+    }
+.CalendarContainer{
+ flex-direction: column;    
+}
+
+.SideBar{
+    height:min-content;
+    padding-bottom: 40px;
+    display: flex;
+    
+}
 }

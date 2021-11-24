@@ -1,9 +1,9 @@
 import { Col, Container, Row } from "react-bootstrap";
 import React, { Component } from "react";
 
+import AdminCrudService from "../../../../../api/services/admin-crud-service";
+import { AdminSideBar } from "../AdminSidebar/AdminSideBar";
 import Button from "@mui/material/Button";
-import CrudService from "../../../../../api/services/crud-service";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { Loader } from "../../../../Layout/Loader/Loader";
 import { NavBar } from "../../../../Layout/Home/NavBar/NavBar";
 import Paper from "@mui/material/Paper";
@@ -13,12 +13,11 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { adminSideBar } from "../AdminSidebar/AdminSideBar";
-import styles from "./ManageEvents.module.css";
+import styles from "./ManageUsers.module.css";
 
-export default class ManageEvent extends Component {
+export default class ManageUsers extends Component {
 	defaultState = {
-		events: [],
+		verifyList: [],
 		isLoading: true,
 	};
 
@@ -27,12 +26,12 @@ export default class ManageEvent extends Component {
 		this.state = this.defaultState;
 	}
 	async componentDidMount() {
-		// this.setState({ isLoading: true });
+		this.setState({ isLoading: true });
 		console.log("first");
-		await CrudService.ReadEvents( ).then(
+		await AdminCrudService.VerifyList().then(
 			(response) => {
 				console.log("res achieve")
-				this.setState({ events: response.data });
+				this.setState({ verifyList: response.data });
 			},
 			(error) => {
 				console.log("error")
@@ -51,36 +50,19 @@ export default class ManageEvent extends Component {
 		);
 		this.setState({ isLoading: false });
 	}
-	onUpdate(e, eventItemId) {
+	async onVerify(e, verifyItemId) {
 		e.preventDefault();
-		this.props.history.push({
-			pathname: `/UpdateEvent/${eventItemId}`,
-		});
+		await AdminCrudService.Verify(verifyItemId);
+		alert("verified");
+		this.setState({verifyList:this.state.verifyList.filter((verifyItem) => verifyItem._id !== verifyItemId)})
 	}
-	async onDelete(e, eventItemId) {
+	async onReject(e, verifyItemId) {
 		e.preventDefault();
-		this.setState({ isLoading: true });
-		await CrudService.Delete(eventItemId);
+		await AdminCrudService.Reject(verifyItemId);
 
-		await CrudService.ReadEvents().then(
-			(response) => {
-				this.setState({ events: response.data });
-			},
-			(error) => {
-				let resMessage = "";
-				if (!error.response) {
-					console.log(JSON.stringify(error.message));
-				}
+		alert(" user not verified as creator");
+		this.setState({verifyList:this.state.verifyList.filter((verifyItem) => verifyItem._id !== verifyItemId)})
 
-				resMessage = error.response.data;
-
-				this.setState({
-					successful: false,
-					message: resMessage,
-				});
-			}
-		);
-		this.setState({ isLoading: false });
 	}
 	render() {
 		return (
@@ -91,7 +73,7 @@ export default class ManageEvent extends Component {
 					<Container fluid>
 						<Row>
 							<Col md={2} className={styles.SideBar}>
-								<adminSideBar />
+								<AdminSideBar />
 							</Col>
 							<Col md={10}>
 								<Container>
@@ -99,6 +81,7 @@ export default class ManageEvent extends Component {
 										<h1 className="text-center mt-4">Manage Events</h1>
 									</Row>
 									<Row>
+										{console.log(this.state.verifyList)}
 										<TableContainer component={Paper}>
 											{this.state.isLoading ? (
 												<Loader message={"Your Content is Loading"} />
@@ -106,51 +89,49 @@ export default class ManageEvent extends Component {
 												<Table sx={{ minWidth: 650 }} aria-label="simple table">
 													<TableHead>
 														<TableRow>
-															<TableCell align="center">Event Name</TableCell>
-															<TableCell align="center">Category</TableCell>
-															<TableCell align="center">Cost</TableCell>
-															<TableCell align="center">Date & Time</TableCell>
-															<TableCell align="center">Edit</TableCell>
-															<TableCell align="center">Delete</TableCell>
+															<TableCell align="center">User Name</TableCell>
+															<TableCell align="center">Email</TableCell>
+															<TableCell align="center">Verify</TableCell>
+															<TableCell align="center">Reject</TableCell>
 														</TableRow>
 													</TableHead>
 													<TableBody>
-														{this.state.events.map((eventItem) => (
+														{this.state.verifyList.map((verifyItem) => (
 															<TableRow
-																key={eventItem._id}
+																key={verifyItem._id}
 																sx={{
 																	"&:last-child td, &:last-child th": {
 																		border: 0,
 																	},
 																}}
 															>
-																<TableCell component="th" scope="row">
-																	<Link to={{ pathname: `/EventPage/${eventItem._id}`}}>{eventItem.title}</Link>
+																<TableCell align="center">
+																	{verifyItem.name}
 																</TableCell>
 																<TableCell align="center">
-																	{eventItem.category.join(",")}
+																	{verifyItem.email}
 																</TableCell>
-																<TableCell align="center">{eventItem.rate}</TableCell>
-																<TableCell align="center">{eventItem.date.split("T")[0]}  &  {eventItem.time}</TableCell>
 																<TableCell align="center">
 																	<Button
 																		variant="contained"
+																		color="success"
 																		onClick={(e) => {
-																			this.onUpdate(e, eventItem._id);
+																			this.onVerify(e, verifyItem._id);
 																		}}
 																	>
-																		Edit
+																		Verify
 																	</Button>
 																</TableCell>
 
 																<TableCell align="center">
 																	<Button
 																		variant="contained"
+																		color="error"
 																		onClick={(e) => {
-																			this.onDelete(e, eventItem._id);
+																			this.onReject(e, verifyItem._id);
 																		}}
 																	>
-																		Delete
+																		Reject
 																	</Button>
 																</TableCell>
 															</TableRow>
