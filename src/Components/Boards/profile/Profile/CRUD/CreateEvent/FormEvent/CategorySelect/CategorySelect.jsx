@@ -31,7 +31,8 @@ export const CategorySelect = (props) => {
 					onChange={(e) => {
 						setCategory(e.target.value);
 					}}
-                    
+                    selectAll={false}
+                    showSelectAll={false}
 					placeholder="Category"
 					display="chip"
 					selectionLimit={3}

@@ -191,7 +191,7 @@ const FormEvent = (props) => {
 
 									<Col>
 										<TimeField
-											defaultValue={timeValue}
+											value={timeValue}
 											onChange={(e) => setTimeValue(e.target.value)}
 											className="w-25"
 										/>

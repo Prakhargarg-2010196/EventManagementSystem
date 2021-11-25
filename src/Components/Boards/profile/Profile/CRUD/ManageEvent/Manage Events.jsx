@@ -161,9 +161,12 @@ export default class ManageEvent extends Component {
 																	<Button
 																		variant="contained"
 																		onClick={(e) => {
+
+
 																			window.confirm(
-																				"Are you sure you wish to delete this item?"
+																				"Are you sure you wish to delete this event?"
 																			) && this.onDelete(e, eventItem._id);
+
 																		}}
 																	>
 																		Delete
