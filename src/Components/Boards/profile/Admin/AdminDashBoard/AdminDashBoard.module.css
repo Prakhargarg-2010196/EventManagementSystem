@@ -1,44 +1,73 @@
-.container{
-    margin:0;
-    padding:0;
-    background: #c2bbff;
+.container {
+    margin: 0;
+    padding: 0;
+    background: #ececf3;
 }
 
-.Calendar{
+.CalendarContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.Calendar {
     width: 100%;
     height: min-content;
-    background-color: rgb(131, 131, 131);
+    background-color: rgb(248, 248, 230);
     margin-top: 10px;
-    
+
 }
 
-.SideBar{
-    background:rgb(21, 204, 236);
-    box-sizing: border-box;    
-    min-height:90.2vh ;
+.SideBar {
+    background: #28bff5;
+    box-sizing: border-box;
+    min-height: 90.2vh;
 }
 
 
-.card{
-    background-color: rgb(222, 242, 245);
-    margin-top: 30px ;
-    border:solid rgb(201, 193, 193) 1px;
-    width:18em;
-    height:8em;
-    box-shadow: 0 8px 8px -4px lightblue;;
+.card {
+    background-color: rgb(255, 255, 255);
+    margin-top: 30px;
+    border: dashed rgb(201, 193, 193) 1px;
+    width: 18em;
+    height: 8em;
+    box-shadow: 0 8px 8px -4px rgb(35, 149, 187);
+
 }
-.card>.cardTitle{
+
+.card>.cardTitle {
     text-align: center;
     font-size: large;
     margin-top: 12px;
     font-weight: 800;
 }
-.card>.cardBody{
+
+.card>.cardBody {
     text-align: left;
     margin: 12px;
 }
-.card>.cardBody{
+
+.card>.cardBody {
     font-size: 50px;
-    margin-bottom:30px;
+    margin-bottom: 30px;
     text-align: center;
+}
+
+@media screen and (max-width:560px) {
+    .Calendar {
+        width: 100%;
+        margin-right: 0;
+
+    }
+
+    .CalendarContainer {
+        flex-direction: column;
+    }
+
+    .SideBar {
+        height: min-content;
+        padding-bottom: 40px;
+        display: flex;
+
+    }
 }

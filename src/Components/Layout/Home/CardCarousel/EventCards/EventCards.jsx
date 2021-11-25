@@ -46,9 +46,8 @@ export default function EventCards(props) {
 
 	const handleFavoritism = async () => {
 		if (authService.isAuthenticated()) {
-			if (!isPresent || !favorite) {
+			if (!isPresent && !favorite) {
 				setFavorite(true);
-				alert("Bookmarked");
 				await postsService.FavoritePost(props.id).then(
 					(res) => {},
 					(error) => {
@@ -59,9 +58,9 @@ export default function EventCards(props) {
 						setMessage(resMessage);
 					}
 				);
+				alert("Bookmarked");
 			} else {
 				setFavorite(false);
-				alert("UnBookmarked");
 				await postsService.UnFavoritePost(props.id).then(
 					(res) => {},
 					(error) => {
@@ -72,6 +71,7 @@ export default function EventCards(props) {
 						setMessage(resMessage);
 					}
 				);
+				alert("UnBookmarked");
 			}
 			await crudService.BookMarkedEvents().then(
 				(response) => {
@@ -89,11 +89,9 @@ export default function EventCards(props) {
 	};
 
 	return (
-		
 		<Card
 			sx={{ maxWidth: 650, border: "solid 0.5px grey", margin: "30px 0px" }}
 		>
-			
 			<CardHeader title={props.title} />
 			<CardActionArea>
 				<CardMedia
