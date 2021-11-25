@@ -17,6 +17,7 @@ export const AdminSideBar = () => {
 	const history = useHistory();
 	return (
 		<>
+<<<<<<< Updated upstream
 			<nav className={styles.nav}>
 				<List sx={style} component="nav">
 					<NavLink className={styles.link} to="/AdminDashBoard">
@@ -39,12 +40,68 @@ export const AdminSideBar = () => {
 					onClick={() => {
 						authService.logOut();
 						history.push("/");
+=======
+			<List component="nav">
+				<NavLink
+					activeStyle={{
+						color: "blue",
+					}}
+					className={styles.link}
+					to="/AdminDashBoard"
+				>
+					<ListItem divider>DashBoard</ListItem>
+				</NavLink>
+				<Divider />
+				<Divider />
+				<NavLink
+					activeStyle={{
+						color: "blue",
+>>>>>>> Stashed changes
 					}}
 					startIcon={<LogoutIcon />}
 				>
+<<<<<<< Updated upstream
 					Logout
 				</Button>
 			</nav>
+=======
+					<ListItem divider> Verify Users</ListItem>
+				</NavLink>
+				<Divider />
+				<Divider />
+				<NavLink
+					activeStyle={{
+						color: "blue",
+					}}
+					className={styles.link}
+					to="/ManageAllEvents"
+				>
+					<ListItem divider>All Events</ListItem>
+				</NavLink>
+				<Divider />
+				<Divider />
+				<NavLink
+					activeStyle={{
+						color: "blue",
+					}}
+					className={styles.link}
+					to="/ManageAllUsers"
+				>
+					<ListItem divider>All Users</ListItem>
+				</NavLink>
+			</List>
+			<Button
+				variant="contained"
+				sx={{ marginTop: "20%" }}
+				onClick={() => {
+					authService.logOut();
+					history.push("/");
+				}}
+				startIcon={<LogoutIcon />}
+			>
+				Logout
+			</Button>
+>>>>>>> Stashed changes
 		</>
 	);
 };

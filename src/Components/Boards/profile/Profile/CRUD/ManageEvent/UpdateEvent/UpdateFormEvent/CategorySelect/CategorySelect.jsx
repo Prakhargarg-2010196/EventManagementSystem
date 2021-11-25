@@ -7,7 +7,8 @@ import React, { useEffect, useState } from "react";
 import { MultiSelect } from "primereact/multiselect";
 
 export const CategorySelect = (props) => {
-	const [Category, setCategory] = useState(props.defaultValue);
+	const selectedCategories=props.defaultValue;
+	const [Category, setCategory] = useState();
 	const Categories = [
 		  "music" ,
 		  "sports" ,
@@ -26,14 +27,14 @@ export const CategorySelect = (props) => {
 
 	return (
 		<div className="w-100">
-			
 				<MultiSelect
 					value={Category}
 					options={Categories}
 					onChange={(e) => {
 						setCategory(e.target.value);
 					}}
-                    
+					selectAll={false}
+                    showSelectAll={false}
 					placeholder="Category"
 					display="chip"
 					selectionLimit={3}

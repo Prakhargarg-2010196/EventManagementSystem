@@ -11,6 +11,8 @@ import EventPage from "../Components/Layout/EventPage/EventPage";
 import Home from "../Components/Layout/Home/Home";
 import { Loader } from "../Components/Layout/Loader/Loader";
 import LoginPage from "../Components/Auth/LoginPage/LoginPage";
+import ManageAllEvents from "../Components/Boards/profile/Admin/ManageAllEvents/ManageAllEvents";
+import ManageAllUsers from "../Components/Boards/profile/Admin/ManageAllUsers/ManageAllUsers";
 import ManageEvent from "../Components/Boards/profile/Profile/CRUD/ManageEvent/Manage Events";
 import ManageUsers from "../Components/Boards/profile/Admin/ManageUsers/ManageUsers"
 import OtpPasswordReset from "../Components/Auth/PasswordReset/OtpPasswordReset/OtpPasswordReset";
@@ -33,6 +35,8 @@ export const Routes = () => {
 			<Route path="/RegisteredEvents" exact component={RegisteredEvents}></Route>
 			<Route path="/BookMarkedEvents" exact component={BookMarkedEvents}></Route>
 			<Route path="/ManageUsers" exact component={ManageUsers}></Route>
+			<Route path="/ManageAllEvents" exact component={ManageAllEvents}></Route>
+			<Route path="/ManageAllUsers" exact component={ManageAllUsers}></Route>
 			
 			<Route
 				path="/PasswordResetPage"

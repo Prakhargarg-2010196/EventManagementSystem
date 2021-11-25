@@ -60,9 +60,18 @@ export default class ManageUsers extends Component {
 		e.preventDefault();
 		await AdminCrudService.Reject(verifyItemId);
 
+<<<<<<< Updated upstream
 		alert(" user not verified as creator");
 		this.setState({verifyList:this.state.verifyList.filter((verifyItem) => verifyItem._id !== verifyItemId)})
 
+=======
+		alert(" User not verified as creator");
+		this.setState({
+			verifyList: this.state.verifyList.filter(
+				(verifyItem) => verifyItem._id !== verifyItemId
+			),
+		});
+>>>>>>> Stashed changes
 	}
 	render() {
 		return (
@@ -78,10 +87,9 @@ export default class ManageUsers extends Component {
 							<Col md={10}>
 								<Container>
 									<Row>
-										<h1 className="text-center mt-4">Manage Events</h1>
+										<h1 className="text-center mt-4">Manage Verification</h1>
 									</Row>
 									<Row>
-										{console.log(this.state.verifyList)}
 										<TableContainer component={Paper}>
 											{this.state.isLoading ? (
 												<Loader message={"Your Content is Loading"} />
@@ -96,6 +104,11 @@ export default class ManageUsers extends Component {
 														</TableRow>
 													</TableHead>
 													<TableBody>
+														{this.state.verifyList.length === 0 && (
+															<div className=" d-flex justify-content-center  bg-white">
+																<p>No such Users to verify</p>
+															</div>
+														)}
 														{this.state.verifyList.map((verifyItem) => (
 															<TableRow
 																key={verifyItem._id}
@@ -116,7 +129,9 @@ export default class ManageUsers extends Component {
 																		variant="contained"
 																		color="success"
 																		onClick={(e) => {
-																			this.onVerify(e, verifyItem._id);
+																			window.confirm(
+																				"Are you sure you wish to verify this user as creator?"
+																			) && this.onVerify(e, verifyItem._id);
 																		}}
 																	>
 																		Verify
@@ -128,7 +143,13 @@ export default class ManageUsers extends Component {
 																		variant="contained"
 																		color="error"
 																		onClick={(e) => {
+<<<<<<< Updated upstream
 																			this.onReject(e, verifyItem._id);
+=======
+																			window.confirm(
+																				"Are you sure you wish to reject this user for creator?"
+																			) && this.onReject(e, verifyItem._id);
+>>>>>>> Stashed changes
 																		}}
 																	>
 																		Reject

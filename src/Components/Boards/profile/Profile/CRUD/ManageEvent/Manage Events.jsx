@@ -159,7 +159,13 @@ export default class ManageEvent extends Component {
 																	<Button
 																		variant="contained"
 																		onClick={(e) => {
+<<<<<<< Updated upstream
 																			this.onDelete(e, eventItem._id);
+=======
+																			window.confirm(
+																				"Are you sure you wish to delete this event?"
+																			) && this.onDelete(e, eventItem._id);
+>>>>>>> Stashed changes
 																		}}
 																	>
 																		Delete

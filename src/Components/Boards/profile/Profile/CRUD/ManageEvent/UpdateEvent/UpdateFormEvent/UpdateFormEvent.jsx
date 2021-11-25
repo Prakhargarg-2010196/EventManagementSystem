@@ -25,13 +25,16 @@ const UpdateFormEvent = (props) => {
 
 	const { id } = useParams();
 	useEffect(() => {
+		
 		const getAllData = async () => {
+			setLoading(false);
 			await crudService.Read(id).then(
 				(response) => {
 					setSuccess(true);
 					setContent(response.data.post.content);
 					setDateValue(response.data.post.date.split("T")[0]);
 					setTimeValue(response.data.post.time);
+					setArray(response.data.post.category)
 					setMoney(response.data.post.rate);
 					setLoading(false);
 				},
@@ -140,7 +143,7 @@ const UpdateFormEvent = (props) => {
 							<Form.Label className={styles.requiredField}>Category</Form.Label>
 						</Col>
 						<Col xs={6} md={3}>
-							<CategorySelect onSelect={setArray} />
+							<CategorySelect onSelect={setArray} defaultValue={Categories} />
 						</Col>
 					</Row>
 					{/* Category end */}
@@ -171,7 +174,7 @@ const UpdateFormEvent = (props) => {
 							<TimeField
 								onChange={(e) => setTimeValue(e.target.value)}
 								className="w-25"
-								defaultValue={timeValue}
+								value={timeValue}
 							/>
 						</Col>
 					</Row>
@@ -212,7 +215,8 @@ const UpdateFormEvent = (props) => {
 						Update images
 					</Button>
 					<Button
-						variant="primary"
+						variant="success"
+						
 						className={styles.button}
 						onClick={(e) => {
 							handleSubmit(e);
