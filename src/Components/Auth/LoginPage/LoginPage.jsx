@@ -35,45 +35,36 @@ class LoginPage extends Component {
 	constructor(props) {
 		super(props);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleBlur = this.handleBlur.bind(this);
 		this.state = this.defaultState;
 	}
 
-	handleBlur(e) {
-		const regEmail = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
-		let emailErr = "";
-		let passErr = "";
-
-		if (!this.state.email || regEmail.test(this.state.email) === false)
-			emailErr = "Email Field is Invalid ";
-		if (this.state.password < 8) passErr = "Pass Field is Invalid ";
-		if (!this.state.email) emailErr = "Email field is required";
-		if (!this.state.password) passErr = "Pass field is required";
-
+	handleChange(e) {
 		this.setState({
 			...this.state,
 			[e.target.name]: e.target.value,
-			emailErr,
-			passErr,
 		});
 	}
-
-	handleFocus(e) {
-		e.preventDefault();
+	handleBlurEmail() {
 		const regEmail = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
 		let emailErr = "";
+
+		if (regEmail.test(this.state.email) === false)
+			emailErr = "Email Field is Invalid ";
+		if (this.state.email==="") emailErr = "Email field is required";
+
+		this.setState({
+			...this.state,
+			emailErr,
+		});
+	}
+	handleBlurPassword() {
 		let passErr = "";
 
-		if (!this.state.email || regEmail.test(this.state.email) === false)
-			emailErr = "Email Field is Invalid ";
-		if (!this.state.email) emailErr = "Email field is required";
-		if (this.state.password < 8) passErr = "Pass Field is Invalid ";
+		if (!this.state.password&&this.state.password < 8) passErr = "Pass Field is Invalid ";
 		if (!this.state.password) passErr = "Pass field is required";
 
 		this.setState({
 			...this.state,
-			[e.target.name]: e.target.value,
-			emailErr,
 			passErr,
 		});
 	}
@@ -151,8 +142,8 @@ class LoginPage extends Component {
 									className="form-control"
 									placeholder="name@example.com"
 									type="text"
-									onFocus={(e) => this.handleFocus(e)}
-									onBlur={(e) => this.handleBlur(e)}
+									onChange={(e) => this.handleChange(e)}
+									onBlur={(e) => this.handleBlurEmail(e)}
 								/>
 								<span className="text-danger">{this.state.emailErr}</span>
 							</FloatingLabel>
@@ -170,10 +161,10 @@ class LoginPage extends Component {
 									placeholder="Password"
 									name="password"
 									className="form-control"
-									onBlur={(e) => this.handleBlur(e)}
-									onFocus={(e) => this.handleFocus(e)}
+									onChange={(e) => this.handleChange(e)}
+									onBlur={(e) => this.handleBlurPassword(e)}
 								/>
-								<span className="text-danger">{this.state.passErr}</span>
+								{<span className="text-danger">{this.state.passErr}</span>}
 							</FloatingLabel>
 						</Form.Group>
 						<Link to="/PasswordResetPage" className="align-self-end">
