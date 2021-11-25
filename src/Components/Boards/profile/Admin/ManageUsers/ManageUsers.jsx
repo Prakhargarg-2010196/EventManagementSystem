@@ -30,11 +30,11 @@ export default class ManageUsers extends Component {
 		console.log("first");
 		await AdminCrudService.VerifyList().then(
 			(response) => {
-				console.log("res achieve")
+				console.log("res achieve");
 				this.setState({ verifyList: response.data });
 			},
 			(error) => {
-				console.log("error")
+				console.log("error");
 				let resMessage = "";
 				if (!error.response) {
 					console.log(JSON.stringify(error.message));
@@ -54,24 +54,23 @@ export default class ManageUsers extends Component {
 		e.preventDefault();
 		await AdminCrudService.Verify(verifyItemId);
 		alert("verified");
-		this.setState({verifyList:this.state.verifyList.filter((verifyItem) => verifyItem._id !== verifyItemId)})
+		this.setState({
+			verifyList: this.state.verifyList.filter(
+				(verifyItem) => verifyItem._id !== verifyItemId
+			),
+		});
 	}
 	async onReject(e, verifyItemId) {
 		e.preventDefault();
 		await AdminCrudService.Reject(verifyItemId);
 
-<<<<<<< Updated upstream
-		alert(" user not verified as creator");
-		this.setState({verifyList:this.state.verifyList.filter((verifyItem) => verifyItem._id !== verifyItemId)})
 
-=======
 		alert(" User not verified as creator");
 		this.setState({
 			verifyList: this.state.verifyList.filter(
 				(verifyItem) => verifyItem._id !== verifyItemId
 			),
 		});
->>>>>>> Stashed changes
 	}
 	render() {
 		return (
@@ -143,13 +142,11 @@ export default class ManageUsers extends Component {
 																		variant="contained"
 																		color="error"
 																		onClick={(e) => {
-<<<<<<< Updated upstream
-																			this.onReject(e, verifyItem._id);
-=======
+																			
 																			window.confirm(
-																				"Are you sure you wish to reject this user for creator?"
+																				"Are you sure you wish to delete this item?"
 																			) && this.onReject(e, verifyItem._id);
->>>>>>> Stashed changes
+
 																		}}
 																	>
 																		Reject

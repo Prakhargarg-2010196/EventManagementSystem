@@ -57,7 +57,9 @@ export default class ManageEvent extends Component {
 		e.preventDefault();
 		// this.setState({ isLoading: true });
 		await CrudService.Delete(eventItemId);
-		this.setState({events:this.state.events.filter((event) => event._id !== eventItemId)})
+		this.setState({
+			events: this.state.events.filter((event) => event._id !== eventItemId),
+		});
 		// await CrudService.ReadEvents().then(
 		// 	(response) => {
 		// 		this.setState({ events: response.data });
@@ -159,13 +161,12 @@ export default class ManageEvent extends Component {
 																	<Button
 																		variant="contained"
 																		onClick={(e) => {
-<<<<<<< Updated upstream
-																			this.onDelete(e, eventItem._id);
-=======
+
+
 																			window.confirm(
 																				"Are you sure you wish to delete this event?"
 																			) && this.onDelete(e, eventItem._id);
->>>>>>> Stashed changes
+
 																		}}
 																	>
 																		Delete

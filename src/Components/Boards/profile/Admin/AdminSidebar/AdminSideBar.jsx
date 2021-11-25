@@ -9,38 +9,11 @@ import React from "react";
 import authService from "../../../../../api/services/auth.service";
 import styles from "./AdminSideBar.module.css";
 
-const style = {
-	width: "100%",
-	bgcolor: "transparent",
-};
 export const AdminSideBar = () => {
 	const history = useHistory();
 	return (
 		<>
-<<<<<<< Updated upstream
-			<nav className={styles.nav}>
-				<List sx={style} component="nav">
-					<NavLink className={styles.link} to="/AdminDashBoard">
-						<ListItem className={styles.listItem} button divider>
-							{" "}
-							DashBoard
-						</ListItem>
-					</NavLink>
-					<Divider />
-					<Divider />
-					<NavLink className={styles.link} to="/ManageUsers">
-						<ListItem button className={styles.listItem} divider>
-							Manage Users
-						</ListItem>
-					</NavLink>
-				</List>
-				<Button
-					variant="contained"
-					sx={{ marginTop: "20%" }}
-					onClick={() => {
-						authService.logOut();
-						history.push("/");
-=======
+
 			<List component="nav">
 				<NavLink
 					activeStyle={{
@@ -56,15 +29,11 @@ export const AdminSideBar = () => {
 				<NavLink
 					activeStyle={{
 						color: "blue",
->>>>>>> Stashed changes
 					}}
-					startIcon={<LogoutIcon />}
+					className={styles.link}
+					to="/ManageUsers"
 				>
-<<<<<<< Updated upstream
-					Logout
-				</Button>
-			</nav>
-=======
+		
 					<ListItem divider> Verify Users</ListItem>
 				</NavLink>
 				<Divider />
@@ -88,6 +57,8 @@ export const AdminSideBar = () => {
 					to="/ManageAllUsers"
 				>
 					<ListItem divider>All Users</ListItem>
+
+	
 				</NavLink>
 			</List>
 			<Button
@@ -101,7 +72,6 @@ export const AdminSideBar = () => {
 			>
 				Logout
 			</Button>
->>>>>>> Stashed changes
 		</>
 	);
 };

@@ -3,9 +3,8 @@
     padding:0;
 }
 
-
-.SideBar{
-    background:rgb(21, 204, 236);
-    box-sizing: border-box;    
-    min-height:90.2vh ;
+.SideBar {
+    background: #28bff5;
+    box-sizing: border-box;
+    min-height: 90.2vh;
 }

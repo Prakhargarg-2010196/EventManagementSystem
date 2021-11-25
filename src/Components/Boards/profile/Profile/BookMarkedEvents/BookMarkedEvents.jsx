@@ -1,6 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import React, { Component } from "react";
 
+import { Button } from "@mui/material";
 import CrudService from "../../../../../api/services/crud-service";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { Loader } from "../../../../Layout/Loader/Loader";
@@ -13,6 +14,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import postsService from "../../../../../api/services/posts.service";
 import styles from "./BookMarkedEvents.module.css";
 
 export default class BookMarkedEvents extends Component {
@@ -44,9 +46,31 @@ export default class BookMarkedEvents extends Component {
 				});
 			}
 		);
-		this.setState({ isLoading: false });
+		this.setState({isLoading:false});
 	}
+	onUnfavorite = async (e, eventItemId) => {
+		
+		await postsService.UnFavoritePost(eventItemId).then(
+			(res) => {},
 
+			(error) => {
+				let resMessage = "";
+				if (!error.response) {
+					console.log(JSON.stringify(error.message));
+				}
+
+				resMessage = error.response.data;
+
+				this.setState({
+					successful: false,
+					message: resMessage,
+				});
+			}
+		);
+		this.setState({
+			events: this.state.events.filter((event) => event._id !== eventItemId),
+		});
+	};
 	render() {
 		return (
 			<>
@@ -74,6 +98,7 @@ export default class BookMarkedEvents extends Component {
 															<TableCell align="center">Category</TableCell>
 															<TableCell align="center">Cost</TableCell>
 															<TableCell align="center">Date & Time</TableCell>
+															<TableCell align="center">Unfavorite</TableCell>
 														</TableRow>
 													</TableHead>
 													<TableBody>
@@ -109,6 +134,19 @@ export default class BookMarkedEvents extends Component {
 																<TableCell align="center">
 																	{eventItem.date.split("T")[0]} &{" "}
 																	{eventItem.time}
+																</TableCell>
+																<TableCell align="center">
+																	<Button
+																		variant="contained"
+																		color="error"
+																		onClick={(e) => {
+																			window.confirm(
+																				"Are you sure you wish to unfavorite this item?"
+																			) && this.onUnfavorite(e, eventItem._id);
+																		}}
+																	>
+																		Unfavorite
+																	</Button>
 																</TableCell>
 															</TableRow>
 														))}
