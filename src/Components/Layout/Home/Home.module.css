@@ -8,9 +8,14 @@
 .Search{
     background: #D1D4E8;
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
+}
+.Search :nth-child(1){
+ margin-right: 12px;    
+}
+.Search :nth-child(2){
+    width: 50%;
 }
 @media (max-width:480px) {
     .container{
@@ -22,5 +27,11 @@
         box-sizing: border-box;
         
     }
-    
+.Search{
+  flex-direction: column;
+}
+
+   .Search :nth-child(2){
+       width: 80%;
+   }
 }

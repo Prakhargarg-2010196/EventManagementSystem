@@ -1,15 +1,18 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import * as React from "react";
 
 import { Col, Row } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
 
 import { BaseUrl } from "../../../../api/services/BaseUrl";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
 import EventCarousel from "../Event/EventCarousel/EventCaraousel";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import { IconButton } from "@mui/material";
 import { Loader } from "../../Loader/Loader";
+import Typography from "@mui/material/Typography";
 import crudService from "../../../../api/services/crud-service";
 import postsService from "../../../../api/services/posts.service";
 import styles from "./Event.module.css";
@@ -23,7 +26,9 @@ const Event = () => {
 	let category = [];
 	const [message, setMessage] = React.useState("");
 	const [successful, setSuccess] = React.useState(false);
-
+	let date = "";
+	let time = "";
+	let rate = "";
 	const [isLoading, setLoading] = React.useState(true);
 	React.useEffect(() => {
 		const getAllEventDetails = async () => {
@@ -40,6 +45,18 @@ const Event = () => {
 					} else message = error.response.data;
 					setSuccess(false);
 					setMessage(message);
+					setLoading(false);
+					toast.error(message, {
+						position: "bottom-center",
+						autoClose: 3000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						style: { background: "pink", color: "black" },
+					});
+
 				}
 			);
 		};
@@ -52,6 +69,15 @@ const Event = () => {
 	if (event.category) {
 		category = event.category;
 	}
+	if (event.date) {
+		date = event.date;
+	}
+	if (event.time) {
+		time = event.time;
+	}
+	if (event.rate) {
+		rate = event.rate;
+	}
 	const handleClick = async () => {
 		await postsService.RegisterPost(id).then(
 			(response) => {},
@@ -62,69 +88,125 @@ const Event = () => {
 				} else message = error.response.data;
 				setSuccess(false);
 				setMessage(message);
+				toast.error(message, {
+					position: "bottom-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
 			}
 		);
-		alert("Event has been registered");
+		if (!message) alert("Event has been registered");
 	};
 	return (
 		<>
-			<Row>
+			
 				{isLoading ? (
 					<Loader message={"Event Coming Up..."} />
 				) : (
 					<>
-						<h1 className="text-center mt-4">{event.title}</h1>
+						<h1 className="text-center mt-5">{event.title}</h1>
+						<div className={styles.mainContainer}>
+							<div className={styles.cardContainer}>
+								<Card
+									style={{
+										width: "100%",
+										height: "100%",
+										padding: " 0 3em",
+										boxShadow: " 0 8px 8px -4px lightblue",
+										border: "solid rgb(191, 196, 191) 1px",
+									}}
+								>
+									<EventCarousel imgUrlArray={imageUrlUpdate} />
+									<CardContent
+										style={{
+											background: "#434C5E",
+											display: "flex",
+											alignItems: "end",
+											flexDirection: "column",
+										}}
+									>
+										<Typography
+											sx={{ fontSize: 20, color: "#EBCB8B" }}
+											color="text.secondary"
+											gutterBottom
+										>
+											Date: {date.split("T")[0]}
+										</Typography>
+										<Typography
+											sx={{ fontSize: 20, color: "#EBCB8B" }}
+											color="text.secondary"
+											gutterBottom
+										>
+											Time: {time}
+										</Typography>
+									</CardContent>
 
-						<Col md={6}>
-							<Card
-								style={{
-									marginTop: "100px",
-									width: "100%",
-									height: "100%",
-									padding: " 0 3em",
-									boxShadow: " 0 8px 8px -4px lightblue",
-									border: "solid rgb(191, 196, 191) 1px",
-								}}
-							>
-								<EventCarousel imgUrlArray={imageUrlUpdate} />
-
-								<CardActions>
-									<IconButton aria-label="add to favorites">
-										<FavoriteIcon />
-									</IconButton>
-									<Button variant="contained" onClick={(e) => handleClick(e)}>
+									<Button
+										variant="contained"
+										style={{
+											background: "#BF616A",
+											color: "black",
+											border: "dashed 0.6px black",
+											margin: "16px 0",
+										}}
+										onClick={(e) => handleClick(e)}
+									>
 										Register Now
 									</Button>
-								</CardActions>
-								<div className="d-flex justify-content-between mb-3">
-									<h4>Categories</h4>
-									{category.map((categoryItem) => (
-										<Button
-											variant="contained"
-											style={{ background: "#BF616A" }}
-										>
-											#{categoryItem}
-										</Button>
-									))}
-								</div>
-							</Card>
-						</Col>
-						<Col md={6}>
+									<div className="d-flex justify-content-between flex-wrap mt-3 mb-3">
+										<h4>Categories</h4>
+										{category.map((categoryItem) => (
+											<Button
+												variant="contained"
+												style={{ background: "#BF616A" }}
+											>
+												#{categoryItem}
+											</Button>
+										))}
+									</div>
+									<Typography
+										sx={{ fontSize: 20, color: "#FD4005" }}
+										color="text.secondary"
+										gutterBottom
+									>
+										Price: &#8377; {rate}/-
+									</Typography>
+								</Card>
+							</div>
+
 							<div className={styles.contentBox}>
 								<h1>Event Details</h1>
 								{event.content}
 							</div>
-						</Col>
-						{message && (
+							{/* {message && (
 							<div className="form-group mt-4">
 								<div className="alert alert-danger" role="alert">
 									{message}
 								</div>
-							</div>
-						)}
+								</div>
+							)} */}
+							{message && (
+								<ToastContainer
+									position="bottom-center"
+									autoClose={5000}
+									hideProgressBar={false}
+									newestOnTop={false}
+									closeOnClick
+									rtl={false}
+									pauseOnFocusLoss
+									draggable
+									pauseOnHover
+								/>
+							)}
+						</div>
+
 					</>
 				)}
-			</Row>
 		</>
 	);
 };

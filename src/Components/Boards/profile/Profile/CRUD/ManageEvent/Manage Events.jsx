@@ -29,6 +29,7 @@ export default class ManageEvent extends Component {
 	async componentDidMount() {
 		await CrudService.ReadEvents().then(
 			(response) => {
+				if(response.data)
 				this.setState({ events: response.data });
 			},
 			(error) => {

@@ -144,7 +144,7 @@ export default class ManageUsers extends Component {
 																		onClick={(e) => {
 																			
 																			window.confirm(
-																				"Are you sure you wish to delete this item?"
+																				"Are you sure you wish to reject this user?"
 																			) && this.onReject(e, verifyItem._id);
 
 																		}}

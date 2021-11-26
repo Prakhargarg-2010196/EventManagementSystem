@@ -6,6 +6,7 @@ import { Component } from "react";
 import Event from "./Event/Event";
 import Footer from "../Home/Footer/Footer.jsx";
 import { NavBar } from "../Home/NavBar/NavBar";
+import { NavLink } from "react-router-dom";
 import React from "react";
 import SearchBar from "../Home/SearchBar/SearchBar";
 import styles from "./EventPage.module.css";
@@ -16,18 +17,15 @@ class EventPage extends Component {
 			<>
 				<NavBar />
 				<div className={styles.container}>
-					<div className={styles.Search}>
+				<div className={styles.Search}>
+						<NavLink to="/">
+							<h1 style={{ color: "#8360c3" }}>Eventooz</h1>
+						</NavLink>
 						<SearchBar />
 					</div>
 
 					<Container>
-						<Row>
-							<Event />
-						</Row>
-
-						<Row>
-							{/* <CardCarousel /> */}
-						</Row>
+						<Event />
 					</Container>
 				</div>
 				<Footer />

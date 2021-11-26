@@ -1,7 +1,10 @@
 // eslint:disable-next-line:no-unused-vars
 // eslint:disable:no-unused-vars
+import "react-toastify/dist/ReactToastify.css";
+
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import { useHistory, useParams } from "react-router-dom";
 
 import { BaseUrl } from "../../../../../../../../api/services/BaseUrl";
@@ -92,6 +95,16 @@ const UpdateFormEvent = (props) => {
 				} else message = error.response.data;
 				setSuccess(false);
 				setMessage(message);
+				toast.error(message, {
+					position: "bottom-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
 			}
 		);
 	};
@@ -107,17 +120,17 @@ const UpdateFormEvent = (props) => {
 				<Form className={styles.form}>
 					{/* Content */}
 					{message && (
-						<div className="form-group mt-2">
-							<div
-								className={
-									successful ? "alert alert-success" : "alert alert-danger"
-								}
-								role="alert"
-							>
-								{message}
-							</div>
-						</div>
-					)}
+							<ToastContainer
+								position="bottom-center"
+								hideProgressBar={false}
+								newestOnTop={false}
+								closeOnClick
+								rtl={false}
+								pauseOnFocusLoss
+								draggable
+								pauseOnHover
+							/>
+						)}
 					<Row className="mb-3">
 						<Col md={6} sm={12}>
 							<Form.Label className={styles.requiredField}>Content</Form.Label>
@@ -216,7 +229,7 @@ const UpdateFormEvent = (props) => {
 					</Button>
 					<Button
 						variant="success"
-						
+												
 						className={styles.button}
 						onClick={(e) => {
 							handleSubmit(e);

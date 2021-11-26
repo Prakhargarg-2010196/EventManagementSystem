@@ -52,9 +52,7 @@ export const NavBar = () => {
 				<Navbar.Collapse id="responsive-navbar-nav justify-content-lg-end">
 					<Nav className="ms-auto">
 						<NavLink
-							activeStyle={{
-								color: "blue",
-							}}
+							
 							to="/"
 							className={styles.navLinks}
 						>
@@ -63,9 +61,7 @@ export const NavBar = () => {
 						{(authService.isAdmin() || authService.isAuthenticated() )? (
 							authService.isAuthenticated() ? (
 								<NavLink
-									activeStyle={{
-										color: "blue",
-									}}
+									
 									to="/DashBoard"
 									className={styles.navLinks}
 								>

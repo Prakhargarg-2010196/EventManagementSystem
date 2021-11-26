@@ -1,5 +1,8 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 import React, { Component } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 import AuthService from "../../../../api/services/auth.service";
 import CalendarMobile from "../../../../assets/CalendarMobile.svg";
@@ -31,39 +34,28 @@ class OtpPasswordReset extends Component {
 	constructor(props) {
 		super(props);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleBlur = this.handleBlur.bind(this);
 		this.state = this.defaultState;
 		this.handleResendOtp = this.handleResendOtp.bind(this);
 	}
 
-	handleBlur(e) {
-		const regOtp = /\d*/;
-		let otpErr = "";
-
-		if (!this.state.otp || regOtp.test(this.state.otp) === false)
-			otpErr = "otp is invalid";
-		if (this.state.otp.length !== 6 && this.state.otp)
-			otpErr = "otp is invalid";
-		if (!this.state.otp) otpErr = "otp is required";
+	handleChange(e) {
 		this.setState({
 			...this.state,
 			[e.target.name]: e.target.value,
-			otpErr,
 		});
 	}
-
-	handleFocus(e) {
-		e.preventDefault();
+	handleBlurOtp() {
 		const regOtp = /\d*/;
 		let otpErr = "";
+
 		if (!this.state.otp || regOtp.test(this.state.otp) === false)
 			otpErr = "otp is invalid";
-		if (!this.state.otp) otpErr = "otp is required";
 		if (this.state.otp.length !== 6 && this.state.otp)
 			otpErr = "otp is invalid";
+		if (!this.state.otp) otpErr = "otp is required";
 		this.setState({
 			...this.state,
-			[e.target.name]: e.target.value,
+
 			otpErr,
 		});
 	}
@@ -84,6 +76,16 @@ class OtpPasswordReset extends Component {
 				this.setState({
 					message: resMessage,
 					successful: false,
+				});
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
 				});
 			}
 		);
@@ -164,8 +166,8 @@ class OtpPasswordReset extends Component {
 									placeholder="otp"
 									name="otp"
 									className="form-control"
-									onBlur={(e) => this.handleBlur(e)}
-									onFocus={(e) => this.handleFocus(e)}
+									onBlur={() => this.handleBlurOtp()}
+									onChange={(e) => this.handleChange(e)}
 								/>
 								<span className="text-danger">{this.state.otpErr}</span>
 							</FloatingLabel>
@@ -187,7 +189,7 @@ class OtpPasswordReset extends Component {
 						>
 							resend otp
 						</Button>
-						{this.state.message && (
+						{/* {this.state.message && (
 							<div className="form-group mt-4">
 								<div
 									className={
@@ -200,6 +202,19 @@ class OtpPasswordReset extends Component {
 									{this.state.message}
 								</div>
 							</div>
+						)} */}
+						{this.state.message && (
+							<ToastContainer
+								position="bottom-center"
+								autoClose={5000}
+								hideProgressBar={false}
+								newestOnTop={false}
+								closeOnClick
+								rtl={false}
+								pauseOnFocusLoss
+								draggable
+								pauseOnHover
+							/>
 						)}
 					</Form>
 				)}
