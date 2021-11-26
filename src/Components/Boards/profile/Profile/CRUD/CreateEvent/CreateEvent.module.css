@@ -5,9 +5,23 @@
 
 
 
-.SideBar {
-    background: rgb(205, 242, 255);
-    box-sizing: border-box;
-    min-height: 90.2vh;
+.SideBar{
+    
+    
+    border-top-left-radius:12px;
+    border-top-right-radius:12px;
+    background:rgb(205, 242, 255);
+    box-sizing: border-box;    
+    height: inherit;
+}
+
+@media screen and (max-width:768px) {
+ 
+
+.SideBar{
+    height:min-content;
+    padding-bottom: 40px;
+    text-align: center;
+}
 
 }

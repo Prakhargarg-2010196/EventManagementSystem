@@ -2,14 +2,11 @@
     width: 40px;
     margin:7px;
 }
-
-.footer {
-    display: grid;
-    background: #765353;
-    padding-top: 30px;
-    width: 100%;
+.footer{
+    display: flex;
 
 }
+
 
 a{
     color:black;
@@ -20,4 +17,11 @@ a:hover{
     color:black;
     user-select: none;
     text-decoration: none;
+}
+@media (max-width:480px) {
+    .footer {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 }

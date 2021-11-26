@@ -16,25 +16,90 @@ const FormEvent = (props) => {
 	const [content, setContent] = useState("");
 	const [Categories, setArray] = useState([]);
 	const [dateValue, setDateValue] = useState(null);
-	const [timeValue, setTimeValue] = useState("24:00");
+	const [timeValue, setTimeValue] = useState();
 	const [optionValue, setOptionValue] = useState("");
 	const [Url, setUrl] = useState("");
 	const [City, setCity] = useState("");
 	const [Address, setAddress] = useState("");
-	const [money, setMoney] = useState();
-	const [Files, setFilesArray] = useState([]);
+	const [money, setMoney] = useState("");
 	const history = useHistory();
+	const [Files, setFilesArray] = useState([]);
 	const [message, setMessage] = useState("");
 	const [successful, setSuccess] = useState(false);
 	const [isLoading, setLoading] = useState(false);
+	const [errors, setErrors] = useState({
+		contentErr: "",
+		titleErr: "",
+		urlErr: "",
+		dateErr: "",
+		timeErr: "",
+		rateErr: "",
+		modeErr: "",
+		addressErr: "",
+		cityErr: "",
+	});
+
+	const handleBlurRate = () => {
+		let rateErr = "";
+		if ((typeof Number(money) !== "number")) rateErr = " Price must be a number";
+		if (!money) rateErr = " Price is required";
+		setErrors({ rateErr: rateErr });
+	};
+	const handleBlurContent = () => {
+		let contentErr = "";
+		if (!content) contentErr = " content Can't be empty";
+		setErrors({ contentErr });
+	};
+	const handleBlurMode = () => {
+		let modeErr = "";
+		if (!optionValue) modeErr = " One Mode should be selected";
+		setErrors({ modeErr });
+	};
+	const handleBlurTime = () => {
+		let timeErr = "";
+		if (!timeValue) timeErr = "Time can't be empty ";
+		setErrors({ timeErr });
+	};
+	const handleBlurDate = () => {
+		let dateErr = "";
+		if (!dateValue) dateErr = " Date Can't be empty";
+		setErrors({ dateErr });
+	};
+	const handleBlurTitle = () => {
+		let titleErr = "";
+		if (!title) titleErr = " title Can't be empty";
+		setErrors({ titleErr });
+	};
+	const handleBlurUrl = () => {
+		let urlErr = "";
+		console.log(typeof Url);
+		const urlReg =
+			/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
+		if (!Url) urlErr = " url Can't be empty";
+		if (Url && urlReg.test(Url) === false) urlErr = " url is invalid";
+		setErrors({ urlErr });
+	};
+	const handleBlurAddress = () => {
+		let addressErr = "";
+
+		if (!Address) addressErr = "Address Can't be empty";
+		setErrors({ addressErr });
+	};
+	const handleBlurCity = () => {
+		let cityErr = "";
+
+		if (!City) cityErr = "City Can't be empty";
+		setErrors({ cityErr });
+	};
 
 	const handleDateUpdate = (e) => {
 		const dateValue = e.target.value;
-		const dateValueToBe = new Date(dateValue);
 		const dateValueInEpoch = new Date(dateValue).getTime();
+		const dateValueToBe = new Date(dateValue);
 		const currentDate = new Date();
 		if (dateValueToBe.getDate() - currentDate.getDate() >= 0)
 			setDateValue(dateValueInEpoch);
+			else setErrors({dateErr:"invalid date"})
 	};
 
 	const handleSubmit = async (e) => {
@@ -95,9 +160,8 @@ const FormEvent = (props) => {
 				<Container>
 					<h1 style={{ textAlign: "center" }}>Create Events</h1>
 					<Row className="mt-5">
-						
 						{/* DragDrop */}
-						<Col md={6}>
+						<Col md={6} xs={12}>
 							<Row>
 								<Form.Label className={styles.requiredField}>
 									Browse select one at a time or select multiple or drop
@@ -107,8 +171,7 @@ const FormEvent = (props) => {
 								<DragNDrop onGet={setFilesArray} />
 							</Row>
 							{/* DragDrop END */}
-							
-							
+
 							{/* Content */}
 							<Row className="mt-5">
 								<Form.Label className={styles.requiredField}>
@@ -120,16 +183,18 @@ const FormEvent = (props) => {
 									onChange={(e) => {
 										setContent(e.target.value);
 									}}
+									onBlur={() => {
+										handleBlurContent();
+									}}
+									
 								/>
+								<div className="text-danger">{errors.contentErr}</div>
 							</Row>
 							{/* Content end  */}
 						</Col>
-						
-						
+
 						<Col md={6}>
-							
 							<Form className={styles.form}>
-								
 								{/* Title */}
 								<Row className="mb-3">
 									<Col>
@@ -137,55 +202,61 @@ const FormEvent = (props) => {
 											Title
 										</Form.Label>
 									</Col>
-									<Col>
+									<Col xs={12}>
 										<Form.Control
 											type="text"
 											placeholder=""
 											onChange={(e) => {
 												setTitle(e.target.value);
 											}}
+											onBlur={() => {
+												handleBlurTitle();
+											}}
 										/>
 									</Col>
+									<span className="text-danger">{errors.titleErr}</span>
 								</Row>
 								{/*Title end*/}
-								
-								
+
 								{/* Category start */}
 								<Row>
-									<Col>
+									<Col xs={12}>
 										<Form.Label className={styles.requiredField}>
 											Category
 										</Form.Label>
 									</Col>
-									<Col>
+									<Col xs={12}>
 										<CategorySelect onSelect={setArray} />
 									</Col>
 								</Row>
-								
+
 								{/* Category end */}
 
-								
 								{/* Date Start */}
 								<Row className="mt-4">
-									<Col>
+									<Col xs={12}>
 										<Form.Label className={styles.requiredField}>
 											Date{" "}
 										</Form.Label>
 									</Col>
-									<Col>
+									<Col xs={12}>
 										<input
 											className="form-control"
 											type="date"
 											onChange={(e) => handleDateUpdate(e)}
+											onBlur={() => {
+												handleBlurDate();
+											}}
 										/>
 									</Col>
+									<span className="text-danger">{errors.dateErr}</span>
 								</Row>
-								
+
 								{/* Date end */}
 
 								{/* Time start*/}
 								<Row className="mt-4">
-									<Col>
+									<Col xs={12}>
 										<Form.Label>Time(HH:MM) </Form.Label>
 									</Col>
 
@@ -193,13 +264,16 @@ const FormEvent = (props) => {
 										<TimeField
 											value={timeValue}
 											onChange={(e) => setTimeValue(e.target.value)}
-											className="w-25"
+											onBlur={() => {
+												handleBlurTime();
+											}}
+											className="w-100"
 										/>
 									</Col>
+									<span className="text-danger">{errors.timeErr}</span>
 								</Row>
 								{/* Time end */}
-								
-								
+
 								{/* Mode of events */}
 								<Row className="mt-4">
 									<Form.Label
@@ -225,6 +299,9 @@ const FormEvent = (props) => {
 													onChange={(e) => {
 														setOptionValue(e.target.value);
 													}}
+													onBlur={() => {
+														handleBlurMode();
+													}}
 												/>
 												Online
 											</label>
@@ -240,7 +317,11 @@ const FormEvent = (props) => {
 														onChange={(e) => {
 															setUrl(e.target.value);
 														}}
+														onBlur={() => {
+															handleBlurUrl();
+														}}
 													/>
+													<div className="text-danger">{errors.urlErr}</div>
 												</Col>
 											)}
 										</div>
@@ -262,6 +343,9 @@ const FormEvent = (props) => {
 													onChange={(e) => {
 														setOptionValue(e.target.value);
 													}}
+													onBlur={() => {
+														handleBlurMode();
+													}}
 												/>
 												Offline
 											</label>
@@ -280,8 +364,14 @@ const FormEvent = (props) => {
 																onChange={(e) => {
 																	setAddress(e.target.value);
 																}}
+																onBlur={() => {
+																	handleBlurAddress();
+																}}
 															/>
 														</Col>
+														<div className="text-danger">
+															{errors.addressErr}
+														</div>
 													</Row>
 													<Row className="mt-4">
 														<Col>
@@ -296,36 +386,49 @@ const FormEvent = (props) => {
 																onChange={(e) => {
 																	setCity(e.target.value);
 																}}
+																onBlur={() => {
+																	handleBlurCity();
+																}}
 															/>
 														</Col>
+														<div className="text-danger">
+															{errors.cityErr}
+														</div>
 													</Row>
 												</>
 											)}
 										</div>
 									</Col>
+									<span className="text-danger">{errors.modeErr}</span>
 								</Row>
 								{/* Mode of events end */}
 
 								{/* Money */}
 								<Row className="mt-5">
-									<Col md={6}>
+									<Col md={6} xs={12}>
 										<Form.Label className={styles.requiredField}>
 											Price(in INR)
 										</Form.Label>
 									</Col>
-									<Col md={6}>
+									<Col md={6} xs={12}>
 										<InputGroup className="">
 											<InputGroup.Text>₹</InputGroup.Text>
 											<Form.Control
 												aria-label="Amount (to the nearest rupee)"
+												type="text"
 												className="w-50"
 												onChange={(e) => {
 													setMoney(e.target.value);
 												}}
+												onBlur={() => {
+													handleBlurRate();
+												}}
 											/>
 										</InputGroup>
 									</Col>
+									<span className="text-danger">{errors.rateErr}</span>
 								</Row>
+
 								{/* money end */}
 
 								<Button

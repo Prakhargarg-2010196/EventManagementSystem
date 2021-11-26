@@ -72,9 +72,8 @@
 }
 
 .SideBar{
-    height:min-content;
+    height:100%;
     padding-bottom: 40px;
-    display: flex;
     
 }
 }

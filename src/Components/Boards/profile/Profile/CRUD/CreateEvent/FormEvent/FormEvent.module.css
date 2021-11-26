@@ -17,8 +17,17 @@
 }
 
 .button {
-    width: 40%;
+    width: 50%;
     align-self: center;
     margin-top: 30px;
     margin-bottom: 20px;
 }
+
+@media screen and (max-width:768px) {
+ 
+
+   .form{
+       margin: 100px 0;
+   }
+    
+    }

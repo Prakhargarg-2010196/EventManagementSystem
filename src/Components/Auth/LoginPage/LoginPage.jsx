@@ -1,5 +1,8 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 import React, { Component } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 import AuthService from "../../../api/services/auth.service";
 import { BaseUrl } from "../../../api/services/BaseUrl";
@@ -50,7 +53,7 @@ class LoginPage extends Component {
 
 		if (regEmail.test(this.state.email) === false)
 			emailErr = "Email Field is Invalid ";
-		if (this.state.email==="") emailErr = "Email field is required";
+		if (this.state.email === "") emailErr = "Email field is required";
 
 		this.setState({
 			...this.state,
@@ -60,7 +63,10 @@ class LoginPage extends Component {
 	handleBlurPassword() {
 		let passErr = "";
 
-		if (!this.state.password&&this.state.password < 8) passErr = "Pass Field is Invalid ";
+		if (this.state.password && this.state.password.length < 8) {
+			passErr = "Pass Field is Invalid ";
+		}
+
 		if (!this.state.password) passErr = "Pass field is required";
 
 		this.setState({
@@ -115,6 +121,16 @@ class LoginPage extends Component {
 					successful: false,
 					message: resMessage,
 				});
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
 			}
 		);
 	};
@@ -162,13 +178,13 @@ class LoginPage extends Component {
 									name="password"
 									className="form-control"
 									onChange={(e) => this.handleChange(e)}
-									onBlur={(e) => this.handleBlurPassword(e)}
+									onBlur={() => this.handleBlurPassword()}
 								/>
 								{<span className="text-danger">{this.state.passErr}</span>}
 							</FloatingLabel>
 						</Form.Group>
 						<Link to="/PasswordResetPage" className="align-self-end">
-							<Form.Text>Forgot Password?</Form.Text>
+							<Form.Text style={{ color: "#000" }}>Forgot Password?</Form.Text>
 						</Link>
 						<Button
 							variant="primary"
@@ -178,17 +194,30 @@ class LoginPage extends Component {
 						>
 							Login
 						</Button>
-
+						{/* 
 						{this.state.message && (
 							<div className="form-group mt-2">
 								<div className="alert alert-danger " role="alert">
 									{this.state.message}
 								</div>
 							</div>
+						)} */}
+						{this.state.message && (
+							<ToastContainer
+								position="bottom-center"
+								autoClose={5000}
+								hideProgressBar={false}
+								newestOnTop={false}
+								closeOnClick
+								rtl={false}
+								pauseOnFocusLoss
+								draggable
+								pauseOnHover
+							/>
 						)}
 						<Form.Text>Don't have an account ?</Form.Text>
 						<Link to="/SignUpPage">
-							<Form.Text>Sign up</Form.Text>
+							<Form.Text style={{ color: "#000" }}>Sign up</Form.Text>
 						</Link>
 					</Form>
 				)}

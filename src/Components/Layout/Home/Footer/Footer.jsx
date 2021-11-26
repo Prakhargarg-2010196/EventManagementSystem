@@ -42,18 +42,18 @@ export default function Footer() {
 			<Box
 				component="footer"
 				sx={{
-					py: 3,
-					px: 2,
+					py: 2,
+					px: 3,
 					mt: "auto",
 					backgroundColor: " #765353",
 					display: "flex",
-					flexWrap: "wrap",
 				}}
+				className={styles.footer}
 			>
 				<Box
 					style={{ display: "flex", flexDirection: "column" }}
 					sx={{
-						width: 300,
+						width: 400,
 						height: 300,
 					}}
 				>
@@ -80,7 +80,7 @@ export default function Footer() {
 				<Box
 					style={{ display: "flex", flexDirection: "column" }}
 					sx={{
-						width: 300,
+						width: 400,
 						height: 300,
 					}}
 				>
@@ -104,7 +104,7 @@ export default function Footer() {
 				<Box
 					style={{ display: "flex", flexDirection: "column" }}
 					sx={{
-						width: 300,
+						width: 400,
 						height: 300,
 					}}
 				>
@@ -133,7 +133,7 @@ export default function Footer() {
 				<Box
 					style={{ display: "flex", flexDirection: "column" }}
 					sx={{
-						width: 300,
+						width: 400,
 						height: 300,
 					}}
 				>
@@ -172,32 +172,7 @@ export default function Footer() {
 						
 					</div>
 				</Box>
-				<Box
-					style={{ display: "flex", flexDirection: "column"}}
-					sx={{
-						width: 200,
-						height: 300,
-					}}
-				>
-					<div className="d-flex flex-column">
-						<p style={{ fontSize: "20px" }}>Popular Searches</p>
-						<a href="google.com" alt="">
-							Countries supported by Eventooze
-						</a>
-						<a href="google.com" alt="">
-							Countries supported by Eventooze
-						</a>
-						<a href="google.com" alt="">
-							Countries supported by Eventooze
-						</a>
-						<a href="google.com" alt="">
-							Countries supported by Eventooze
-						</a>
-						<a href="google.com" alt="">
-							Countries supported by Eventooze
-						</a>
-					</div>
-				</Box>
+				
 			</Box>
 		</Box>
 	);

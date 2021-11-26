@@ -31,8 +31,8 @@ export default function SearchBar() {
 	};
 	return (
 		<>
-			<Stack sx={{ width: "80%", margin: " 0 40px", padding: "20px 0" }}>
-				<input type="search" onKeyPress={(e) => handleSubmit(e)} style={{width: "50%",marginLeft:"10em" ,borderRadius:"10px" ,border:"grey solid"}}></input>
+			<Stack sx={{padding: "20px 0" ,display:"flex",justifyContent:"center" ,alignItems:"center",background:"#D1D4E8" }}>
+				<input type="search" onKeyPress={(e) => handleSubmit(e)} style={{width: "100%", borderRadius:"10px" ,border:"grey solid"}}></input>
 			</Stack>
 			{message && (
 				<div className="form-group">

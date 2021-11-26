@@ -20,11 +20,11 @@ export default class DashBoard extends Component {
 					<NavBar />
 					<Container fluid>
 						<Row>
-							<Col md={2} className={styles.SideBar}>
+							<Col md={2}  className={styles.SideBar}>
 								<SideBar />
 							</Col>
-							<Col md={10}>
-									<FormEvent />
+							<Col md={10} >
+								<FormEvent />
 							</Col>
 						</Row>
 					</Container>

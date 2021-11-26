@@ -1,9 +1,27 @@
-.contentBox{
-    margin-top: 100px;
+.contentBox {
     width: 100%;
-    height: 100%;
-    padding:3em;
-    border:solid rgb(191, 196, 191) 1px;
+    height: inherit;
+    padding: 3em;
+    border: solid rgb(191, 196, 191) 1px;
     box-shadow: 0 8px 8px -4px lightblue;
 
+}
+
+.mainContainer {
+    display: flex;
+    justify-content: center;
+    gap: 3em;
+
+}
+
+.cardContainer {
+    width: fit-content;
+}
+
+@media screen and (max-width:786px) {
+
+    .mainContainer {
+        flex-direction: column;
+
+    }
 }

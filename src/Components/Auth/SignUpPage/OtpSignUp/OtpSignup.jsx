@@ -1,5 +1,8 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 import React, { Component } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 import AuthService from "../../../../api/services/auth.service";
 import CalendarMobile from "../../../../assets/CalendarMobile.svg";
@@ -31,45 +34,32 @@ class OtpSignUp extends Component {
 	constructor(props) {
 		super(props);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleBlur = this.handleBlur.bind(this);
 		this.state = this.defaultState;
 		this.handleResendOtp = this.handleResendOtp.bind(this);
 	}
-
-	handleBlur(e) {
-		const regOtp = /\d*/;
-		let otpErr = "";
-
-		if (!this.state.otp || regOtp.test(this.state.otp) === false)
-			otpErr = "otp is invalid";
-		if (this.state.otp.length !== 6 && this.state.otp)
-			otpErr = "otp is invalid";
-		if (!this.state.otp) otpErr = "otp is required";
+	handleChange(e) {
 		this.setState({
 			...this.state,
 			[e.target.name]: e.target.value,
-			otpErr,
 		});
 	}
-
-	handleFocus(e) {
-		e.preventDefault();
+	handleBlurOtp() {
 		const regOtp = /\d*/;
 		let otpErr = "";
+
 		if (!this.state.otp || regOtp.test(this.state.otp) === false)
 			otpErr = "otp is invalid";
-		if (!this.state.otp) otpErr = "otp is required";
 		if (this.state.otp.length !== 6 && this.state.otp)
 			otpErr = "otp is invalid";
+		if (!this.state.otp) otpErr = "otp is required";
 		this.setState({
 			...this.state,
-			[e.target.name]: e.target.value,
+
 			otpErr,
 		});
 	}
 
 	handleResendOtp = async (e) => {
-		
 		e.preventDefault();
 		this.handleKeyPress(e);
 		const user = {
@@ -78,9 +68,7 @@ class OtpSignUp extends Component {
 			email: this.props.history.location.state.email,
 		};
 		await AuthService.SignUp(user).then(
-			(response) => {
-				
-			},
+			(response) => {},
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
@@ -93,6 +81,7 @@ class OtpSignUp extends Component {
 				});
 			}
 		);
+		alert("OTP resent successfully")
 	};
 
 	handleSubmit = async (e) => {
@@ -111,7 +100,6 @@ class OtpSignUp extends Component {
 			(response) => {
 				if (response.status === 201) {
 					this.setState({
-						// message: response.data,
 						successful: true,
 					});
 				}
@@ -147,8 +135,19 @@ class OtpSignUp extends Component {
 						successful: false,
 					});
 				}
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
 			}
 		);
+		
 	};
 	handleKeyPress(e) {
 		if (e.key === "Enter") e.preventDefault();
@@ -170,8 +169,8 @@ class OtpSignUp extends Component {
 									placeholder="otp"
 									name="otp"
 									className="form-control"
-									onBlur={(e) => this.handleBlur(e)}
-									onFocus={(e) => this.handleFocus(e)}
+									onBlur={(e) => this.handleBlurOtp(e)}
+									onChange={(e) => this.handleChange(e)}
 								/>
 								<span className="text-danger">{this.state.otpErr}</span>
 							</FloatingLabel>
@@ -189,24 +188,25 @@ class OtpSignUp extends Component {
 							variant="primary"
 							className={styles.buttonSignUp}
 							onClick={(e) => {
-								this.handleResendOtp(e)}}
+								this.handleResendOtp(e);
+							}}
 							onKeyPress={(e) => this.handleKeyPress(e)}
 						>
 							resend otp
 						</Button>
+						
 						{this.state.message && (
-							<div className="form-group mt-4">
-								<div
-									className={
-										this.state.successful
-											? "alert alert-success"
-											: "alert alert-danger"
-									}
-									role="alert"
-								>
-									{this.state.message}
-								</div>
-							</div>
+							<ToastContainer
+								position="bottom-center"
+								autoClose={5000}
+								hideProgressBar={false}
+								newestOnTop={false}
+								closeOnClick
+								rtl={false}
+								pauseOnFocusLoss
+								draggable
+								pauseOnHover
+							/>
 						)}
 					</Form>
 				)}

@@ -8,6 +8,7 @@ import { MultiSelect } from "primereact/multiselect";
 
 export const CategorySelect = (props) => {
 	const [Category, setCategory] = useState([]);
+	const [categoryErr, setCategoryErr] = useState("");
 	const Categories = [
 		  "music" ,
 		  "sports" ,
@@ -21,7 +22,12 @@ export const CategorySelect = (props) => {
 	useEffect(() => {
 		props.onSelect(Category);
 	});
-
+	const handleBlurCategory = () => {
+		let categoryErr = "";
+		if (Category.length===0) categoryErr = "category Can't be empty";
+		setCategoryErr(categoryErr );
+	};
+	
 	return (
 		<div className="w-100">
 			
@@ -31,12 +37,14 @@ export const CategorySelect = (props) => {
 					onChange={(e) => {
 						setCategory(e.target.value);
 					}}
+					onBlur={()=>{handleBlurCategory()}}
                     selectAll={false}
                     showSelectAll={false}
 					placeholder="Category"
 					display="chip"
 					selectionLimit={3}
 				/>
+				<div className="text-danger">{categoryErr}</div>
 		</div>
 	);
 };
