@@ -28,6 +28,10 @@ const Event = () => {
 	let date = "";
 	let time = "";
 	let rate = "";
+	let venueORlink="";
+	let city = "";
+	let content = "";
+	let mode = "";
 	const [isLoading, setLoading] = React.useState(true);
 	React.useEffect(() => {
 		const getAllEventDetails = async () => {
@@ -106,8 +110,21 @@ const Event = () => {
 	if (event.time) {
 		time = event.time;
 	}
+	if (event.content) {
+		content = event.content;
+	}
 	if (event.rate) {
 		rate = event.rate;
+	}
+	
+	if (event.venueORlink) {
+		venueORlink = event.venueORlink;
+	}
+	if (event.isOnline) {
+		mode = event.isOnline;
+	}
+	if (event.city) {
+		city = event.city;
 	}
 	const handleClick = async () => {
 		await postsService.RegisterPost(id).then(
@@ -211,7 +228,12 @@ const Event = () => {
 
 						<div className={styles.contentBox}>
 							<h1>Event Details</h1>
-							{event.content}
+							<h2>Content</h2>
+							<p>{content}</p>
+							<br></br>
+							{mode?<h2> Link </h2>:<h2> venue </h2>}
+							<p>{venueORlink}</p>
+							{mode?"":<h2>City :{city}</h2>}
 						</div>
 
 						{message && (
