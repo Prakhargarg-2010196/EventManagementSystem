@@ -152,7 +152,9 @@ export default class ManageEvent extends Component {
 																			pathname: `/EventPage/${eventItem._id}`,
 																		}}
 																	>
-																		{eventItem.title}
+																		<strong>
+																			<u>{eventItem.title}</u>
+																		</strong>
 																	</Link>
 																</TableCell>
 																<TableCell align="center">
