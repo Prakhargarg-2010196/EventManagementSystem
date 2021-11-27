@@ -28,7 +28,7 @@ const Event = () => {
 	let date = "";
 	let time = "";
 	let rate = "";
-	let venueORlink="";
+	let venueORlink = "";
 	let city = "";
 	let content = "";
 	let mode = "";
@@ -116,7 +116,7 @@ const Event = () => {
 	if (event.rate) {
 		rate = event.rate;
 	}
-	
+
 	if (event.venueORlink) {
 		venueORlink = event.venueORlink;
 	}
@@ -227,13 +227,25 @@ const Event = () => {
 						</div>
 
 						<div className={styles.contentBox}>
-							<h1>Event Details</h1>
-							<h2>Content</h2>
-							<p>{content}</p>
+							<h1 style={{ color: "darkblue" }}>Event Details</h1>
 							<br></br>
-							{mode?<h2> Link </h2>:<h2> venue </h2>}
-							<p>{venueORlink}</p>
-							{mode?"":<h2>City :{city}</h2>}
+							<h2 style={{ fontStyle: "italic" }}>Content</h2>
+							<p style={{ color: "#B86868" }}>{content}</p>
+							<br></br>
+							{mode ? (
+								<h2 style={{ fontStyle: "italic" }}>Link </h2>
+							) : (
+								<h2 style={{ fontStyle: "italic" }}> Venue </h2>
+							)}
+							<p style={{ color: "#B86868" }}>{venueORlink}</p>
+							{mode ? (
+								""
+							) : (
+								<>
+									<h2 style={{ fontStyle: "italic" }}>City </h2>
+									<p style={{ color: "#B86868" }}>{city}</p>
+								</>
+							)}
 						</div>
 
 						{message && (
