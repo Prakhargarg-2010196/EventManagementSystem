@@ -51,6 +51,7 @@ export default function EventCards(props) {
 				}
 			);
 		};
+		if(authService.isAuthenticated())
 		getBookmarked();
 	}, []);
 	const handleClickEvent = () => {
@@ -58,7 +59,6 @@ export default function EventCards(props) {
 	};
 
 	const handleFavoritism = async () => {
-		if (authService.isAuthenticated()) {
 			if (!isPresent && !favorite) {
 				setFavorite(true);
 				await postsService.FavoritePost(props.id).then(
@@ -128,7 +128,7 @@ export default function EventCards(props) {
 					});
 				}
 			);
-		}
+		
 	};
 
 	return (
@@ -156,11 +156,12 @@ export default function EventCards(props) {
 								handleFavoritism();
 							}}
 						>
-							{favorite || isPresent ? (
+		 
+							{authService.isAuthenticated()?(favorite || isPresent ? (
 								<FavoriteIcon color="secondary" />
 							) : (
 								<FavoriteBorderIcon />
-							)}
+							)):""}
 						</Button>
 					</CardActions>
 				</CardActionArea>

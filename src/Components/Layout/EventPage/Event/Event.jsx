@@ -193,7 +193,7 @@ const Event = () => {
 									</Typography>
 								</CardContent>
 
-								<Button
+								{authService.isAuthenticated()?(<Button
 									variant="contained"
 									style={{
 										background: "#BF616A",
@@ -204,7 +204,7 @@ const Event = () => {
 									onClick={(e) => handleClick(e)}
 								>
 									Register Now
-								</Button>
+								</Button>):""}
 								<div className="d-flex justify-content-between flex-wrap mt-3 mb-3">
 									<h4>Categories</h4>
 									{category.map((categoryItem) => (
