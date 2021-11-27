@@ -92,7 +92,7 @@ export default class RegisteredEvents extends Component {
 														</TableRow>
 													</TableHead>
 													<TableBody>
-													{this.state.events.length === 0 && (
+														{this.state.events.length === 0 && (
 															<div className=" d-flex justify-content-center  bg-white">
 																<h1>No such events</h1>
 															</div>
@@ -131,25 +131,25 @@ export default class RegisteredEvents extends Component {
 												</Table>
 											)}
 										</TableContainer>
-										{this.state.message && (
-											<ToastContainer
-												position="bottom-center"
-												autoClose={5000}
-												hideProgressBar={false}
-												newestOnTop={false}
-												closeOnClick
-												rtl={false}
-												pauseOnFocusLoss
-												draggable
-												pauseOnHover
-											/>
-										)}
 									</Row>
 								</Container>
 							</Col>
 						</Row>
 					</Container>
 				</div>
+				{this.state.message && (
+					<ToastContainer
+						position="bottom-center"
+						autoClose={5000}
+						hideProgressBar={false}
+						newestOnTop={false}
+						closeOnClick
+						rtl={false}
+						pauseOnFocusLoss
+						draggable
+						pauseOnHover
+					/>
+				)}
 			</>
 		);
 	}

@@ -466,20 +466,20 @@ const FormEvent = (props) => {
 							</Form>
 						</Col>
 					</Row>
-					{message && (
-						<ToastContainer
-							position="bottom-center"
-							autoClose={5000}
-							hideProgressBar={false}
-							newestOnTop={false}
-							closeOnClick
-							rtl={false}
-							pauseOnFocusLoss
-							draggable
-							pauseOnHover
-						/>
-					)}
 				</Container>
+			)}
+			{message && (
+				<ToastContainer
+					position="bottom-center"
+					autoClose={5000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+				/>
 			)}
 		</>
 	);

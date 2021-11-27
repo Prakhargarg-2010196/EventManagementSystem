@@ -197,7 +197,13 @@ export default class ManageEvent extends Component {
 												</Table>
 											)}
 										</TableContainer>
-										{this.state.message && (
+									
+									</Row>
+								</Container>
+							</Col>
+						</Row>
+					</Container>
+					{this.state.message && (
 											<ToastContainer
 												position="bottom-center"
 												autoClose={5000}
@@ -210,11 +216,6 @@ export default class ManageEvent extends Component {
 												pauseOnHover
 											/>
 										)}
-									</Row>
-								</Container>
-							</Col>
-						</Row>
-					</Container>
 				</div>
 			</>
 		);

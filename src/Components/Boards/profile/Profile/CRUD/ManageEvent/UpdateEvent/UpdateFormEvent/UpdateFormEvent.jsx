@@ -248,7 +248,10 @@ const UpdateFormEvent = (props) => {
 					>
 						Submit
 					</Button>
-					{message && (
+					
+				</Form>
+			)}
+			{message && (
 						<ToastContainer
 							position="bottom-center"
 							autoClose={5000}
@@ -261,8 +264,6 @@ const UpdateFormEvent = (props) => {
 							pauseOnHover
 						/>
 					)}
-				</Form>
-			)}
 		</>
 	);
 };

@@ -215,7 +215,10 @@ const UpdateImagesEvent = () => {
 							</Button>
 						</Col>
 					</Row>
-					{message && (
+				
+				</Form>
+			)}
+				{message && (
 						<ToastContainer
 							position="bottom-center"
 							autoClose={5000}
@@ -228,8 +231,6 @@ const UpdateImagesEvent = () => {
 							pauseOnHover
 						/>
 					)}
-				</Form>
-			)}
 		</>
 	);
 	/* DragDrop END */

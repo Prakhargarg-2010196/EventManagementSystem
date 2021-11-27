@@ -215,7 +215,9 @@ export default class ManageUsers extends Component {
 								</Container>
 							</Col>
 						</Row>
-						{this.state.message && (
+						
+					</Container>
+					{this.state.message && (
 							<ToastContainer
 								position="bottom-center"
 								autoClose={5000}
@@ -228,7 +230,6 @@ export default class ManageUsers extends Component {
 								pauseOnHover
 							/>
 						)}
-					</Container>
 				</div>
 			</>
 		);
