@@ -24,7 +24,7 @@ class Home extends Component {
 				<div className={styles.container}>
 					<div className={styles.Search}>
 						<NavLink to="/">
-							<h1 style={{ color: "#8360c3" }}>Eventooz</h1>
+							<h1 style={{ color: "#8360c3" }}>Eventooze</h1>
 						</NavLink>
 						<SearchBar />
 					</div>
