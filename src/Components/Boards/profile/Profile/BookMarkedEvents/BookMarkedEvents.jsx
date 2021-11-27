@@ -40,7 +40,7 @@ export default class BookMarkedEvents extends Component {
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
-					resMessage=JSON.stringify(error.message).replace(/^"|"$/g, "");
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
 				} else resMessage = error.response.data;
 
 				this.setState({
@@ -68,10 +68,8 @@ export default class BookMarkedEvents extends Component {
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
-					resMessage=JSON.stringify(error.message).replace(/^"|"$/g, "");
-				}
-
-				else resMessage = error.response.data;
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+				} else resMessage = error.response.data;
 
 				this.setState({
 					successful: false,
@@ -174,19 +172,6 @@ export default class BookMarkedEvents extends Component {
 															</TableRow>
 														))}
 													</TableBody>
-													{this.state.message && (
-														<ToastContainer
-															position="bottom-center"
-															autoClose={5000}
-															hideProgressBar={false}
-															newestOnTop={false}
-															closeOnClick
-															rtl={false}
-															pauseOnFocusLoss
-															draggable
-															pauseOnHover
-														/>
-													)}
 												</Table>
 											)}
 										</TableContainer>
@@ -195,6 +180,19 @@ export default class BookMarkedEvents extends Component {
 							</Col>
 						</Row>
 					</Container>
+					{this.state.message && (
+						<ToastContainer
+							position="bottom-center"
+							autoClose={5000}
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+						/>
+					)}
 				</div>
 			</>
 		);
