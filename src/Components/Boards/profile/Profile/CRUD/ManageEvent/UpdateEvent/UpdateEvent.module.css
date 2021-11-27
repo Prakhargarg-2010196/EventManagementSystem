@@ -11,3 +11,14 @@
     min-height:90.2vh ;
     
 }
+@media screen and (max-width:762px) {
+
+
+    .SideBar {
+        min-height: 20%;
+        padding-bottom: 40px;
+
+    }
+    
+
+}

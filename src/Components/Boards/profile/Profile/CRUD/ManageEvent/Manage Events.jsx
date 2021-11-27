@@ -111,16 +111,12 @@ export default class ManageEvent extends Component {
 								<SideBar />
 							</Col>
 							<Col md={10}>
-								<Container>
-									<Row>
 										<h1 className="text-center mt-4">Manage Events</h1>
-									</Row>
-									<Row>
-										<TableContainer component={Paper}>
+										<TableContainer  component={Paper}>
 											{this.state.isLoading ? (
 												<Loader message={"Your Content is Loading"} />
 											) : (
-												<Table sx={{ minWidth: 650 }} aria-label="simple table">
+												<Table 	className={styles.table} aria-label="simple table">
 													<TableHead>
 														<TableRow>
 															<TableCell align="center">Event Name</TableCell>
@@ -198,8 +194,8 @@ export default class ManageEvent extends Component {
 											)}
 										</TableContainer>
 									
-									</Row>
-								</Container>
+									{/* </Row> */}
+								{/* </Container> */}
 							</Col>
 						</Row>
 					</Container>

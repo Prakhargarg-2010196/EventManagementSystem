@@ -8,6 +8,17 @@
 .SideBar{
     background:rgb(205, 242, 255);
     box-sizing: border-box;    
-    min-height:90.2vh ;
+    height:90.2vh ;
     
+}
+@media screen and (max-width:762px) {
+
+
+    .SideBar {
+        height: 100%;
+        padding-bottom: 40px;
+
+    }
+    
+
 }

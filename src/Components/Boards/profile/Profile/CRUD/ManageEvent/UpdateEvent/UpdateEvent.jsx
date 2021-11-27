@@ -3,13 +3,13 @@ import React, { Component } from "react";
 
 import { NavBar } from "../../../../../../Layout/Home/NavBar/NavBar";
 import { SideBar } from "../../../SideBar/sidebar";
-import UpdateFormEvent from "./UpdateFormEvent/UpdateFormEvent"
+import UpdateFormEvent from "./UpdateFormEvent/UpdateFormEvent";
 import styles from "./UpdateEvent.module.css";
 
 export default class UpdateEvent extends Component {
 	constructor(props) {
 		super(props);
-		this.state=this.props.history.location.state;
+		this.state = this.props.history.location.state;
 	}
 
 	render() {
@@ -23,14 +23,8 @@ export default class UpdateEvent extends Component {
 								<SideBar />
 							</Col>
 							<Col md={10}>
-								<Container>
-									<Row>
-										<h1 className="text-center mt-4">Update Events</h1>
-									</Row>
-									<Row>
-										<UpdateFormEvent />
-									</Row>
-								</Container>
+								<h1 className="text-center mt-4">Update Events</h1>
+								<UpdateFormEvent />
 							</Col>
 						</Row>
 					</Container>
