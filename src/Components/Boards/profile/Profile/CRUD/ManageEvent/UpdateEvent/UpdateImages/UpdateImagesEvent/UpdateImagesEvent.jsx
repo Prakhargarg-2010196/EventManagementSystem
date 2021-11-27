@@ -1,4 +1,7 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import { Button, Col, Form, Row } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
 import { useEffect, useState } from "react";
 
 import { BaseUrl } from "../../../../../../../../../api/services/BaseUrl";
@@ -29,10 +32,20 @@ const UpdateImagesEvent = () => {
 				(error) => {
 					let resMessage = "";
 					if (!error.response) {
-						console.log(JSON.stringify(error.message));
+						resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
 					} else resMessage = error.response.data;
 					setSuccess(false);
 					setMessage(resMessage);
+					toast.error(message, {
+						position: "bottom-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						style: { background: "pink", color: "black" },
+					});
 				}
 			);
 		}
@@ -48,11 +61,52 @@ const UpdateImagesEvent = () => {
 
 	const handleDelete = async (e, id, imageUrl) => {
 		e.preventDefault();
-		await postsService.DeleteImage(id, imageUrl);
+		await postsService.DeleteImage(id, imageUrl).then(
+			(res) => {},
+			(error) => {
+				let resMessage = "";
+				if (!error.response) {
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+					
+				} else resMessage = error.response.data;
+				setSuccess(false);
+				setMessage(resMessage);
+				toast.error(message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
+			}
+		);
 		// imageUrlUpdate.filter((image) =>image !==imageUrl )
-		const response = await crudService.Read(id);
+		const response = await crudService.Read(id).then(
+			(res) => {},
+			(error) => {
+				let resMessage = "";
+				if (!error.response) {
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+					
+				} else resMessage = error.response.data;
+				setSuccess(false);
+				setMessage(resMessage);
+				toast.error(message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
+			}
+		);;
 		setResult(response.data.post);
-		
 	};
 
 	const handleAdd = async (e, id) => {
@@ -71,10 +125,40 @@ const UpdateImagesEvent = () => {
 				} else resMessage = error.response.data;
 				setSuccess(false);
 				setMessage(resMessage);
+				toast.error(message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
 			}
 		);
-		console.log(isAdded);
-		const response = await crudService.Read(id);
+		const response = await crudService.Read(id).then(
+			(res) => {},
+			(error) => {
+				let resMessage = "";
+				if (!error.response) {
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+					
+				} else resMessage = error.response.data;
+				setSuccess(false);
+				setMessage(resMessage);
+				toast.error(message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
+			}
+		);;
 		setResult(response.data.post);
 		setAdded(true);
 		setLoading(false);
@@ -116,7 +200,6 @@ const UpdateImagesEvent = () => {
 							<Form.Label className={styles.requiredField}>
 								Browse select one at a time or select multiple or drop multiple{" "}
 							</Form.Label>
-							{console.log(isAdded)}
 							<DragNDrop
 								imagesLength={imageUrlUpdate.length}
 								onGet={setFilesArray}
@@ -133,11 +216,17 @@ const UpdateImagesEvent = () => {
 						</Col>
 					</Row>
 					{message && (
-						<div className="form-group mt-4">
-							<div className="alert alert-danger" role="alert">
-								{message}
-							</div>
-						</div>
+						<ToastContainer
+							position="bottom-center"
+							autoClose={5000}
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+						/>
 					)}
 				</Form>
 			)}

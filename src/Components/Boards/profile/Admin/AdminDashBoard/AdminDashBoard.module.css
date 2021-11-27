@@ -1,7 +1,19 @@
 .container {
     margin: 0;
     padding: 0;
-    background: #ececf3;
+    background: #fce7e7;
+
+}
+
+
+
+.SideBar {
+
+
+
+    background: #28bff5;
+    box-sizing: border-box;
+    height: 90.2vh;
 }
 
 .CalendarContainer {
@@ -11,28 +23,30 @@
 }
 
 .Calendar {
-    width: 100%;
-    height: min-content;
-    background-color: rgb(248, 248, 230);
+    width: inherit;
+    height: 100%;
+    background: rgb(225, 228, 228);
     margin-top: 10px;
-
+    border-radius: 12px;
+    border-image: round;
 }
 
-.SideBar {
-    background: #28bff5;
-    box-sizing: border-box;
-    min-height: 90.2vh;
-}
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 40px auto;
 
+}
 
 .card {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(222, 242, 245);
     margin-top: 30px;
-    border: dashed rgb(201, 193, 193) 1px;
-    width: 18em;
+    border: solid rgb(201, 193, 193) 1px;
     height: 8em;
-    box-shadow: 0 8px 8px -4px rgb(35, 149, 187);
-
+    width: 17em;
+    box-shadow: 0 8px 8px -4px lightblue;
+    ;
 }
 
 .card>.cardTitle {
@@ -65,9 +79,8 @@
     }
 
     .SideBar {
-        height: min-content;
+        height: 100%;
         padding-bottom: 40px;
-        display: flex;
 
     }
 }

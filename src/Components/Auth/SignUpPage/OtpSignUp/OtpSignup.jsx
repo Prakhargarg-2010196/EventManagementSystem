@@ -68,7 +68,10 @@ class OtpSignUp extends Component {
 			email: this.props.history.location.state.email,
 		};
 		await AuthService.SignUp(user).then(
-			(response) => {},
+			(response) => {
+				
+				this.setState({message:response.data})
+				},
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
@@ -79,9 +82,20 @@ class OtpSignUp extends Component {
 					successful: false,
 					message: resMessage,
 				});
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
 			}
 		);
-		alert("OTP resent successfully")
+		toast.success(this.state.message)
+
 	};
 
 	handleSubmit = async (e) => {
@@ -101,6 +115,7 @@ class OtpSignUp extends Component {
 				if (response.status === 201) {
 					this.setState({
 						successful: true,
+						message:response.data
 					});
 				}
 
@@ -112,6 +127,7 @@ class OtpSignUp extends Component {
 					localStorage.setItem("isAuthenticatedLogin", true);
 					this.props.history.push("/DashBoard");
 				}
+				
 			},
 			(error) => {
 				let resMessage = "";
@@ -147,6 +163,7 @@ class OtpSignUp extends Component {
 				});
 			}
 		);
+		
 		
 	};
 	handleKeyPress(e) {

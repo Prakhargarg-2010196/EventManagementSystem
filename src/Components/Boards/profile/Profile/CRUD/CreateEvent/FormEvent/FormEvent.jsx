@@ -1,7 +1,10 @@
 // eslint:disable:no-unused-vars
 // eslint:disable-next-line:no-unused-vars
+import "react-toastify/dist/ReactToastify.css";
+
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 import { CategorySelect } from "./CategorySelect/CategorySelect";
 import { DragNDrop } from "./DragNDrop/DragNDrop";
@@ -41,13 +44,13 @@ const FormEvent = (props) => {
 
 	const handleBlurRate = () => {
 		let rateErr = "";
-		if ((typeof Number(money) !== "number")) rateErr = " Price must be a number";
+		if (typeof Number(money) !== "number") rateErr = " Price must be a number";
 		if (!money) rateErr = " Price is required";
 		setErrors({ rateErr: rateErr });
 	};
 	const handleBlurContent = () => {
 		let contentErr = "";
-		if (!content) contentErr = " content Can't be empty";
+		if (!content) contentErr = " Content Can't be empty";
 		setErrors({ contentErr });
 	};
 	const handleBlurMode = () => {
@@ -62,12 +65,12 @@ const FormEvent = (props) => {
 	};
 	const handleBlurDate = () => {
 		let dateErr = "";
-		if (!dateValue) dateErr = " Date Can't be empty";
+		if (!dateValue) dateErr = " Date can't be empty";
 		setErrors({ dateErr });
 	};
 	const handleBlurTitle = () => {
 		let titleErr = "";
-		if (!title) titleErr = " title Can't be empty";
+		if (!title) titleErr = " Title can't be empty";
 		setErrors({ titleErr });
 	};
 	const handleBlurUrl = () => {
@@ -76,19 +79,19 @@ const FormEvent = (props) => {
 		const urlReg =
 			/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
 		if (!Url) urlErr = " url Can't be empty";
-		if (Url && urlReg.test(Url) === false) urlErr = " url is invalid";
+		if (Url && urlReg.test(Url) === false) urlErr = " Url is invalid";
 		setErrors({ urlErr });
 	};
 	const handleBlurAddress = () => {
 		let addressErr = "";
 
-		if (!Address) addressErr = "Address Can't be empty";
+		if (!Address) addressErr = "Address can't be empty";
 		setErrors({ addressErr });
 	};
 	const handleBlurCity = () => {
 		let cityErr = "";
 
-		if (!City) cityErr = "City Can't be empty";
+		if (!City) cityErr = "City can't be empty";
 		setErrors({ cityErr });
 	};
 
@@ -99,7 +102,7 @@ const FormEvent = (props) => {
 		const currentDate = new Date();
 		if (dateValueToBe.getDate() - currentDate.getDate() >= 0)
 			setDateValue(dateValueInEpoch);
-			else setErrors({dateErr:"invalid date"})
+		else setErrors({ dateErr: "Invalid date" });
 	};
 
 	const handleSubmit = async (e) => {
@@ -144,6 +147,16 @@ const FormEvent = (props) => {
 				} else message = error.response.data;
 				setMessage(message);
 				setLoading(false);
+				toast.error(message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
 			}
 		);
 	};
@@ -186,7 +199,6 @@ const FormEvent = (props) => {
 									onBlur={() => {
 										handleBlurContent();
 									}}
-									
 								/>
 								<div className="text-danger">{errors.contentErr}</div>
 							</Row>
@@ -391,9 +403,7 @@ const FormEvent = (props) => {
 																}}
 															/>
 														</Col>
-														<div className="text-danger">
-															{errors.cityErr}
-														</div>
+														<div className="text-danger">{errors.cityErr}</div>
 													</Row>
 												</>
 											)}
@@ -457,16 +467,17 @@ const FormEvent = (props) => {
 						</Col>
 					</Row>
 					{message && (
-						<div className="form-group mt-2">
-							<div
-								className={
-									successful ? "alert alert-success" : "alert alert-danger"
-								}
-								role="alert"
-							>
-								{message}
-							</div>
-						</div>
+						<ToastContainer
+							position="bottom-center"
+							autoClose={5000}
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+						/>
 					)}
 				</Container>
 			)}

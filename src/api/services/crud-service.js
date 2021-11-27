@@ -39,6 +39,15 @@ class CrudService {
 			},
 		});
 	}
+	ReadAdminEvent(id) {
+		return axios.get(BaseUrl() + `admin/event/${id}`,{
+			headers:{
+				Authorization: "Bearer " +JSON.parse(localStorage.getItem("user2")),
+				enctype: "multipart/form-data",
+				
+			},
+		});
+	}
 	ReadEvents() {
 		return axios.get(BaseUrl() + "post/createdEvents", {
 			headers:{

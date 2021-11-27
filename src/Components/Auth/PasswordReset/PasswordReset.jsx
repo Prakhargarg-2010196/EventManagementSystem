@@ -138,13 +138,7 @@ class PasswordReset extends Component {
 						>
 							Confirm
 						</Button>
-						{/* {this.state.message && (
-							<div className="form-group mt-4">
-								<div className="alert alert-danger" role="alert">
-									{this.state.message}
-								</div>
-							</div>
-						)} */}
+						
 						{this.state.message && (
 							<ToastContainer
 								position="bottom-center"

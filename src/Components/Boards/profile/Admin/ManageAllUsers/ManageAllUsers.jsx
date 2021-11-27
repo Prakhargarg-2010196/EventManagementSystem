@@ -1,5 +1,8 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import { Col, Container, Row } from "react-bootstrap";
 import React, { Component } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 import AdminCrudService from "../../../../../api/services/admin-crud-service";
 import { AdminSideBar } from "../AdminSidebar/AdminSideBar";
@@ -19,6 +22,9 @@ export default class ManageAllUsers extends Component {
 	defaultState = {
 		users: [],
 		isLoading: true,
+		successful:false,
+		message:"",
+		
 	};
 
 	constructor(props) {
@@ -29,21 +35,27 @@ export default class ManageAllUsers extends Component {
 		this.setState({ isLoading: true });
 		await AdminCrudService.UsersList().then(
 			(response) => {
-				console.log("res achieve");
 				this.setState({ users: response.data });
 			},
 			(error) => {
-				console.log("error");
 				let resMessage = "";
 				if (!error.response) {
-					console.log(JSON.stringify(error.message));
-				}
-
-				resMessage = error.response.data;
+					resMessage=JSON.stringify(error.message).replace(/^"|"$/g, "");
+				} else resMessage = error.response.data;
 
 				this.setState({
 					successful: false,
 					message: resMessage,
+				});
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
 				});
 			}
 		);
@@ -51,8 +63,31 @@ export default class ManageAllUsers extends Component {
 	}
 	async onDelete(e, userId) {
 		e.preventDefault();
-		await AdminCrudService.DeleteUser(userId);
-		alert("deleted");
+		await AdminCrudService.DeleteUser(userId).then(
+			(res) => {},
+			(error) => {
+				let resMessage = "";
+				if (!error.response) {
+					resMessage=JSON.stringify(error.message).replace(/^"|"$/g, "");
+				} else resMessage = error.response.data;
+
+				this.setState({
+					successful: false,
+					message: resMessage,
+				});
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
+			}
+		);
+		alert("Deleted");
 		this.setState({
 			users: this.state.users.filter((userItem) => userItem._id !== userId),
 		});
@@ -94,7 +129,7 @@ export default class ManageAllUsers extends Component {
 																<p>No such Users to verify</p>
 															</div>
 														)}
-                                                        {this.state.users.map((user) => (
+														{this.state.users.map((user) => (
 															<TableRow
 																key={user._id}
 																sx={{
@@ -133,7 +168,21 @@ export default class ManageAllUsers extends Component {
 								</Container>
 							</Col>
 						</Row>
+						{this.state.message && (
+						<ToastContainer
+							position="bottom-center"
+							autoClose={5000}
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+						/>
+					)}
 					</Container>
+					
 				</div>
 			</>
 		);

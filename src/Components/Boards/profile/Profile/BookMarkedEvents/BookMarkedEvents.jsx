@@ -1,5 +1,8 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import { Col, Container, Row } from "react-bootstrap";
 import React, { Component } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 import { Button } from "@mui/material";
 import CrudService from "../../../../../api/services/crud-service";
@@ -21,6 +24,8 @@ export default class BookMarkedEvents extends Component {
 	defaultState = {
 		events: [],
 		isLoading: true,
+		successful: false,
+		message: "",
 	};
 
 	constructor(props) {
@@ -35,38 +40,56 @@ export default class BookMarkedEvents extends Component {
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
-					console.log(JSON.stringify(error.message));
-				}
-
-				resMessage = error.response.data;
+					resMessage=JSON.stringify(error.message).replace(/^"|"$/g, "");
+				} else resMessage = error.response.data;
 
 				this.setState({
 					successful: false,
 					message: resMessage,
 				});
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
 			}
 		);
-		this.setState({isLoading:false});
+		this.setState({ isLoading: false });
 	}
 	onUnfavorite = async (e, eventItemId) => {
-		
 		await postsService.UnFavoritePost(eventItemId).then(
 			(res) => {},
 
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
-					console.log(JSON.stringify(error.message));
+					resMessage=JSON.stringify(error.message).replace(/^"|"$/g, "");
 				}
 
-				resMessage = error.response.data;
+				else resMessage = error.response.data;
 
 				this.setState({
 					successful: false,
 					message: resMessage,
 				});
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
 			}
 		);
+		alert("UnFavorited");
 		this.setState({
 			events: this.state.events.filter((event) => event._id !== eventItemId),
 		});
@@ -151,16 +174,22 @@ export default class BookMarkedEvents extends Component {
 															</TableRow>
 														))}
 													</TableBody>
+													{this.state.message && (
+														<ToastContainer
+															position="bottom-center"
+															autoClose={5000}
+															hideProgressBar={false}
+															newestOnTop={false}
+															closeOnClick
+															rtl={false}
+															pauseOnFocusLoss
+															draggable
+															pauseOnHover
+														/>
+													)}
 												</Table>
 											)}
 										</TableContainer>
-										{this.state.message && (
-											<div className="form-group mt-4">
-												<div className="alert alert-danger" role="alert">
-													{this.state.message}
-												</div>
-											</div>
-										)}
 									</Row>
 								</Container>
 							</Col>

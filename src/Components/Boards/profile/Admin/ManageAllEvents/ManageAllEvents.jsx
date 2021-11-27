@@ -1,5 +1,8 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import { Col, Container, Row } from "react-bootstrap";
 import React, { Component } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 import AdminCrudService from "../../../../../api/services/admin-crud-service";
 import { AdminSideBar } from "../AdminSidebar/AdminSideBar";
@@ -20,6 +23,8 @@ export default class ManageAllEvents extends Component {
 	defaultState = {
 		events: [],
 		isLoading: true,
+		successful:false,
+		message:""
 	};
 
 	constructor(props) {
@@ -28,24 +33,31 @@ export default class ManageAllEvents extends Component {
 	}
 	async componentDidMount() {
 		this.setState({ isLoading: true });
-		console.log("first");
 		await AdminCrudService.EventList().then(
 			(response) => {
-				console.log("res achieve");
 				this.setState({ events: response.data });
 			},
 			(error) => {
-				console.log("error");
 				let resMessage = "";
 				if (!error.response) {
-					console.log(JSON.stringify(error.message));
+					resMessage=JSON.stringify(error.message).replace(/^"|"$/g, "");
 				}
 
-				resMessage = error.response.data;
+				else resMessage = error.response.data;
 
 				this.setState({
 					successful: false,
 					message: resMessage,
+				});
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
 				});
 			}
 		);
@@ -53,8 +65,35 @@ export default class ManageAllEvents extends Component {
 	}
 	async onDelete(e, eventItemId) {
 		e.preventDefault();
-		await AdminCrudService.DeleteEvent(eventItemId);
-		alert("deleted");
+		await AdminCrudService.DeleteEvent(eventItemId).then(
+			(res) => {
+						
+
+			},
+			(error) => {
+				let resMessage = "";
+				if (!error.response) {
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+				} 
+				else resMessage = error.response.data;
+
+				this.setState({
+					successful: false,
+					message: resMessage,
+				});
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
+			}
+		);
+		alert("Deleted")
 		this.setState({
 			events: this.state.events.filter(
 				(eventItem) => eventItem._id !== eventItemId
@@ -95,7 +134,7 @@ export default class ManageAllEvents extends Component {
 														</TableRow>
 													</TableHead>
 													<TableBody>
-													{this.state.events.length === 0 && (
+														{this.state.events.length === 0 && (
 															<div className=" d-flex justify-content-center  bg-white">
 																<p>No such Users to verify</p>
 															</div>
@@ -132,7 +171,7 @@ export default class ManageAllEvents extends Component {
 																<TableCell align="center">
 																	<Button
 																		variant="contained"
-                                                                        color="error"
+																		color="error"
 																		onClick={(e) => {
 																			window.confirm(
 																				"Are you sure you wish to delete this item?"
@@ -153,6 +192,19 @@ export default class ManageAllEvents extends Component {
 							</Col>
 						</Row>
 					</Container>
+					{this.state.message && (
+						<ToastContainer
+							position="bottom-center"
+							autoClose={5000}
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+						/>
+					)}
 				</div>
 			</>
 		);

@@ -13,7 +13,6 @@ export const AdminSideBar = () => {
 	const history = useHistory();
 	return (
 		<>
-
 			<List component="nav">
 				<NavLink
 					activeStyle={{
@@ -33,7 +32,6 @@ export const AdminSideBar = () => {
 					className={styles.link}
 					to="/ManageUsers"
 				>
-		
 					<ListItem divider> Verify Users</ListItem>
 				</NavLink>
 				<Divider />
@@ -57,8 +55,6 @@ export const AdminSideBar = () => {
 					to="/ManageAllUsers"
 				>
 					<ListItem divider>All Users</ListItem>
-
-	
 				</NavLink>
 			</List>
 			<Button

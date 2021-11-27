@@ -1,4 +1,8 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import * as React from "react";
+
+import { ToastContainer, toast } from "react-toastify";
 
 import Stack from "@mui/material/Stack";
 import postsService from "../../../../api/services/posts.service";
@@ -25,6 +29,16 @@ export default function SearchBar() {
 						message = JSON.stringify(error.message).replace(/^"|"$/g, "");
 					} else message = error.response.data;
 					setMessage(message);
+					toast.error(message, {
+						position: "bottom-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						style: { background: "pink", color: "black" },
+					});
 				}
 			);
 		}
@@ -35,12 +49,18 @@ export default function SearchBar() {
 				<input type="search" onKeyPress={(e) => handleSubmit(e)} style={{width: "100%", borderRadius:"10px" ,border:"grey solid"}}></input>
 			</Stack>
 			{message && (
-				<div className="form-group">
-					<div className="alert alert-danger" role="alert">
-						{message}
-					</div>
-				</div>
-			)}
+						<ToastContainer
+							position="bottom-center"
+							autoClose={5000}
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+						/>
+					)}
 		</>
 	);
 }

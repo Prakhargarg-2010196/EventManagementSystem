@@ -1,5 +1,8 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import { Container, Image, Nav, Navbar } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 import Avatar from "@mui/material/Avatar";
 import { BaseUrl } from "../../../../api/services/BaseUrl";
@@ -11,6 +14,7 @@ import userService from "../../../../api/services/user.service";
 
 export const NavBar = () => {
 	const [result, setResult] = useState("");
+
 	const [message, setMessage] = useState("");
 	useEffect(() => {
 		if (authService.isAuthenticated()) {
@@ -28,6 +32,16 @@ export const NavBar = () => {
 						resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
 					} else resMessage = error.response.data;
 					setMessage(resMessage);
+					toast.error(message, {
+						position: "bottom-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						style: { background: "pink", color: "black" },
+					});
 				}
 			);
 		}
@@ -51,20 +65,12 @@ export const NavBar = () => {
 
 				<Navbar.Collapse id="responsive-navbar-nav justify-content-lg-end">
 					<Nav className="ms-auto">
-						<NavLink
-							
-							to="/"
-							className={styles.navLinks}
-						>
+						<NavLink to="/" className={styles.navLinks}>
 							Home
 						</NavLink>
-						{(authService.isAdmin() || authService.isAuthenticated() )? (
+						{authService.isAdmin() || authService.isAuthenticated() ? (
 							authService.isAuthenticated() ? (
-								<NavLink
-									
-									to="/DashBoard"
-									className={styles.navLinks}
-								>
+								<NavLink to="/DashBoard" className={styles.navLinks}>
 									<Avatar
 										sx={{
 											bgcolor: "aliceblue",
@@ -97,7 +103,9 @@ export const NavBar = () => {
 										A
 									</Avatar>
 								</NavLink>
-							) :""
+							) : (
+								""
+							)
 						) : (
 							<NavLink
 								activeStyle={{
@@ -112,6 +120,19 @@ export const NavBar = () => {
 					</Nav>
 				</Navbar.Collapse>
 			</Container>
+			{message && (
+				<ToastContainer
+					position="bottom-center"
+					autoClose={5000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+				/>
+			)}
 		</Navbar>
 	);
 };
