@@ -212,7 +212,10 @@ class OtpSignUp extends Component {
 							resend otp
 						</Button>
 						
-						{this.state.message && (
+						
+					</Form>
+				)}
+				{this.state.message && (
 							<ToastContainer
 								position="bottom-center"
 								autoClose={5000}
@@ -225,8 +228,6 @@ class OtpSignUp extends Component {
 								pauseOnHover
 							/>
 						)}
-					</Form>
-				)}
 			</div>
 		);
 	}

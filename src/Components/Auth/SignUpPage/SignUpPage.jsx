@@ -220,7 +220,10 @@ class SignUpPage extends Component {
 							<Form.Text style={{ color: "#000" }}>Login</Form.Text>
 						</Link>
 					
-						{this.state.message && (
+						
+					</Form>
+				)}
+				{this.state.message && (
 							<ToastContainer
 								position="bottom-center"
 								autoClose={5000}
@@ -233,8 +236,6 @@ class SignUpPage extends Component {
 								pauseOnHover
 							/>
 						)}
-					</Form>
-				)}
 			</div>
 		);
 	}

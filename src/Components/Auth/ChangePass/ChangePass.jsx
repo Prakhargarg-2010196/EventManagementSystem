@@ -206,7 +206,10 @@ class ChangePass extends Component {
 							Reset Password
 						</Button>
 						
-						{this.state.message && (
+						
+					</Form>
+				)}
+				{this.state.message && (
 							<ToastContainer
 								position="bottom-center"
 								autoClose={5000}
@@ -220,8 +223,6 @@ class ChangePass extends Component {
 								
 							/>
 						)}
-					</Form>
-				)}
 			</div>
 		);
 	}

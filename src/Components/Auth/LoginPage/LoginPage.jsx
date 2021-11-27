@@ -198,21 +198,21 @@ class LoginPage extends Component {
 						<Form.Text>Don't have an account ?</Form.Text>
 						<Link to="/SignUpPage">
 							<Form.Text style={{ color: "#000" }}>Sign up</Form.Text>
-						{this.state.message && (
-							<ToastContainer
-								position="bottom-center"
-								autoClose={5000}
-								hideProgressBar={false}
-								newestOnTop={false}
-								closeOnClick
-								rtl={false}
-								pauseOnFocusLoss
-								draggable
-								pauseOnHover
-							/>
-						)}
 						</Link>
 					</Form>
+				)}
+				{this.state.message && (
+					<ToastContainer
+						position="bottom-center"
+						autoClose={5000}
+						hideProgressBar={false}
+						newestOnTop={false}
+						closeOnClick
+						rtl={false}
+						pauseOnFocusLoss
+						draggable
+						pauseOnHover
+					/>
 				)}
 			</div>
 		);
