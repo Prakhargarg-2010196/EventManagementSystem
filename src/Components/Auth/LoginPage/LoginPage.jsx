@@ -194,14 +194,10 @@ class LoginPage extends Component {
 						>
 							Login
 						</Button>
-						{/* 
-						{this.state.message && (
-							<div className="form-group mt-2">
-								<div className="alert alert-danger " role="alert">
-									{this.state.message}
-								</div>
-							</div>
-						)} */}
+						
+						<Form.Text>Don't have an account ?</Form.Text>
+						<Link to="/SignUpPage">
+							<Form.Text style={{ color: "#000" }}>Sign up</Form.Text>
 						{this.state.message && (
 							<ToastContainer
 								position="bottom-center"
@@ -215,9 +211,6 @@ class LoginPage extends Component {
 								pauseOnHover
 							/>
 						)}
-						<Form.Text>Don't have an account ?</Form.Text>
-						<Link to="/SignUpPage">
-							<Form.Text style={{ color: "#000" }}>Sign up</Form.Text>
 						</Link>
 					</Form>
 				)}

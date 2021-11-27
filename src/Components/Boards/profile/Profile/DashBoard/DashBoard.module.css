@@ -1,28 +1,28 @@
-.container{
-    margin:0;
-    padding:0;
+.container {
+    margin: 0;
+    padding: 0;
     background: #fce7e7;
-    
+
 }
 
 
 
-.SideBar{
-    
-    
-    border-top-left-radius:12px;
-    border-top-right-radius:12px;
-    background:rgb(205, 242, 255);
-    box-sizing: border-box;    
-    height:90.2vh ;
+.SideBar {
+
+
+
+    background: rgb(205, 242, 255);
+    box-sizing: border-box;
+    height: 90.2vh;
 }
 
-.CalendarContainer{
+.CalendarContainer {
     display: flex;
     justify-content: space-between;
     gap: 15px;
 }
-.Calendar{
+
+.Calendar {
     width: inherit;
     height: 100%;
     background: rgb(225, 228, 228);
@@ -31,49 +31,56 @@
     border-image: round;
 }
 
-.cardContainer{
+.cardContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    margin:40px auto;
-    
+    margin: 40px auto;
+
 }
-.card{
+
+.card {
     background-color: rgb(222, 242, 245);
-    margin-top: 30px ;
-    border:solid rgb(201, 193, 193) 1px;
-    height:8em;
+    margin-top: 30px;
+    border: solid rgb(201, 193, 193) 1px;
+    height: 8em;
     width: 17em;
-    box-shadow: 0 8px 8px -4px lightblue;;
+    box-shadow: 0 8px 8px -4px lightblue;
+    ;
 }
-.card>.cardTitle{
+
+.card>.cardTitle {
     text-align: center;
     font-size: large;
     margin-top: 12px;
     font-weight: 800;
 }
-.card>.cardBody{
+
+.card>.cardBody {
     text-align: left;
     margin: 12px;
 }
-.card>.cardBody{
+
+.card>.cardBody {
     font-size: 50px;
-    margin-bottom:30px;
+    margin-bottom: 30px;
     text-align: center;
 }
-@media screen and (max-width:560px) {
-    .Calendar{
-        width:100%;
-        margin-right:0;
-        
-    }
-.CalendarContainer{
- flex-direction: column;    
-}
 
-.SideBar{
-    height:100%;
-    padding-bottom: 40px;
-    
-}
+@media screen and (max-width:560px) {
+    .Calendar {
+        width: 100%;
+        margin-right: 0;
+
+    }
+
+    .CalendarContainer {
+        flex-direction: column;
+    }
+
+    .SideBar {
+        height: 100%;
+        padding-bottom: 40px;
+
+    }
 }

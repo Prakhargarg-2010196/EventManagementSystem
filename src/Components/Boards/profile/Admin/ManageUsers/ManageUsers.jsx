@@ -1,5 +1,8 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import { Col, Container, Row } from "react-bootstrap";
 import React, { Component } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 import AdminCrudService from "../../../../../api/services/admin-crud-service";
 import { AdminSideBar } from "../AdminSidebar/AdminSideBar";
@@ -19,6 +22,8 @@ export default class ManageUsers extends Component {
 	defaultState = {
 		verifyList: [],
 		isLoading: true,
+		successful: false,
+		message: "",
 	};
 
 	constructor(props) {
@@ -27,24 +32,29 @@ export default class ManageUsers extends Component {
 	}
 	async componentDidMount() {
 		this.setState({ isLoading: true });
-		console.log("first");
 		await AdminCrudService.VerifyList().then(
 			(response) => {
-				console.log("res achieve");
 				this.setState({ verifyList: response.data });
 			},
 			(error) => {
-				console.log("error");
 				let resMessage = "";
 				if (!error.response) {
-					console.log(JSON.stringify(error.message));
-				}
-
-				resMessage = error.response.data;
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+				} else resMessage = error.response.data;
 
 				this.setState({
 					successful: false,
 					message: resMessage,
+				});
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
 				});
 			}
 		);
@@ -52,7 +62,30 @@ export default class ManageUsers extends Component {
 	}
 	async onVerify(e, verifyItemId) {
 		e.preventDefault();
-		await AdminCrudService.Verify(verifyItemId);
+		await AdminCrudService.Verify(verifyItemId).then(
+			(res) => {},
+			(error) => {
+				let resMessage = "";
+				if (!error.response) {
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+				} else resMessage = error.response.data;
+
+				this.setState({
+					successful: false,
+					message: resMessage,
+				});
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
+			}
+		);
 		alert("verified");
 		this.setState({
 			verifyList: this.state.verifyList.filter(
@@ -62,8 +95,30 @@ export default class ManageUsers extends Component {
 	}
 	async onReject(e, verifyItemId) {
 		e.preventDefault();
-		await AdminCrudService.Reject(verifyItemId);
+		await AdminCrudService.Reject(verifyItemId).then(
+			(res) => {},
+			(error) => {
+				let resMessage = "";
+				if (!error.response) {
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+				} else resMessage = error.response.data;
 
+				this.setState({
+					successful: false,
+					message: resMessage,
+				});
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
+			}
+		);
 
 		alert(" User not verified as creator");
 		this.setState({
@@ -142,11 +197,9 @@ export default class ManageUsers extends Component {
 																		variant="contained"
 																		color="error"
 																		onClick={(e) => {
-																			
 																			window.confirm(
 																				"Are you sure you wish to reject this user?"
 																			) && this.onReject(e, verifyItem._id);
-
 																		}}
 																	>
 																		Reject
@@ -162,6 +215,19 @@ export default class ManageUsers extends Component {
 								</Container>
 							</Col>
 						</Row>
+						{this.state.message && (
+							<ToastContainer
+								position="bottom-center"
+								autoClose={5000}
+								hideProgressBar={false}
+								newestOnTop={false}
+								closeOnClick
+								rtl={false}
+								pauseOnFocusLoss
+								draggable
+								pauseOnHover
+							/>
+						)}
 					</Container>
 				</div>
 			</>

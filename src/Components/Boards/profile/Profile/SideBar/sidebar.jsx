@@ -22,9 +22,7 @@ export const SideBar = () => {
 					className={styles.link}
 					to="/DashBoard"
 				>
-					<ListItem  divider>
-						DashBoard
-					</ListItem>
+					<ListItem divider>DashBoard</ListItem>
 				</NavLink>
 
 				<Divider />
@@ -36,9 +34,7 @@ export const SideBar = () => {
 					className={styles.link}
 					to="/CreateEvent"
 				>
-					<ListItem  divider>
-						Create event
-					</ListItem>
+					<ListItem divider>Create event</ListItem>
 				</NavLink>
 				<Divider />
 				<Divider />
@@ -49,9 +45,7 @@ export const SideBar = () => {
 					className={styles.link}
 					to="/ManageEvent"
 				>
-					<ListItem  divider>
-						Manage Event
-					</ListItem>
+					<ListItem divider>Manage Event</ListItem>
 				</NavLink>
 				<Divider />
 				<Divider />
@@ -62,9 +56,7 @@ export const SideBar = () => {
 					className={styles.link}
 					to="/RegisteredEvents"
 				>
-					<ListItem   divider>
-						Registered Events
-					</ListItem>
+					<ListItem divider>Registered Events</ListItem>
 				</NavLink>
 				<NavLink
 					activeStyle={{
@@ -73,16 +65,14 @@ export const SideBar = () => {
 					className={styles.link}
 					to="/BookMarkedEvents"
 				>
-					<ListItem  divider>
-						Bookmarked Events
-					</ListItem>
+					<ListItem divider>Bookmarked Events</ListItem>
 				</NavLink>
 				<Divider />
 				<Divider />
 			</List>
 			<Button
 				variant="contained"
-				sx={{  }}
+				sx={{}}
 				onClick={() => {
 					authService.logOut();
 					history.push("/");

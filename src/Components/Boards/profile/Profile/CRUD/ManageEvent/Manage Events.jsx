@@ -1,5 +1,8 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import { Col, Container, Row } from "react-bootstrap";
 import React, { Component } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 import Button from "@mui/material/Button";
 import CrudService from "../../../../../../api/services/crud-service";
@@ -20,6 +23,8 @@ export default class ManageEvent extends Component {
 	defaultState = {
 		events: [],
 		isLoading: true,
+		successful: false,
+		message: "",
 	};
 
 	constructor(props) {
@@ -27,22 +32,31 @@ export default class ManageEvent extends Component {
 		this.state = this.defaultState;
 	}
 	async componentDidMount() {
+		this.setState({ isLoading: true });
+
 		await CrudService.ReadEvents().then(
 			(response) => {
-				if(response.data)
-				this.setState({ events: response.data });
+				if (response.data) this.setState({ events: response.data });
 			},
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
-					console.log(JSON.stringify(error.message));
-				}
-
-				resMessage = error.response.data;
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+				} else resMessage = error.response.data;
 
 				this.setState({
 					successful: false,
 					message: resMessage,
+				});
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
 				});
 			}
 		);
@@ -56,37 +70,41 @@ export default class ManageEvent extends Component {
 	}
 	async onDelete(e, eventItemId) {
 		e.preventDefault();
-		// this.setState({ isLoading: true });
-		await CrudService.Delete(eventItemId);
+		await CrudService.Delete(eventItemId).then(
+			(res) => {},
+
+			(error) => {
+				let resMessage = "";
+				if (!error.response) {
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+				} else resMessage = error.response.data;
+
+				this.setState({
+					successful: false,
+					message: resMessage,
+				});
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
+			}
+		);
+		alert("Deleted");
 		this.setState({
 			events: this.state.events.filter((event) => event._id !== eventItemId),
 		});
-		// await CrudService.ReadEvents().then(
-		// 	(response) => {
-		// 		this.setState({ events: response.data });
-		// 	},
-		// 	(error) => {
-		// 		let resMessage = "";
-		// 		if (!error.response) {
-		// 			resMessage = JSON.stringify(error.message);
-		// 		}
-
-		// 		else resMessage = error.response.data;
-
-		// 		this.setState({
-		// 			successful: false,
-		// 			message: resMessage,
-		// 		});
-		// 	}
-		// );
-		// this.setState({ isLoading: false });
 	}
 	render() {
 		return (
 			<>
 				<div className={styles.container}>
 					<NavBar />
-
 					<Container fluid>
 						<Row>
 							<Col md={2} className={styles.SideBar}>
@@ -161,13 +179,11 @@ export default class ManageEvent extends Component {
 																<TableCell align="center">
 																	<Button
 																		variant="contained"
+																		color="error"
 																		onClick={(e) => {
-
-
 																			window.confirm(
 																				"Are you sure you wish to delete this event?"
 																			) && this.onDelete(e, eventItem._id);
-
 																		}}
 																	>
 																		Delete
@@ -180,11 +196,17 @@ export default class ManageEvent extends Component {
 											)}
 										</TableContainer>
 										{this.state.message && (
-											<div className="form-group mt-4">
-												<div className="alert alert-danger" role="alert">
-													{this.state.message}
-												</div>
-											</div>
+											<ToastContainer
+												position="bottom-center"
+												autoClose={5000}
+												hideProgressBar={false}
+												newestOnTop={false}
+												closeOnClick
+												rtl={false}
+												pauseOnFocusLoss
+												draggable
+												pauseOnHover
+											/>
 										)}
 									</Row>
 								</Container>

@@ -205,13 +205,7 @@ class ChangePass extends Component {
 						>
 							Reset Password
 						</Button>
-						{/* {this.state.message && (
-							<div className="mt-2 form-group">
-								<div className="alert alert-danger" role="alert">
-									{this.state.message}
-								</div>
-							</div>
-						)} */}
+						
 						{this.state.message && (
 							<ToastContainer
 								position="bottom-center"

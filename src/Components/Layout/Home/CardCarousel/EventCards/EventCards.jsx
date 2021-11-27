@@ -1,6 +1,9 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import * as React from "react";
 
 import { Button, CardActionArea } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
 
 import { BaseUrl } from "../../../../../api/services/BaseUrl";
 import Card from "@mui/material/Card";
@@ -35,6 +38,16 @@ export default function EventCards(props) {
 						resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
 					} else resMessage = error.response.data;
 					setMessage(resMessage);
+					toast.error(message, {
+						position: "bottom-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						style: { background: "pink", color: "black" },
+					});
 				}
 			);
 		};
@@ -56,6 +69,16 @@ export default function EventCards(props) {
 							resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
 						} else resMessage = error.response.data;
 						setMessage(resMessage);
+						toast.error(message, {
+							position: "bottom-center",
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+							style: { background: "pink", color: "black" },
+						});
 					}
 				);
 				alert("Bookmarked");
@@ -69,6 +92,16 @@ export default function EventCards(props) {
 							resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
 						} else resMessage = error.response.data;
 						setMessage(resMessage);
+						toast.error(message, {
+							position: "bottom-center",
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+							style: { background: "pink", color: "black" },
+						});
 					}
 				);
 				alert("UnBookmarked");
@@ -83,43 +116,67 @@ export default function EventCards(props) {
 						resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
 					} else resMessage = error.response.data;
 					setMessage(resMessage);
+					toast.error(message, {
+						position: "bottom-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						style: { background: "pink", color: "black" },
+					});
 				}
 			);
 		}
 	};
 
 	return (
-		<Card
-			sx={{ maxWidth: 650, border: "solid 0.5px grey", margin: "30px 0px" }}
-		>
-			<CardHeader title={props.title} />
-			<CardActionArea>
-				<CardMedia
-					component="img"
-					height="200"
-					image={imageUrl}
-					alt=""
-					onClick={() => {
-						handleClickEvent();
-					}}
-				/>
-
-				<CardActions disableSpacing>
-					{console.log(favorite)}
-
-					<Button
+		<>	{message && (
+			<ToastContainer
+				position="bottom-center"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+			/>
+		)}
+			<Card
+				sx={{ maxWidth: 650, border: "solid 0.5px grey", margin: "30px 0px" }}
+			>
+				<CardHeader title={props.title} />
+				<CardActionArea>
+					<CardMedia
+						component="img"
+						height="200"
+						image={imageUrl}
+						alt=""
 						onClick={() => {
-							handleFavoritism();
+							handleClickEvent();
 						}}
-					>
-						{favorite || isPresent ? (
-							<FavoriteIcon color="secondary" />
-						) : (
-							<FavoriteBorderIcon />
-						)}
-					</Button>
-				</CardActions>
-			</CardActionArea>
-		</Card>
+					/>
+
+					<CardActions disableSpacing>
+						{console.log(favorite)}
+
+						<Button
+							onClick={() => {
+								handleFavoritism();
+							}}
+						>
+							{favorite || isPresent ? (
+								<FavoriteIcon color="secondary" />
+							) : (
+								<FavoriteBorderIcon />
+							)}
+						</Button>
+					</CardActions>
+				</CardActionArea>
+			</Card>
+		</>
 	);
 }

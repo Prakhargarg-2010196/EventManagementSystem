@@ -2,17 +2,16 @@ import "react-toastify/dist/ReactToastify.css";
 
 import * as React from "react";
 
-import { Col, Row } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 
 import { BaseUrl } from "../../../../api/services/BaseUrl";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import EventCarousel from "../Event/EventCarousel/EventCaraousel";
 import { Loader } from "../../Loader/Loader";
 import Typography from "@mui/material/Typography";
+import authService from "../../../../api/services/auth.service";
 import crudService from "../../../../api/services/crud-service";
 import postsService from "../../../../api/services/posts.service";
 import styles from "./Event.module.css";
@@ -32,33 +31,65 @@ const Event = () => {
 	const [isLoading, setLoading] = React.useState(true);
 	React.useEffect(() => {
 		const getAllEventDetails = async () => {
-			await crudService.Read(id).then(
-				(response) => {
-					if (response.data.post) setCurrentEvent(response.data.post);
-					setSuccess(true);
-					setLoading(false);
-				},
-				(error) => {
-					let message = "";
-					if (!error.response || !BaseUrl()) {
-						message = JSON.stringify(error.message).replace(/^"|"$/g, "");
-					} else message = error.response.data;
-					setSuccess(false);
-					setMessage(message);
-					setLoading(false);
-					toast.error(message, {
-						position: "bottom-center",
-						autoClose: 3000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-						style: { background: "pink", color: "black" },
-					});
-
-				}
-			);
+			if (authService.isAuthenticated()) {
+				await crudService.Read(id).then(
+					(response) => {
+						if (response.data.post) {
+							setCurrentEvent(response.data.post);
+						}
+						setSuccess(true);
+						setLoading(false);
+					},
+					(error) => {
+						let message = "";
+						if (!error.response || !BaseUrl()) {
+							message = JSON.stringify(error.message).replace(/^"|"$/g, "");
+						} else message = error.response.data;
+						setSuccess(false);
+						setMessage(message);
+						setLoading(false);
+						toast.error(message, {
+							position: "bottom-center",
+							autoClose: 3000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+							style: { background: "pink", color: "black" },
+						});
+					}
+				);
+			} else if (authService.isAdmin()) {
+				await crudService.ReadAdminEvent(id).then(
+					(response) => {
+						if (response.data.post) {
+							setCurrentEvent(response.data.post);
+						}
+						setSuccess(true);
+						setLoading(false);
+					},
+					(error) => {
+						let message = "";
+						if (!error.response || !BaseUrl()) {
+							message = JSON.stringify(error.message).replace(/^"|"$/g, "");
+						} else message = error.response.data;
+						setSuccess(false);
+						setMessage(message);
+						setLoading(false);
+						toast.error(message, {
+							position: "bottom-center",
+							autoClose: 3000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+							style: { background: "pink", color: "black" },
+						});
+					}
+				);
+			}
 		};
 		getAllEventDetails();
 	}, []);
@@ -104,109 +135,101 @@ const Event = () => {
 	};
 	return (
 		<>
-			
-				{isLoading ? (
-					<Loader message={"Event Coming Up..."} />
-				) : (
-					<>
-						<h1 className="text-center mt-5">{event.title}</h1>
-						<div className={styles.mainContainer}>
-							<div className={styles.cardContainer}>
-								<Card
+			{isLoading ? (
+				<Loader message={"Event Coming Up..."} />
+			) : (
+				<>
+					<h1 className="text-center mt-5">{event.title}</h1>
+					<div className={styles.mainContainer}>
+						<div className={styles.cardContainer}>
+							<Card
+								style={{
+									width: "100%",
+									height: "100%",
+									padding: " 0 3em",
+									boxShadow: " 0 8px 8px -4px lightblue",
+									border: "solid rgb(191, 196, 191) 1px",
+								}}
+							>
+								<EventCarousel imgUrlArray={imageUrlUpdate} />
+								<CardContent
 									style={{
-										width: "100%",
-										height: "100%",
-										padding: " 0 3em",
-										boxShadow: " 0 8px 8px -4px lightblue",
-										border: "solid rgb(191, 196, 191) 1px",
+										background: "#434C5E",
+										display: "flex",
+										alignItems: "end",
+										flexDirection: "column",
 									}}
 								>
-									<EventCarousel imgUrlArray={imageUrlUpdate} />
-									<CardContent
-										style={{
-											background: "#434C5E",
-											display: "flex",
-											alignItems: "end",
-											flexDirection: "column",
-										}}
-									>
-										<Typography
-											sx={{ fontSize: 20, color: "#EBCB8B" }}
-											color="text.secondary"
-											gutterBottom
-										>
-											Date: {date.split("T")[0]}
-										</Typography>
-										<Typography
-											sx={{ fontSize: 20, color: "#EBCB8B" }}
-											color="text.secondary"
-											gutterBottom
-										>
-											Time: {time}
-										</Typography>
-									</CardContent>
-
-									<Button
-										variant="contained"
-										style={{
-											background: "#BF616A",
-											color: "black",
-											border: "dashed 0.6px black",
-											margin: "16px 0",
-										}}
-										onClick={(e) => handleClick(e)}
-									>
-										Register Now
-									</Button>
-									<div className="d-flex justify-content-between flex-wrap mt-3 mb-3">
-										<h4>Categories</h4>
-										{category.map((categoryItem) => (
-											<Button
-												variant="contained"
-												style={{ background: "#BF616A" }}
-											>
-												#{categoryItem}
-											</Button>
-										))}
-									</div>
 									<Typography
-										sx={{ fontSize: 20, color: "#FD4005" }}
+										sx={{ fontSize: 20, color: "#EBCB8B" }}
 										color="text.secondary"
 										gutterBottom
 									>
-										Price: &#8377; {rate}/-
+										Date: {date.split("T")[0]}
 									</Typography>
-								</Card>
-							</div>
+									<Typography
+										sx={{ fontSize: 20, color: "#EBCB8B" }}
+										color="text.secondary"
+										gutterBottom
+									>
+										Time: {time}
+									</Typography>
+								</CardContent>
 
-							<div className={styles.contentBox}>
-								<h1>Event Details</h1>
-								{event.content}
-							</div>
-							{/* {message && (
-							<div className="form-group mt-4">
-								<div className="alert alert-danger" role="alert">
-									{message}
+								<Button
+									variant="contained"
+									style={{
+										background: "#BF616A",
+										color: "black",
+										border: "dashed 0.6px black",
+										margin: "16px 0",
+									}}
+									onClick={(e) => handleClick(e)}
+								>
+									Register Now
+								</Button>
+								<div className="d-flex justify-content-between flex-wrap mt-3 mb-3">
+									<h4>Categories</h4>
+									{category.map((categoryItem) => (
+										<Button
+											variant="contained"
+											style={{ background: "#BF616A" }}
+										>
+											#{categoryItem}
+										</Button>
+									))}
 								</div>
-								</div>
-							)} */}
-							{message && (
-								<ToastContainer
-									position="bottom-center"
-									autoClose={5000}
-									hideProgressBar={false}
-									newestOnTop={false}
-									closeOnClick
-									rtl={false}
-									pauseOnFocusLoss
-									draggable
-									pauseOnHover
-								/>
-							)}
+								<Typography
+									sx={{ fontSize: 20, color: "#FD4005" }}
+									color="text.secondary"
+									gutterBottom
+								>
+									Price: &#8377; {rate}/-
+								</Typography>
+							</Card>
 						</div>
 
-					</>
-				)}
+						<div className={styles.contentBox}>
+							<h1>Event Details</h1>
+							{event.content}
+						</div>
+
+						{message && (
+							<ToastContainer
+								position="bottom-center"
+								autoClose={5000}
+								hideProgressBar={false}
+								newestOnTop={false}
+								closeOnClick
+								rtl={false}
+								pauseOnFocusLoss
+								draggable
+								pauseOnHover
+							/>
+						)}
+					</div>
+				</>
+			)}
 		</>
 	);
 };

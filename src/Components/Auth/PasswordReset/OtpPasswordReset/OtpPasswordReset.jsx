@@ -67,7 +67,7 @@ class OtpPasswordReset extends Component {
 			email: this.props.history.location.state.email,
 		};
 		await AuthService.ResetPass(user).then(
-			(res) => {},
+			(res) => {this.setState({message:res.data})},
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
@@ -88,7 +88,8 @@ class OtpPasswordReset extends Component {
 					style: { background: "pink", color: "black" },
 				});
 			}
-		);
+			);
+			toast.success(this.state.message)
 	};
 
 	handleSubmit = async (e) => {
@@ -144,6 +145,16 @@ class OtpPasswordReset extends Component {
 						successful: false,
 					});
 				}
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
+				});
 			}
 		);
 	};
@@ -189,20 +200,7 @@ class OtpPasswordReset extends Component {
 						>
 							resend otp
 						</Button>
-						{/* {this.state.message && (
-							<div className="form-group mt-4">
-								<div
-									className={
-										this.state.successful
-											? "alert alert-success"
-											: "alert alert-danger"
-									}
-									role="alert"
-								>
-									{this.state.message}
-								</div>
-							</div>
-						)} */}
+						
 						{this.state.message && (
 							<ToastContainer
 								position="bottom-center"

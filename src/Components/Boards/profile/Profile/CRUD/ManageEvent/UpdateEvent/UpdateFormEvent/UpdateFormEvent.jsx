@@ -28,7 +28,6 @@ const UpdateFormEvent = (props) => {
 
 	const { id } = useParams();
 	useEffect(() => {
-		
 		const getAllData = async () => {
 			setLoading(false);
 			await crudService.Read(id).then(
@@ -37,7 +36,7 @@ const UpdateFormEvent = (props) => {
 					setContent(response.data.post.content);
 					setDateValue(response.data.post.date.split("T")[0]);
 					setTimeValue(response.data.post.time);
-					setArray(response.data.post.category)
+					setArray(response.data.post.category);
 					setMoney(response.data.post.rate);
 					setLoading(false);
 				},
@@ -50,6 +49,16 @@ const UpdateFormEvent = (props) => {
 					setSuccess(false);
 					setMessage(message);
 					setLoading(false);
+					toast.error(message, {
+						position: "bottom-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						style: { background: "pink", color: "black" },
+					});
 				}
 			);
 		};
@@ -120,17 +129,17 @@ const UpdateFormEvent = (props) => {
 				<Form className={styles.form}>
 					{/* Content */}
 					{message && (
-							<ToastContainer
-								position="bottom-center"
-								hideProgressBar={false}
-								newestOnTop={false}
-								closeOnClick
-								rtl={false}
-								pauseOnFocusLoss
-								draggable
-								pauseOnHover
-							/>
-						)}
+						<ToastContainer
+							position="bottom-center"
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+						/>
+					)}
 					<Row className="mb-3">
 						<Col md={6} sm={12}>
 							<Form.Label className={styles.requiredField}>Content</Form.Label>
@@ -229,7 +238,6 @@ const UpdateFormEvent = (props) => {
 					</Button>
 					<Button
 						variant="success"
-												
 						className={styles.button}
 						onClick={(e) => {
 							handleSubmit(e);
@@ -240,6 +248,19 @@ const UpdateFormEvent = (props) => {
 					>
 						Submit
 					</Button>
+					{message && (
+						<ToastContainer
+							position="bottom-center"
+							autoClose={5000}
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+						/>
+					)}
 				</Form>
 			)}
 		</>

@@ -1,7 +1,9 @@
 import "react-calendar/dist/Calendar.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Col, Container, Row } from "react-bootstrap";
 import React, { Component } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 import Calendar from "react-calendar";
 import Cards from "./card.jsx";
@@ -17,24 +19,46 @@ export default class DashBoard extends Component {
 		this.state = {
 			date: new Date(),
 			result: {},
-			isLoading: true,
+			message: "",
+			successful: "",
+			created: [],
+			registered: [],
+			bookmarked: [],
 		};
 	}
 	async componentDidMount() {
 		await userService.getUserBoard().then(
 			(res) => {
 				const result = res.data.user;
-				this.setState({ result: result });
+				const createdEvents = res.data.user.event;
+				const registeredEvents = res.data.user.registeredEvents;
+				const bookmarkedEvents = res.data.user.bookmarked;
+				this.setState({
+					result: result,
+					created: createdEvents,
+					registered: registeredEvents,
+					bookmarked: bookmarkedEvents,
+				});
 			},
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
-					resMessage = JSON.stringify(error.message);
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
 				} else resMessage = error.response.data;
 
 				this.setState({
 					successful: false,
 					message: resMessage,
+				});
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
 				});
 			}
 		);
@@ -52,43 +76,53 @@ export default class DashBoard extends Component {
 							</Col>
 							<Col md={10}>
 								<div className={styles.CalendarContainer}>
-										<Cards name={this.state.result.name} email={this.state.result.email} />
-									
-										<Calendar
-											onChange={this.state.date}
-											className={styles.Calendar}
-										/>
+									<Cards
+										name={this.state.result.name}
+										email={this.state.result.email}
+									/>
+
+									<Calendar
+										onChange={this.state.date}
+										className={styles.Calendar}
+									/>
 								</div>
 								<Row>
 									<div className={styles.cardContainer}>
 										<div className={styles.card}>
-											<div className={styles.cardTitle}>Booked Events</div>
+											<div className={styles.cardTitle}>Created Events</div>
 											<div className={styles.cardBody}>
-												<span>120 </span>
+												<span>{this.state.created.length} </span>
 											</div>
 										</div>
 
 										<div className={styles.card}>
-											<div className={styles.cardTitle}>Rated Events</div>
+											<div className={styles.cardTitle}>Bookmarked Events</div>
 											<div className={styles.cardBody}>
-												<span>120 </span>
+												<span>{this.state.bookmarked.length} </span>
 											</div>
 										</div>
 
 										<div className={styles.card}>
-											<div className={styles.cardTitle}>Suggested Events</div>
-											<div className={styles.cardBody}>120</div>
+											<div className={styles.cardTitle}>Registered Events</div>
+											<div className={styles.cardBody}>{this.state.registered.length}</div>
 										</div>
 									</div>
 								</Row>
 							</Col>
 						</Row>
+
 						{this.state.message && (
-							<div className="form-group mt-4">
-								<div className="alert alert-danger" role="alert">
-									{this.state.message}
-								</div>
-							</div>
+							<ToastContainer
+								position="bottom-center"
+								autoClose={5000}
+								hideProgressBar={false}
+								newestOnTop={false}
+								closeOnClick
+								rtl={false}
+								pauseOnFocusLoss
+								draggable
+								pauseOnHover
+							/>
 						)}
 					</Container>
 				</div>

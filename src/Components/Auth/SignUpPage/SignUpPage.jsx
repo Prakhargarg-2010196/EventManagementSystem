@@ -10,7 +10,6 @@ import { DefaultNavbar } from "../DefaultNavbar";
 import { Image } from "react-bootstrap";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import Logo from "../../../assets/logo.png";
-import { NavLink } from "react-router-dom";
 import styles from "./SignUpPage.module.css";
 
 const links = {
@@ -96,16 +95,20 @@ class SignUpPage extends Component {
 		};
 		await AuthService.SignUp(user).then(
 			(response) => {
+				
 				this.setState({
-					// message: response.data,
+					message: response.data,
 					successful: true,
 				});
 				if (this.state.successful) {
+					
 					this.props.history.push({
 						pathname: "/OtpSignUp",
 						state: user,
+						
 					});
 				}
+				
 			},
 			(error) => {
 				let resMessage = "";
@@ -119,7 +122,7 @@ class SignUpPage extends Component {
 				});
 				toast.error(this.state.message, {
 					position: "bottom-center",
-					autoClose: 3000,
+					autoClose: 5000,
 					hideProgressBar: false,
 					closeOnClick: true,
 					pauseOnHover: true,
@@ -128,7 +131,8 @@ class SignUpPage extends Component {
 					style: { background: "pink", color: "black" },
 				});
 			}
-		);
+			);
+			
 	};
 	handleKeyPress(e) {
 		if (e.key === "Enter") e.preventDefault();
@@ -215,20 +219,7 @@ class SignUpPage extends Component {
 						<Link to="LogInPage">
 							<Form.Text style={{ color: "#000" }}>Login</Form.Text>
 						</Link>
-						{/* {this.state.message && (
-							<div className="form-group mt-2">
-								<div
-									className={
-										this.state.successful
-											? "alert alert-success"
-											: "alert alert-danger"
-									}
-									role="alert"
-								>
-									{this.state.message}
-								</div>
-							</div>
-						)} */}
+					
 						{this.state.message && (
 							<ToastContainer
 								position="bottom-center"

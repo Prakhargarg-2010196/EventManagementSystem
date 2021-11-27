@@ -1,6 +1,7 @@
 import "swiper/swiper-bundle.css";
 import "swiper/swiper.min.css";
 import "swiper/swiper-bundle";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, {
@@ -10,6 +11,7 @@ import SwiperCore, {
 	Pagination,
 	Scrollbar,
 } from "swiper";
+import { ToastContainer, toast } from "react-toastify";
 import { useEffect, useState } from "react";
 
 import EventCards from "./EventCards/EventCards";
@@ -44,6 +46,16 @@ const CardCarousel = (props) => {
 					} else message = error.response.data;
 					setSuccess(false);
 					setMessage(message);
+					toast.error(message, {
+						position: "bottom-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						style: { background: "pink", color: "black" },
+					});
 				}
 			);
 		};
@@ -385,15 +397,18 @@ const CardCarousel = (props) => {
 				</Swiper>
 			</div>
 			{message && (
-				<div className="form-group mt-2">
-					<div
-						className={success ? "alert alert-success" : "alert alert-danger"}
-						role="alert"
-					>
-						{message}
-					</div>
-				</div>
-			)}
+						<ToastContainer
+							position="bottom-center"
+							autoClose={5000}
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+						/>
+					)}
 		</div>
 	);
 };

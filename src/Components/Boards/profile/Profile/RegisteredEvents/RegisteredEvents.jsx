@@ -1,5 +1,8 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import { Col, Container, Row } from "react-bootstrap";
 import React, { Component } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 import CrudService from "../../../../../api/services/crud-service";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
@@ -43,6 +46,16 @@ export default class RegisteredEvents extends Component {
 				this.setState({
 					message: resMessage,
 					successful: false,
+				});
+				toast.error(this.state.message, {
+					position: "bottom-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					style: { background: "pink", color: "black" },
 				});
 			}
 		);
@@ -119,11 +132,17 @@ export default class RegisteredEvents extends Component {
 											)}
 										</TableContainer>
 										{this.state.message && (
-											<div className="form-group mt-4">
-												<div className="alert alert-danger" role="alert">
-													{this.state.message}
-												</div>
-											</div>
+											<ToastContainer
+												position="bottom-center"
+												autoClose={5000}
+												hideProgressBar={false}
+												newestOnTop={false}
+												closeOnClick
+												rtl={false}
+												pauseOnFocusLoss
+												draggable
+												pauseOnHover
+											/>
 										)}
 									</Row>
 								</Container>

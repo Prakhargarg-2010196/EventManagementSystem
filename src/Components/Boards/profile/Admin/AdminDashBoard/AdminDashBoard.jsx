@@ -7,15 +7,12 @@ import Cards from "../card.jsx";
 import { NavBar } from "../../../../Layout/Home/NavBar/NavBar";
 import styles from "./AdminDashBoard.module.css";
 
-// import userService from "../../../../../api/services/user.service";
-
 export default class AdminDashBoard extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			date: new Date(),
-			result: {},
 		};
 	}
 
@@ -37,26 +34,28 @@ export default class AdminDashBoard extends Component {
 										className={styles.Calendar}
 									/>
 								</div>
+								<Row>
 								<div className={styles.cardContainer}>
 									<div className={styles.card}>
-										<div className={styles.cardTitle}>Booked Events</div>
+										<div className={styles.cardTitle}>Users To Be Verified</div>
 										<div className={styles.cardBody}>
 											<span>120 </span>
 										</div>
 									</div>
 
 									<div className={styles.card}>
-										<div className={styles.cardTitle}>Rated Events</div>
+										<div className={styles.cardTitle}>Total Users</div>
 										<div className={styles.cardBody}>
 											<span>120 </span>
 										</div>
 									</div>
 
 									<div className={styles.card}>
-										<div className={styles.cardTitle}>Suggested Events</div>
+										<div className={styles.cardTitle}>Total Events</div>
 										<div className={styles.cardBody}>120</div>
 									</div>
 								</div>
+								</Row>
 							</Col>
 						</Row>
 					</Container>
