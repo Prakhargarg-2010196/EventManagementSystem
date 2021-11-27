@@ -132,19 +132,7 @@ export default function EventCards(props) {
 	};
 
 	return (
-		<>	{message && (
-			<ToastContainer
-				position="bottom-center"
-				autoClose={5000}
-				hideProgressBar={false}
-				newestOnTop={false}
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				draggable
-				pauseOnHover
-			/>
-		)}
+		<>
 			<Card
 				sx={{ maxWidth: 650, border: "solid 0.5px grey", margin: "30px 0px" }}
 			>

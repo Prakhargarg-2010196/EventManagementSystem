@@ -23,8 +23,8 @@ export default class ManageAllEvents extends Component {
 	defaultState = {
 		events: [],
 		isLoading: true,
-		successful:false,
-		message:""
+		successful: false,
+		message: "",
 	};
 
 	constructor(props) {
@@ -40,10 +40,8 @@ export default class ManageAllEvents extends Component {
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
-					resMessage=JSON.stringify(error.message).replace(/^"|"$/g, "");
-				}
-
-				else resMessage = error.response.data;
+					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
+				} else resMessage = error.response.data;
 
 				this.setState({
 					successful: false,
@@ -66,16 +64,12 @@ export default class ManageAllEvents extends Component {
 	async onDelete(e, eventItemId) {
 		e.preventDefault();
 		await AdminCrudService.DeleteEvent(eventItemId).then(
-			(res) => {
-						
-
-			},
+			(res) => {},
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
 					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
-				} 
-				else resMessage = error.response.data;
+				} else resMessage = error.response.data;
 
 				this.setState({
 					successful: false,
@@ -93,7 +87,7 @@ export default class ManageAllEvents extends Component {
 				});
 			}
 		);
-		alert("Deleted")
+		alert("Deleted");
 		this.setState({
 			events: this.state.events.filter(
 				(eventItem) => eventItem._id !== eventItemId
@@ -118,7 +112,6 @@ export default class ManageAllEvents extends Component {
 										<h1 className="text-center mt-4">Manage Events</h1>
 									</Row>
 									<Row>
-										{console.log(this.state.events)}
 										<TableContainer component={Paper}>
 											{this.state.isLoading ? (
 												<Loader message={"Your Content is Loading"} />
@@ -154,7 +147,7 @@ export default class ManageAllEvents extends Component {
 																			pathname: `/EventPage/${eventItem._id}`,
 																		}}
 																	>
-																		{eventItem.title}
+																		<>{eventItem.title}</>
 																	</Link>
 																</TableCell>
 																<TableCell align="center">
