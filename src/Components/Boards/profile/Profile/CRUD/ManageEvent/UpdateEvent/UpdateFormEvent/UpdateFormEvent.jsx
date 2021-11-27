@@ -126,144 +126,151 @@ const UpdateFormEvent = (props) => {
 			{isLoading ? (
 				<Loader message={"Your Data is getting an updated"} />
 			) : (
-				<Form className={styles.form}>
-					{/* Content */}
-					{message && (
-						<ToastContainer
-							position="bottom-center"
-							hideProgressBar={false}
-							newestOnTop={false}
-							closeOnClick
-							rtl={false}
-							pauseOnFocusLoss
-							draggable
-							pauseOnHover
-						/>
-					)}
-					<Row className="mb-3">
-						<Col md={6} sm={12}>
-							<Form.Label className={styles.requiredField}>Content</Form.Label>
-						</Col>
-						<Col md={12} sm={8}>
-							<Form.Control
-								as="textarea"
-								rows={5}
-								defaultValue={content}
-								className="w-100"
-								onChange={(e) => {
-									setContent(e.target.value);
-								}}
+				<div className={styles.formContainer}>
+					<Form className={styles.form}>
+						{/* Content */}
+						{message && (
+							<ToastContainer
+								position="bottom-center"
+								hideProgressBar={false}
+								newestOnTop={false}
+								closeOnClick
+								rtl={false}
+								pauseOnFocusLoss
+								draggable
+								pauseOnHover
 							/>
-						</Col>
-					</Row>
-
-					{/* Content end  */}
-
-					{/* Category start */}
-					<Row>
-						<Col xs={12} md={6}>
-							<Form.Label className={styles.requiredField}>Category</Form.Label>
-						</Col>
-						<Col xs={6} md={3}>
-							<CategorySelect onSelect={setArray} defaultValue={Categories} />
-						</Col>
-					</Row>
-					{/* Category end */}
-
-					{/* Date start */}
-					<Row className="mt-4">
-						<Col md={6} sm={6}>
-							<Form.Label className={styles.requiredField}>Date</Form.Label>
-						</Col>
-						<Col md={6} sm={12}>
-							<input
-								className="form-control"
-								type="date"
-								defaultValue={dateValue}
-								onChange={(e) => handleDateUpdate(e)}
-							/>
-						</Col>
-					</Row>
-					{/* Date end */}
-
-					{/* Time */}
-					<Row className="mt-4">
-						<Col>
-							<Form.Label>Time(HH:MM) </Form.Label>
-						</Col>
-
-						<Col>
-							<TimeField
-								onChange={(e) => setTimeValue(e.target.value)}
-								className="w-25"
-								value={timeValue}
-							/>
-						</Col>
-					</Row>
-
-					{/* Money */}
-					<Row className="mt-5">
-						<Col md={6}>
-							<Form.Label className={styles.requiredField}>
-								Price(in INR)
-							</Form.Label>
-						</Col>
-						<Col md={6}>
-							<InputGroup className="">
-								<InputGroup.Text>₹</InputGroup.Text>
+						)}
+						<Row className="mb-3">
+							<Col md={6}>
+								<Form.Label className={styles.requiredField}>
+									Content
+								</Form.Label>
+							</Col>
+							<Col md={12}>
 								<Form.Control
-									aria-label="Amount (to the nearest rupee)"
-									className="w-50"
+									as="textarea"
+									rows={5}
+									defaultValue={content}
+									className="w-100"
 									onChange={(e) => {
-										setMoney(e.target.value);
+										setContent(e.target.value);
 									}}
-									defaultValue={money}
 								/>
-							</InputGroup>
-						</Col>
-					</Row>
-					{/* money end */}
+							</Col>
+						</Row>
 
-					<Button
-						variant="primary"
-						className={styles.button}
-						onClick={(e) => {
-							handleImagesSubmit(e);
-						}}
-						onKeyPress={(e) => {
-							handleKeyPress(e);
-						}}
-					>
-						Update images
-					</Button>
-					<Button
-						variant="success"
-						className={styles.button}
-						onClick={(e) => {
-							handleSubmit(e);
-						}}
-						onKeyPress={(e) => {
-							handleKeyPress(e);
-						}}
-					>
-						Submit
-					</Button>
-					
-				</Form>
+						{/* Content end  */}
+
+						{/* Category start */}
+						<Row>
+							<Col xs={12} md={6}>
+								<Form.Label className={styles.requiredField}>
+									Category
+								</Form.Label>
+							</Col>
+							<Col xs={6} md={3}>
+								<CategorySelect onSelect={setArray} defaultValue={Categories} />
+							</Col>
+						</Row>
+						{/* Category end */}
+
+						{/* Date start */}
+						<Row className="mt-4">
+							<Col md={6} sm={6}>
+								<Form.Label className={styles.requiredField}>Date</Form.Label>
+							</Col>
+							<Col md={6} sm={12}>
+								<input
+									className="form-control"
+									type="date"
+									defaultValue={dateValue}
+									onChange={(e) => handleDateUpdate(e)}
+								/>
+							</Col>
+						</Row>
+						{/* Date end */}
+
+						{/* Time */}
+						<Row className="mt-4">
+							<Col md={6}xs={12}>
+								<Form.Label>Time(HH:MM) </Form.Label>
+							</Col>
+
+							<Col md={6}xs={12}>
+								<TimeField
+									onChange={(e) => setTimeValue(e.target.value)}
+									className="w-25"
+									value={timeValue}
+								/>
+							</Col>
+						</Row>
+
+						{/* Money */}
+						<Row className="mt-5">
+							<Col md={6}>
+								<Form.Label className={styles.requiredField}>
+									Price(in INR)
+								</Form.Label>
+							</Col>
+							<Col md={6}>
+								<InputGroup className="">
+									<InputGroup.Text>₹</InputGroup.Text>
+									<Form.Control
+										aria-label="Amount (to the nearest rupee)"
+										className="w-50"
+										onChange={(e) => {
+											setMoney(e.target.value);
+										}}
+										defaultValue={money}
+									/>
+								</InputGroup>
+							</Col>
+						</Row>
+						{/* money end */}
+
+						<div className={styles.buttonGroup}>
+						<Button
+							variant="primary"
+							className={styles.button}
+							onClick={(e) => {
+								handleImagesSubmit(e);
+							}}
+							onKeyPress={(e) => {
+								handleKeyPress(e);
+							}}
+						>
+							Update images
+						</Button>
+						<Button
+							variant="success"
+							className={styles.button}
+							onClick={(e) => {
+								handleSubmit(e);
+							}}
+							onKeyPress={(e) => {
+								handleKeyPress(e);
+							}}
+						>
+							Submit
+						</Button>
+						</div>
+					</Form>
+				</div>
 			)}
 			{message && (
-						<ToastContainer
-							position="bottom-center"
-							autoClose={5000}
-							hideProgressBar={false}
-							newestOnTop={false}
-							closeOnClick
-							rtl={false}
-							pauseOnFocusLoss
-							draggable
-							pauseOnHover
-						/>
-					)}
+				<ToastContainer
+					position="bottom-center"
+					autoClose={5000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+				/>
+			)}
 		</>
 	);
 };

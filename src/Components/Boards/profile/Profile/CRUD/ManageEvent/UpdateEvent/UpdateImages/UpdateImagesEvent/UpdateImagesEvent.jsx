@@ -13,8 +13,8 @@ import styles from "./UpdateImagesEvent.module.css";
 import { useParams } from "react-router-dom";
 
 const UpdateImagesEvent = () => {
-	const [Files, setFilesArray] = useState({});
-	const [result, setResult] = useState({});
+	const [Files, setFilesArray] = useState([]);
+	const [result, setResult] = useState([]);
 	const [isLoading, setLoading] = useState(true);
 	const [isAdded, setAdded] = useState(false);
 	const [message, setMessage] = useState("");
@@ -84,8 +84,12 @@ const UpdateImagesEvent = () => {
 			}
 		);
 		// imageUrlUpdate.filter((image) =>image !==imageUrl )
-		const response = await crudService.Read(id).then(
-			(res) => {},
+		 await crudService.Read(id).then(
+			(response) => {
+				if(response.data.post){
+					setResult(response.data.post)
+				}
+			},
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
@@ -105,16 +109,16 @@ const UpdateImagesEvent = () => {
 					style: { background: "pink", color: "black" },
 				});
 			}
-		);;
-		setResult(response.data.post);
+		);
 	};
 
 	const handleAdd = async (e, id) => {
 		e.preventDefault();
 		var FileData = new FormData();
-		Files.forEach((file) => {
+		if(Files)
+		{Files.forEach((file) => {
 			FileData.append("files", file);
-		});
+		});}
 		setLoading(true);
 		await postsService.AddImage(id, FileData).then(
 			(response) => {},
@@ -137,8 +141,12 @@ const UpdateImagesEvent = () => {
 				});
 			}
 		);
-		const response = await crudService.Read(id).then(
-			(res) => {},
+		 await crudService.Read(id).then(
+			(response) => {
+				if(response.data.post){
+					setResult(response.data.post)
+				}
+			},
 			(error) => {
 				let resMessage = "";
 				if (!error.response) {
@@ -158,8 +166,8 @@ const UpdateImagesEvent = () => {
 					style: { background: "pink", color: "black" },
 				});
 			}
-		);;
-		setResult(response.data.post);
+		);
+		
 		setAdded(true);
 		setLoading(false);
 	};
@@ -176,7 +184,7 @@ const UpdateImagesEvent = () => {
 							</Form.Label>
 							<div className="d-flex flex-wrap justify-content-between m-2">
 								{imageUrlUpdate.map((image, index) => (
-									<div key={index} className="m-3">
+									<div key={index} className="m-3 d-flex flex-column justify-content-center">
 										<img
 											src={image}
 											width={100}
@@ -186,6 +194,9 @@ const UpdateImagesEvent = () => {
 										<Button
 											style={{ width: "100%", marginTop: "10px" }}
 											onClick={(e) => {
+												window.confirm(
+													"Are you sure you wish to delete this image?"
+												) &&
 												handleDelete(e, id, image);
 											}}
 										>
@@ -210,7 +221,9 @@ const UpdateImagesEvent = () => {
 								onClick={(e) => {
 									handleAdd(e, id);
 								}}
-							>
+								disabled={Files.length===0}
+								
+							>	
 								Add images
 							</Button>
 						</Col>

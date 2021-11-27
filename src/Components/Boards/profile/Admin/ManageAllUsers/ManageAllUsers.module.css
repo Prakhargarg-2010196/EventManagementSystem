@@ -7,4 +7,13 @@
     background: #28bff5;
     box-sizing: border-box;
     min-height: 90.2vh;
+}@media screen and (max-width:768px) {
+
+
+    .SideBar {
+        min-height: 100%;
+        padding-bottom: 40px;
+
+    }
+
 }
