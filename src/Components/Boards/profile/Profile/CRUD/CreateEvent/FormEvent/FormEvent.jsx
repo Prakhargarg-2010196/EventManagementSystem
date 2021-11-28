@@ -97,8 +97,8 @@ const FormEvent = (props) => {
 
 	const handleDateUpdate = (e) => {
 		const dateValue = e.target.value;
-		const dateValueInEpoch = new Date(dateValue).getTime();
 		const dateValueToBe = new Date(dateValue);
+		const dateValueInEpoch = new Date(dateValue).getTime();
 		const currentDate = new Date();
 		if (dateValueToBe.getDate() - currentDate.getDate() >= 0)
 			setDateValue(dateValueInEpoch);
