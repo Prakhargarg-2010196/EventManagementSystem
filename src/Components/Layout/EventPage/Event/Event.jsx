@@ -35,7 +35,7 @@ const Event = () => {
 	const [isLoading, setLoading] = React.useState(true);
 	React.useEffect(() => {
 		const getAllEventDetails = async () => {
-			if (!authService.isAuthenticated()) {
+			if (authService.isAuthenticated()) {
 				await crudService.Read(id).then(
 					(response) => {
 						if (response.data.post) {
