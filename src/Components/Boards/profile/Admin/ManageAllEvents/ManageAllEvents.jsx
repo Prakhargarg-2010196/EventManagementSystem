@@ -129,7 +129,7 @@ export default class ManageAllEvents extends Component {
 													<TableBody>
 														{this.state.events.length === 0 && (
 															<div className=" d-flex justify-content-center  bg-white">
-																<p>No such Users to verify</p>
+																<p>No such events exist</p>
 															</div>
 														)}
 														{this.state.events.map((eventItem) => (
