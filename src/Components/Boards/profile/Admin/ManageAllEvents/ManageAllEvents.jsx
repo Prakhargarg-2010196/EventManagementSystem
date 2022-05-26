@@ -4,12 +4,12 @@ import { Col, Container, Row } from "react-bootstrap";
 import React, { Component } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
-import AdminCrudService from "../../../../../api/services/admin-crud-service";
+import AdminCrudService from "api/services/admin-crud-service";
 import { AdminSideBar } from "../AdminSidebar/AdminSideBar";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-import { Loader } from "../../../../Layout/Loader/Loader";
-import { NavBar } from "../../../../Layout/Home/NavBar/NavBar";
+import { Loader } from "Components/Layout/Loader/Loader";
+import { NavBar } from "Components/Layout/Home/NavBar/NavBar";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";

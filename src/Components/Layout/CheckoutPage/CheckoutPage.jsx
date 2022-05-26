@@ -1,5 +1,3 @@
-import { Col, Container, Row } from "react-bootstrap";
-
 import Checkout from "./Checkout/Checkout.jsx";
 import { CheckoutCard } from "./CheckoutCard/CheckoutCard.jsx";
 // import CarouselMain from "../Home/CarouselMain/CarouselMain";

@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { AdminSideBar } from "../AdminSidebar/AdminSideBar";
 import Calendar from "react-calendar/dist/umd/Calendar";
 import Cards from "../card.jsx";
-import { NavBar } from "../../../../Layout/Home/NavBar/NavBar";
+import { NavBar } from "Components/Layout/Home/NavBar/NavBar";
 import styles from "./AdminDashBoard.module.css";
 
 export default class AdminDashBoard extends Component {

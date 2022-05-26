@@ -1,5 +1,3 @@
-// eslint:disable-next-line:no-unused-vars
-// eslint:disable:no-unused-vars
 import "react-toastify/dist/ReactToastify.css";
 
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
@@ -7,11 +5,11 @@ import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useHistory, useParams } from "react-router-dom";
 
-import { BaseUrl } from "../../../../../../../../api/services/BaseUrl";
+import { BaseUrl } from "api/services/BaseUrl";
 import { CategorySelect } from "./CategorySelect/CategorySelect";
-import { Loader } from "../../../../../../../Layout/Loader/Loader";
+import { Loader } from "Components/Layout/Loader/Loader";
 import TimeField from "react-simple-timefield";
-import crudService from "../../../../../../../../api/services/crud-service";
+import crudService from "api/services/crud-service";
 import styles from "./UpdateFormEvent.module.css";
 
 const UpdateFormEvent = (props) => {
@@ -22,7 +20,6 @@ const UpdateFormEvent = (props) => {
 	const [money, setMoney] = useState();
 	const history = useHistory();
 	const [message, setMessage] = useState("");
-	const [successful, setSuccess] = useState(false);
 
 	const [isLoading, setLoading] = useState(true);
 
@@ -32,7 +29,6 @@ const UpdateFormEvent = (props) => {
 			setLoading(false);
 			await crudService.Read(id).then(
 				(response) => {
-					setSuccess(true);
 					setContent(response.data.post.content);
 					setDateValue(response.data.post.date.split("T")[0]);
 					setTimeValue(response.data.post.time);
@@ -46,7 +42,6 @@ const UpdateFormEvent = (props) => {
 					if (!error.response || !BaseUrl()) {
 						message = JSON.stringify(error.message).replace(/^"|"$/g, "");
 					} else message = error.response.data;
-					setSuccess(false);
 					setMessage(message);
 					setLoading(false);
 					toast.error(message, {
@@ -63,7 +58,7 @@ const UpdateFormEvent = (props) => {
 			);
 		};
 		getAllData();
-	}, []);
+	}, [id]);
 
 	const handleDateUpdate = (e) => {
 		const dateValue = e.target.value;
@@ -93,7 +88,6 @@ const UpdateFormEvent = (props) => {
 
 		await crudService.Update(id, FileData).then(
 			(response) => {
-				setSuccess(true);
 				setLoading(false);
 				history.push("/ManageEvent");
 			},
@@ -102,7 +96,6 @@ const UpdateFormEvent = (props) => {
 				if (!error.response || !BaseUrl()) {
 					message = JSON.stringify(error.message).replace(/^"|"$/g, "");
 				} else message = error.response.data;
-				setSuccess(false);
 				setMessage(message);
 				toast.error(message, {
 					position: "bottom-center",

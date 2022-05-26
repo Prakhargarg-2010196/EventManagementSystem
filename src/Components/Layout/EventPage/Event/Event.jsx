@@ -4,16 +4,16 @@ import * as React from "react";
 
 import { ToastContainer, toast } from "react-toastify";
 
-import { BaseUrl } from "../../../../api/services/BaseUrl";
+import { BaseUrl } from "api/services/BaseUrl";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import EventCarousel from "../Event/EventCarousel/EventCaraousel";
 import { Loader } from "../../Loader/Loader";
 import Typography from "@mui/material/Typography";
-import authService from "../../../../api/services/auth.service";
-import crudService from "../../../../api/services/crud-service";
-import postsService from "../../../../api/services/posts.service";
+import authService from "api/services/auth.service";
+import crudService from "api/services/crud-service";
+import postsService from "api/services/posts.service";
 import styles from "./Event.module.css";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -24,7 +24,6 @@ const Event = () => {
 	let imageUrlUpdate = [];
 	let category = [];
 	const [message, setMessage] = React.useState("");
-	const [successful, setSuccess] = React.useState(false);
 	let date = "";
 	let time = "";
 	let rate = "";
@@ -41,7 +40,6 @@ const Event = () => {
 						if (response.data.post) {
 							setCurrentEvent(response.data.post);
 						}
-						setSuccess(true);
 						setLoading(false);
 					},
 					(error) => {
@@ -49,7 +47,6 @@ const Event = () => {
 						if (!error.response || !BaseUrl()) {
 							message = JSON.stringify(error.message).replace(/^"|"$/g, "");
 						} else message = error.response.data;
-						setSuccess(false);
 						setMessage(message);
 						setLoading(false);
 						toast.error(message, {
@@ -70,7 +67,6 @@ const Event = () => {
 						if (response.data.post) {
 							setCurrentEvent(response.data.post);
 						}
-						setSuccess(true);
 						setLoading(false);
 					},
 					(error) => {
@@ -78,7 +74,6 @@ const Event = () => {
 						if (!error.response || !BaseUrl()) {
 							message = JSON.stringify(error.message).replace(/^"|"$/g, "");
 						} else message = error.response.data;
-						setSuccess(false);
 						setMessage(message);
 						setLoading(false);
 						toast.error(message, {
@@ -96,7 +91,7 @@ const Event = () => {
 			}
 		};
 		getAllEventDetails();
-	}, []);
+	}, [id]);
 	if (event.imageUrl) {
 		imgPath = event.imageUrl;
 		imageUrlUpdate = imgPath.map((img) => `${BaseUrl()}${img}`);
@@ -134,7 +129,6 @@ const Event = () => {
 				if (!error.response || !BaseUrl()) {
 					message = JSON.stringify(error.message).replace(/^"|"$/g, "");
 				} else message = error.response.data;
-				setSuccess(false);
 				setMessage(message);
 				toast.error(message, {
 					position: "bottom-center",

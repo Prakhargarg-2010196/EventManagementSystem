@@ -2,7 +2,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import React, { Component } from "react";
 
 import FormEvent from "./FormEvent/FormEvent";
-import { NavBar } from "../../../../../Layout/Home/NavBar/NavBar";
+import { NavBar } from "Components/Layout/Home/NavBar/NavBar";
 import { SideBar } from "../../SideBar/sidebar";
 import styles from "./CreateEvent.module.css";
 

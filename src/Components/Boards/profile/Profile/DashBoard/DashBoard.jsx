@@ -7,10 +7,10 @@ import { ToastContainer, toast } from "react-toastify";
 
 import Calendar from "react-calendar";
 import Cards from "./card.jsx";
-import { NavBar } from "../../../../Layout/Home/NavBar/NavBar";
-import { SideBar } from "../SideBar/sidebar";
+import { NavBar } from "Components/Layout/Home/NavBar/NavBar";
+import { SideBar } from "Components/Boards/profile/Profile/SideBar/sidebar";
 import styles from "./DashBoard.module.css";
-import userService from "../../../../../api/services/user.service.js";
+import userService from "api/services/user.service.js";
 
 export default class DashBoard extends Component {
 	constructor(props) {

@@ -3,18 +3,18 @@ import "react-toastify/dist/ReactToastify.css";
 import * as React from "react";
 
 import { Button, CardActionArea } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
 
-import { BaseUrl } from "../../../../../api/services/BaseUrl";
+import { BaseUrl } from "api/services/BaseUrl";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import authService from "../../../../../api/services/auth.service";
-import crudService from "../../../../../api/services/crud-service";
-import postsService from "../../../../../api/services/posts.service";
+import authService from "api/services/auth.service";
+import crudService from "api/services/crud-service";
+import postsService from "api/services/posts.service";
+import {toast} from "react-toastify";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function EventCards(props) {
@@ -53,7 +53,7 @@ export default function EventCards(props) {
 		};
 		if(authService.isAuthenticated())
 		getBookmarked();
-	}, []);
+	}, [message]);
 	const handleClickEvent = () => {
 		history.push({ pathname: `/EventPage/${props.id}` });
 	};

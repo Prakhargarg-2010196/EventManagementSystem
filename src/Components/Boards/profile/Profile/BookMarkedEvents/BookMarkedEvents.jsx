@@ -5,10 +5,10 @@ import React, { Component } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
 import { Button } from "@mui/material";
-import CrudService from "../../../../../api/services/crud-service";
+import CrudService from "api/services/crud-service";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import { Loader } from "../../../../Layout/Loader/Loader";
-import { NavBar } from "../../../../Layout/Home/NavBar/NavBar";
+import { Loader } from "Components/Layout/Loader/Loader";
+import { NavBar } from "Components/Layout/Home/NavBar/NavBar";
 import Paper from "@mui/material/Paper";
 import { SideBar } from "../SideBar/sidebar";
 import Table from "@mui/material/Table";
@@ -17,7 +17,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import postsService from "../../../../../api/services/posts.service";
+import postsService from "api/services/posts.service";
 import styles from "./BookMarkedEvents.module.css";
 
 export default class BookMarkedEvents extends Component {

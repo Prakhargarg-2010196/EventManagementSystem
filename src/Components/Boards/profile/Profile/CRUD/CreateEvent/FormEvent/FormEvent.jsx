@@ -1,5 +1,3 @@
-// eslint:disable:no-unused-vars
-// eslint:disable-next-line:no-unused-vars
 import "react-toastify/dist/ReactToastify.css";
 
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
@@ -8,9 +6,9 @@ import { ToastContainer, toast } from "react-toastify";
 
 import { CategorySelect } from "./CategorySelect/CategorySelect";
 import { DragNDrop } from "./DragNDrop/DragNDrop";
-import { Loader } from "../../../../../../Layout/Loader/Loader";
+import { Loader } from "Components/Layout/Loader/Loader";
 import TimeField from "react-simple-timefield";
-import crudService from "../../../../../../../api/services/crud-service";
+import crudService from "api/services/crud-service";
 import styles from "./FormEvent.module.css";
 import { useHistory } from "react-router-dom";
 
@@ -28,7 +26,6 @@ const FormEvent = (props) => {
 	const history = useHistory();
 	const [Files, setFilesArray] = useState([]);
 	const [message, setMessage] = useState("");
-	const [successful, setSuccess] = useState(false);
 	const [isLoading, setLoading] = useState(false);
 	const [errors, setErrors] = useState({
 		contentErr: "",
@@ -76,8 +73,8 @@ const FormEvent = (props) => {
 	const handleBlurUrl = () => {
 		let urlErr = "";
 		console.log(typeof Url);
-		const urlReg =
-			/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
+		// eslint-disable-next-line
+		const urlReg =/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
 		if (!Url) urlErr = " url Can't be empty";
 		if (Url && urlReg.test(Url) === false) urlErr = " Url is invalid";
 		setErrors({ urlErr });
@@ -134,7 +131,6 @@ const FormEvent = (props) => {
 		setLoading(true);
 		await crudService.Create(FileData).then(
 			(response) => {
-				setSuccess(true);
 				setLoading(false);
 				history.push("/ManageEvent");
 			},

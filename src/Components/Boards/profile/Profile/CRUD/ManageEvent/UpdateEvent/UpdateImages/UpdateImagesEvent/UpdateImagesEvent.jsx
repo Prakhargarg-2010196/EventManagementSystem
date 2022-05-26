@@ -4,11 +4,11 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import { useEffect, useState } from "react";
 
-import { BaseUrl } from "../../../../../../../../../api/services/BaseUrl";
+import { BaseUrl } from "api/services/BaseUrl";
 import { DragNDrop } from "../DragNDrop/DragNDrop";
-import { Loader } from "../../../../../../../../Layout/Loader/Loader";
-import crudService from "../../../../../../../../../api/services/crud-service";
-import postsService from "../../../../../../../../../api/services/posts.service";
+import { Loader } from "Components/Layout/Loader/Loader";
+import crudService from "api/services/crud-service";
+import postsService from "api/services/posts.service";
 import styles from "./UpdateImagesEvent.module.css";
 import { useParams } from "react-router-dom";
 
@@ -18,15 +18,14 @@ const UpdateImagesEvent = () => {
 	const [isLoading, setLoading] = useState(true);
 	const [isAdded, setAdded] = useState(false);
 	const [message, setMessage] = useState("");
-	const [successful, setSuccess] = useState(false);
 	let imgPath = [];
 	let imageUrlUpdate = [];
+	const { id } = useParams();
 	useEffect(() => {
 		async function getAllimages() {
 			await crudService.Read(id).then(
 				(response) => {
 					setResult(response.data.post);
-					setSuccess(true);
 					setLoading(false);
 				},
 				(error) => {
@@ -34,7 +33,6 @@ const UpdateImagesEvent = () => {
 					if (!error.response) {
 						resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
 					} else resMessage = error.response.data;
-					setSuccess(false);
 					setMessage(resMessage);
 					toast.error(message, {
 						position: "bottom-center",
@@ -50,9 +48,8 @@ const UpdateImagesEvent = () => {
 			);
 		}
 		getAllimages();
-	}, []);
+	}, [message,id]);
 
-	const { id } = useParams();
 
 	if (result.imageUrl) {
 		imgPath = result.imageUrl;
@@ -69,7 +66,6 @@ const UpdateImagesEvent = () => {
 					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
 					
 				} else resMessage = error.response.data;
-				setSuccess(false);
 				setMessage(resMessage);
 				toast.error(message, {
 					position: "bottom-center",
@@ -96,7 +92,6 @@ const UpdateImagesEvent = () => {
 					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
 					
 				} else resMessage = error.response.data;
-				setSuccess(false);
 				setMessage(resMessage);
 				toast.error(message, {
 					position: "bottom-center",
@@ -127,7 +122,6 @@ const UpdateImagesEvent = () => {
 				if (!error.response) {
 					console.log(JSON.stringify(error.message));
 				} else resMessage = error.response.data;
-				setSuccess(false);
 				setMessage(resMessage);
 				toast.error(message, {
 					position: "bottom-center",
@@ -153,7 +147,6 @@ const UpdateImagesEvent = () => {
 					resMessage = JSON.stringify(error.message).replace(/^"|"$/g, "");
 					
 				} else resMessage = error.response.data;
-				setSuccess(false);
 				setMessage(resMessage);
 				toast.error(message, {
 					position: "bottom-center",

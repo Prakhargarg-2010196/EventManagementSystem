@@ -6,7 +6,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import LogoutIcon from "@mui/icons-material/Logout";
 import React from "react";
-import authService from "../../../../../api/services/auth.service";
+import authService from "api/services/auth.service";
 import styles from "./SideBar.module.css";
 
 export const SideBar = () => {

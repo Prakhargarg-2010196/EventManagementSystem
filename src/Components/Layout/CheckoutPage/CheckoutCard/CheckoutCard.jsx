@@ -4,7 +4,7 @@ import {
 	CardMedia,
 } from "@mui/material";
 
-import bgimageOne from "../../../../assets/carouselbg.png";
+import bgimageOne from "assets/carouselbg.png";
 
 export const CheckoutCard = () => {
 	return (

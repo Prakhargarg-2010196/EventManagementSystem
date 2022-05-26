@@ -1,7 +1,5 @@
 import "./Checkout.css";
 
-import { Col, Form } from "react-bootstrap";
-
 import { Component } from "react";
 import React from "react";
 

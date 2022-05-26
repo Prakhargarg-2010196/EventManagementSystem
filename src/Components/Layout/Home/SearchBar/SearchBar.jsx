@@ -5,7 +5,7 @@ import * as React from "react";
 import { ToastContainer, toast } from "react-toastify";
 
 import Stack from "@mui/material/Stack";
-import postsService from "../../../../api/services/posts.service";
+import postsService from "api/services/posts.service";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
 

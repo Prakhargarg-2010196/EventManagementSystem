@@ -1,8 +1,6 @@
-import { Container, Row } from "react-bootstrap";
-
-import CardCarousel from "../Home/CardCarousel/CardCarousel";
 // import CarouselMain from "../Home/CarouselMain/CarouselMain";
 import { Component } from "react";
+import { Container } from "react-bootstrap";
 import Event from "./Event/Event";
 import Footer from "../Home/Footer/Footer.jsx";
 import { NavBar } from "../Home/NavBar/NavBar";

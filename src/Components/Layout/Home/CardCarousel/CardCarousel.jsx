@@ -15,14 +15,13 @@ import { ToastContainer, toast } from "react-toastify";
 import { useEffect, useState } from "react";
 
 import EventCards from "./EventCards/EventCards";
-import PostService from "../../../../api/services/posts.service";
+import PostService from "api/services/posts.service";
 import styles from "./CardCarousel.module.css";
 
 SwiperCore.use([Pagination, Keyboard, Navigation, A11y, Scrollbar]);
 const CardCarousel = (props) => {
 	const [events, setEvents] = useState([]);
 	const [message, setMessage] = useState("");
-	const [success, setSuccess] = useState(false);
 	let danceEvents = [];
 	let musicEvents = [];
 	let educationEvents = [];
@@ -37,14 +36,12 @@ const CardCarousel = (props) => {
 				(res) => {
 					const events = res.data;
 					setEvents(events);
-					setSuccess(true);
 				},
 				(error) => {
 					let message = "";
 					if (!error.response) {
 						message = JSON.stringify(error.message).replace(/^"|"$/g, "");
 					} else message = error.response.data;
-					setSuccess(false);
 					setMessage(message);
 					toast.error(message, {
 						position: "bottom-center",

@@ -5,12 +5,12 @@ import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
 import Avatar from "@mui/material/Avatar";
-import { BaseUrl } from "../../../../api/services/BaseUrl";
-import Logo from "../../../../assets/logo.png";
+import { BaseUrl } from "api/services/BaseUrl";
+import Logo from "assets/logo.png";
 import { NavLink } from "react-router-dom";
-import authService from "../../../../api/services/auth.service";
+import authService from "api/services/auth.service";
 import styles from "./NavBar.module.css";
-import userService from "../../../../api/services/user.service";
+import userService from "api/services/user.service";
 
 export const NavBar = () => {
 	const [result, setResult] = useState("");
@@ -45,7 +45,7 @@ export const NavBar = () => {
 				}
 			);
 		}
-	}, []);
+	}, [message]);
 
 	return (
 		<Navbar
