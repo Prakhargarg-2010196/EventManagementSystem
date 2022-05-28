@@ -8,7 +8,7 @@ import { MultiSelect } from "primereact/multiselect";
 
 export const CategorySelect = (props) => {
 	const [Category, setCategory] = useState([]);
-	const [categoryErr, setCategoryErr] = useState("");
+	// const [categoryErr, setCategoryErr] = useState("");
 	const Categories = [
 		  "music" ,
 		  "sports" ,
@@ -23,9 +23,9 @@ export const CategorySelect = (props) => {
 		props.onSelect(Category);
 	});
 	const handleBlurCategory = () => {
-		let categoryErr = "";
-		if (Category.length===0) categoryErr = "category Can't be empty";
-		setCategoryErr(categoryErr );
+		// let categoryErr = "";
+		// if (Category.length===0) categoryErr = "category Can't be empty";
+		// setCategoryErr(categoryErr );
 	};
 	
 	return (
@@ -44,7 +44,7 @@ export const CategorySelect = (props) => {
 					display="chip"
 					selectionLimit={3}
 				/>
-				<div className="text-danger">{categoryErr}</div>
+				{/* <div className="text-danger">{categoryErr}</div> */}
 		</div>
 	);
 };

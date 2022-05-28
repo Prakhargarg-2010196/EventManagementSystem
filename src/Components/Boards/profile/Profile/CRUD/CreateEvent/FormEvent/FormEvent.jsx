@@ -62,7 +62,7 @@ const FormEvent = (props) => {
 	};
 	const handleBlurDate = () => {
 		let dateErr = "";
-		if (!dateValue) dateErr = " Date can't be empty";
+		if (dateValue==="") dateErr = " Date can't be empty";
 		setErrors({ dateErr });
 	};
 	const handleBlurTitle = () => {
@@ -94,12 +94,11 @@ const FormEvent = (props) => {
 
 	const handleDateUpdate = (e) => {
 		const dateValue = e.target.value;
-		const dateValueToBe = new Date(dateValue);
+		// const dateValueToBe = new Date(dateValue);
 		const dateValueInEpoch = new Date(dateValue).getTime();
-		const currentDate = new Date();
-		if (dateValueToBe.getDate() - currentDate.getDate() >= 0)
-			setDateValue(dateValueInEpoch);
-		else setErrors({ dateErr: "Invalid date" });
+		// const currentDate = new Date();
+		console.log(dateValueInEpoch)
+		setDateValue(dateValueInEpoch);
 	};
 
 	const handleSubmit = async (e) => {
@@ -447,7 +446,7 @@ const FormEvent = (props) => {
 										!title ||
 										!content ||
 										!Categories ||
-										!dateValue ||
+										// !dateValue ||
 										!timeValue ||
 										!optionValue ||
 										!money ||
