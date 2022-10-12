@@ -1,5 +1,5 @@
 
 export const BaseUrl = () => {
-    const baseUrl = "https://intense-dusk-33613.herokuapp.com/";
+    const baseUrl = "https://eventooze-api.onrender.com/";
     return baseUrl;
 }
