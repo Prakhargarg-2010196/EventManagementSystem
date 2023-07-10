@@ -6,4 +6,6 @@ class UserService {
 		return axios.get(BaseUrl() + "post/dashboard", { headers: authHeader() });
 	}
 }
-export default new UserService();
+
+let user=new UserService();
+export default user;

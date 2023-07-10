@@ -70,5 +70,5 @@ class AdminCrudService {
 			
 	
 }
-
-export default new AdminCrudService();
+let admin=new AdminCrudService()
+export default admin ;

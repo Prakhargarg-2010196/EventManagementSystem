@@ -12,6 +12,7 @@ class CrudService {
 			},
 		});
 	}
+	
 	Update(id,FormData) {
 		return axios.put(BaseUrl() + `post/update/${id}`, FormData,{
 			headers:{
@@ -73,5 +74,5 @@ class CrudService {
 		});
 	}
 }
-
-export default new CrudService();
+let crud = new CrudService();
+export default crud;

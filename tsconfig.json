@@ -1,0 +1,11 @@
+{
+    "include": [
+        ".",
+        "../typescript/types",
+        "src"
+    ],
+    "compilerOptions": {
+        "baseUrl": "src"
+    },
+   
+}
