@@ -1,15 +1,9 @@
+// This is the file from which the App starts 
 import "App.css";
 
-import { Component } from "react";
 import { Routes } from "Routes/Routes";
 
-class App extends Component {
-	render() {
-		return (
-			<>
-				<Routes />
-			</>
-		);
-	}
+export default function App (){
+	return <Routes/>;
 }
-export default App;
+

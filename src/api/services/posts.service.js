@@ -62,4 +62,5 @@ class PostService {
 	
 }
 
-export default new PostService();
+let post=new PostService();
+export default post;
